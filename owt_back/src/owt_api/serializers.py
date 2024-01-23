@@ -1,7 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
-
-from .models import Person, InitialData, WeightRecord, BodyMassIndex
+from .models import Person, InitialData, WeightRecord
 
 
 class UserSerializer(ModelSerializer):
@@ -25,10 +24,4 @@ class InitialDataSerializer(ModelSerializer):
 class WeightRecordSerializer(ModelSerializer):
     class Meta:
         model = WeightRecord
-        fields = '__all__'
-
-
-class BodyMassIndexSerializer(ModelSerializer):
-    class Meta:
-        model = BodyMassIndex
         fields = '__all__'

@@ -20,14 +20,13 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from owt_api.views import UserModelViewSet, PersonModelViewSet, InitialDataModelViewSet, WeightRecordModelViewSet, \
-    BodyMassIndexModelViewSet, register_user_view, set_initial_data_first_connexion_view
+    register_user_view, set_initial_data_first_connexion_view
 
 router = routers.SimpleRouter()
 router.register('users', UserModelViewSet, basename='users')
 router.register('persons', PersonModelViewSet, basename='person')
 router.register('initialdata', InitialDataModelViewSet, basename='initialdata')
 router.register('weights', WeightRecordModelViewSet, basename='weights')
-router.register('bmi', BodyMassIndexModelViewSet, basename='bmi')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
