@@ -26,7 +26,7 @@ class Person(models.Model):
     initial_data = models.OneToOneField(InitialData, on_delete=models.CASCADE)
     
     def __str__(self):
-        return str(self.id_user)
+        return str(self.user)
 
 
 class WeightRecord(models.Model):
