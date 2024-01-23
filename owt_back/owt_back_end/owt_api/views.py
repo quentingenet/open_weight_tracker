@@ -1,17 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
 from django.contrib.auth.models import User
-from django.http import HttpResponseForbidden
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
-
-from owt_api.global_utils import check_first_connection
-from .services import user_service, initial_data_service
-from .models import Person, InitialData, WeightRecord, BodyMassIndex
-from .serializers import PersonSerializer, InitialDataSerializer, WeightRecordSerializer, \
-    BodyMassIndexSerializer, UserSerializer
-
-
-from django.http import HttpResponseForbidden
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from owt_api.global_utils import check_first_connection
@@ -19,6 +7,9 @@ from .services import user_service, initial_data_service
 from .models import Person, InitialData, WeightRecord, BodyMassIndex
 from .serializers import PersonSerializer, InitialDataSerializer, WeightRecordSerializer, \
     BodyMassIndexSerializer, UserSerializer
+from django.http import HttpResponseForbidden
+
+
 
 class UserModelViewSet(ModelViewSet):
     serializer_class = UserSerializer
