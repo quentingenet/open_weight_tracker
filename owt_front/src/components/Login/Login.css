@@ -1,0 +1,21 @@
+.loginFormInput {
+    height: 100%;
+    width: 50%;
+    background-color: #d4d3dc;
+    border-radius: 20px;
+}
+
+.forgot-password {
+    color: #616165;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .loginFormInput {
+        height: 100%;
+        width: 100%;
+        background-color: #d4d3dc;
+        border-radius: 20px;
+    }
+}
