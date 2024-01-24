@@ -14,7 +14,7 @@
 
 ## Technologies
 
-**OWT** is developed using **Python** for the backend, along with the **Django REST**,
+**OWT** is developed using **Python** for the backend, along with the **Django REST** framework,
 <br>For the frontend, the application is developed with **React**.
 
 ## How to contribute ?
@@ -31,7 +31,7 @@ Nobody should be restricted by the software they use. There are four freedoms th
 
 ## Author and contributors
 
--   Quentin GENET (Author)
--   Maybe you as contributor... ? 😄
+-   Quentin GENET
+-   Maybe you as contributor... ? 😄🚀
 
 ![OWT preview](https://github.com/quentingenet/open_weight_tracker/blob/main/owt_preview.png)
