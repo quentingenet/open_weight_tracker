@@ -44,8 +44,8 @@ class WeightRecordModelViewSet(ModelViewSet):
 
 # New user registration
 @api_view(['POST'])
-def register_user_view(request):
-    return user_service.register_user(request.data)
+def register_user_step_one_view(request):
+    return user_service.register_step_one(request.data)
 
 
 # After registration set initial data only if first connexion
@@ -55,7 +55,7 @@ def set_initial_data_first_connexion_view(request):
     if request:
         user_id = get_user_id_from_jwt(request)
         if check_first_connection(user_id):
-            response = initial_data_service.set_initial_data_first_connexion(user_id, request.data)
+            response = user_service.register_step_two(user_id, request.data)
             return response
         else:
             return HttpResponseForbidden("You are not allowed to access this resource")
