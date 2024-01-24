@@ -56,13 +56,13 @@ python manage.py runserver
 Backend server is currently running on **http://localhost:8000**
 
 ### Frontend Setup
+In a separate terminal, install and start the frontend
 ```bash
 cd open_weight_tracker/owt_front
 npm install
 ```
 
 ### Start the frontend server
-In a separate terminal, start the frontend
 ```bash
 cd open_weight_tracker/owt_front
 npm run dev
