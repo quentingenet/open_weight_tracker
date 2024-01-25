@@ -19,11 +19,11 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from owt_api.views import UserModelViewSet, PersonModelViewSet, InitialDataModelViewSet, WeightRecordModelViewSet, \
+from owt_api.views import AppUserModelViewSet, PersonModelViewSet, InitialDataModelViewSet, WeightRecordModelViewSet, \
     register_user_step_one_view, set_initial_data_first_connexion_view
 
 router = routers.SimpleRouter()
-router.register('users', UserModelViewSet, basename='users')
+router.register('users', AppUserModelViewSet, basename='users')
 router.register('persons', PersonModelViewSet, basename='person')
 router.register('initialdata', InitialDataModelViewSet, basename='initialdata')
 router.register('weights', WeightRecordModelViewSet, basename='weights')

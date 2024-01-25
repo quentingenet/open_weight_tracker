@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
+
+from owt_api.models import AppUser
 
 
 def get_user_id_from_jwt(request):
@@ -29,10 +30,10 @@ def get_user_id_from_jwt(request):
 
 
 def check_first_connection(user_id):
-    user = User.objects.get(id=user_id)
+    user = AppUser.objects.get(id=user_id)
     is_first_connection = user.last_login is None
     return is_first_connection
 
 
 def check_user_id(user_id):
-    return User.objects.get(id=user_id) is not None
+    return AppUser.objects.get(id=user_id) is not None

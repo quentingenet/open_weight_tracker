@@ -1,22 +1,20 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-from django.contrib.auth.models import User
 from django.http import HttpResponseForbidden
 
 from rest_framework.decorators import api_view, permission_classes
 from .global_utils import check_first_connection, get_user_id_from_jwt
-from .services import user_service, initial_data_service
-from .models import Person, InitialData, WeightRecord
-from .serializers import PersonSerializer, InitialDataSerializer, WeightRecordSerializer, \
-    UserSerializer
+from .services import user_service
+from .models import AppUser, Person, InitialData, WeightRecord
+from .serializers import AppUserSerializer, PersonSerializer, InitialDataSerializer, WeightRecordSerializer
 
 
-class UserModelViewSet(ModelViewSet):
-    serializer_class = UserSerializer
+class AppUserModelViewSet(ModelViewSet):
+    serializer_class = AppUserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return User.objects.all()
+        return AppUser.objects.all()
 
 
 class PersonModelViewSet(ModelViewSet):

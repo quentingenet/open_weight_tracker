@@ -1,9 +1,14 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import AbstractUser
+
 
 class AppUser(AbstractUser):
     is_accepted_terms = models.BooleanField(default=False, blank=False, null=False)
+
+    def __str__(self):
+        return str(self.is_accepted_terms)
+
 
 class InitialData(models.Model):
     class Gender(models.TextChoices):

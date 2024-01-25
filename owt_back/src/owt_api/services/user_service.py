@@ -3,10 +3,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.http import HttpResponse
 from rest_framework_simplejwt.tokens import AccessToken
-from owt_api.serializers import PersonSerializer, UserSerializer
-from owt_api.global_utils import get_user_id_from_jwt
-from owt_api.models import InitialData, Person
-from django.contrib.auth.models import User
+from owt_api.serializers import PersonSerializer, AppUserSerializer
+from owt_api.models import AppUser, InitialData, Person
 
 
 def register_step_one(data):
@@ -19,7 +17,7 @@ def register_step_one(data):
     data['username'] = data['username'].lower().strip()
     data['email'] = data['email'].lower().strip()
     data['joined_date'] = data['joined_date']
-    serializer = UserSerializer(data=data)
+    serializer = AppUserSerializer(data=data)
     if serializer.is_valid():
         user = serializer.save()
 
@@ -35,7 +33,7 @@ def register_step_one(data):
 
 def register_step_two(user_id, data): 
     
-    user = User.objects.get(id=user_id)
+    user = AppUser.objects.get(id=user_id)
     Initial_data = InitialData(body_size = data['body_size'], 
                             gender = data['gender'], 
                             birthdate = data['birthdate'], 

@@ -1,11 +1,10 @@
 from rest_framework.serializers import ModelSerializer
-from django.contrib.auth.models import User
-from .models import Person, InitialData, WeightRecord
+from .models import AppUser, Person, InitialData, WeightRecord
 
 
-class UserSerializer(ModelSerializer):
+class AppUserSerializer(ModelSerializer):
     class Meta:
-        model = User
+        model = AppUser
         fields = '__all__'
 
 
