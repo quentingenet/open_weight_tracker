@@ -4,7 +4,7 @@ import { API_URL } from '../utils/GlobalUtils';
 
 export const login = (data: ILoginForm) => {
     const requestDataLogin = {
-        appUsername: data.username,
+        username: data.username,
         password: data.password,
     };
     return new Promise((resolve, reject) => {
@@ -36,9 +36,11 @@ export const login = (data: ILoginForm) => {
 
 export const register = (dataRegister: IRegisterForm) => {
     const requestDataRegister = {
-        appUsername: dataRegister.username,
+        //step one
+        username: dataRegister.username,
         password: dataRegister.password,
-        emailUser: dataRegister.emailUser,
+        email: dataRegister.emailUser,
+        //step two
         yearBirth: dataRegister.yearBirth,
         isMale: dataRegister.isMale,
         isEuropeanUnitMeasure: dataRegister.isEuropeanUnitMeasure,
