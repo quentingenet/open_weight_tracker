@@ -6,8 +6,11 @@ import scale from '../../assets/scale-icon.png';
 //import css
 import './Landpage.css';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../../contexts/UserContext';
+import InitialData from '../../components/InitialData/InitialData';
 export default function Landpage() {
-    const [isFirstConnection, setIsFirstConnection] = useState<boolean>(false);
+    const userContext = useUserContext();
+    const [isRegister, setIsRegister] = useState<boolean>(true);
 
     return (
         <>
@@ -47,16 +50,14 @@ export default function Landpage() {
                         <Switch
                             size='medium'
                             inputProps={{ 'aria-label': 'ant design' }}
-                            onChange={(e) =>
-                                setIsFirstConnection(e.target.checked)
-                            }
+                            onChange={(e) => setIsRegister(e.target.checked)}
                         />
                         <Typography variant='h5'>Register</Typography>
                     </Stack>
                 </Grid>
                 <Grid container justifyContent={'center'}>
                     <Grid item xs={10}>
-                        {isFirstConnection ? <Register /> : <Login />}
+                        {isRegister ? <Register /> : <Login />}
                     </Grid>
                 </Grid>
                 <Grid
@@ -69,7 +70,9 @@ export default function Landpage() {
                     <Grid item>
                         <Link to='/Contact'>Contact</Link> |{' '}
                         <Link
-                            to={'https://github.com/quentingenet/owt'}
+                            to={
+                                'https://github.com/quentingenet/open_weight_tracker'
+                            }
                             target='_blank'
                             rel='noopener noreferrer'
                         >

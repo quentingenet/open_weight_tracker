@@ -1,28 +1,17 @@
-import {
-    Person2,
-    VisibilityOff,
-    Visibility,
-    Email,
-    CalendarMonth,
-} from '@mui/icons-material';
-import Radio from '@mui/material/Radio';
+import { Person2, VisibilityOff, Visibility, Email } from '@mui/icons-material';
 import {
     Button,
     Checkbox,
     CircularProgress,
-    FormControl,
     FormControlLabel,
-    FormLabel,
     Grid,
     IconButton,
     InputAdornment,
-    RadioGroup,
-    Slider,
-    Switch,
+    Modal,
     TextField,
     Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IRegisterForm } from '../../models/IRegisterForm';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -37,52 +26,23 @@ import { useUserContext } from '../../contexts/UserContext';
 import { register as registerService } from '../../services/UserService';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Register() {
+export const Register = () => {
     const userContext = useUserContext();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [gender, setGender] = useState<boolean>(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const [valueGender, setValueGender] = useState('Male');
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValueGender((event.target as HTMLInputElement).value);
-    };
-
     const handleMouseDownPassword = (
         event: React.MouseEvent<HTMLButtonElement>
     ) => {
         event.preventDefault();
     };
 
-    const currentYear = new Date().getFullYear();
-
-    const marksEU = [
-        {
-            value: 50,
-            label: '50 Kg',
-        },
-        {
-            value: 200,
-            label: '200 Kg',
-        },
-    ];
-
-    function valuetextEU(value: number) {
-        return `${value}Kg`;
-    }
-
-    const initialValues: IRegisterForm = {
+    const initialRegisterValues: IRegisterForm = {
         username: '',
+        email: '',
         password: '',
         passwordBis: '',
-        emailUser: '',
-        yearBirth: 1990,
-        isMale: false,
-        isEuropeanUnitMeasure: false,
-        bodySize: 175,
-        goalWeight: 80,
         isAcceptedTerms: false,
     };
 
@@ -92,28 +52,10 @@ export default function Register() {
             .min(3, 'Username must contain at least 3 characters')
             .matches(/^[a-z0-9]+$/, 'Must be to lowercase')
             .required('Enter your pseudonyme'),
-        yearBirth: yup
-            .number()
-            .positive('Must be a positive number')
-            .integer('Must be a correct number')
-            .min(1900, 'Birth year must be greater than 1900')
-            .max(currentYear, 'Birth year must be less')
-            .required('Enter your year of birth'),
-        emailUser: yup
-            .string()
-            .required('Enter your email address')
-            .email('Your email address is not valid'),
-        //isMale: yup.boolean().required('Select your gender'),
-        isAcceptedTerms: yup.boolean().required('You must accept terms'),
-        isEuropeanUnitMeasure: yup.boolean().required('Select an unit measure'),
-        bodySize: yup
-            .number()
-            .positive()
-            .integer()
-            .min(100)
-            .max(250)
-            .required('Enter your body size'),
-        goalWeight: yup.number().required('Enter a goal weight'),
+        email: yup.string().email().required('Enter your email'),
+        isAcceptedTerms: yup
+            .boolean()
+            .required('You must accept terms to use OWT'),
         password: yup
             .string()
             .required('Enter your password.')
@@ -144,20 +86,15 @@ export default function Register() {
         watch,
         formState: { errors, isValid },
     } = useForm<IRegisterForm>({
-        defaultValues: initialValues,
+        defaultValues: initialRegisterValues,
         resolver: yupResolver(validationSchema),
     });
 
     const dataRegister: IRegisterForm = {
         username: watch('username'),
+        email: watch('email'),
         password: watch('password'),
         passwordBis: watch('passwordBis'),
-        emailUser: watch('emailUser'),
-        yearBirth: watch('yearBirth'),
-        isMale: gender,
-        isEuropeanUnitMeasure: watch('isEuropeanUnitMeasure'),
-        bodySize: watch('bodySize'),
-        goalWeight: watch('goalWeight'),
         isAcceptedTerms: watch('isAcceptedTerms'),
     };
 
@@ -171,9 +108,10 @@ export default function Register() {
                         const localStorageJwt =
                             localStorage.getItem('jwt') || '';
                         userContext.setJwt(localStorageJwt);
-                        userContext.setIsUserLoggedIn(true);
+                        userContext.setIsUserLoggedIn(false);
+                        userContext.setIsFirstConnection(true);
                         setIsLoading(false);
-                        navigate('/dashboard');
+                        //GERER L'INITIAL DATA STEP two
                     }
                 });
             } catch (error) {
@@ -181,16 +119,6 @@ export default function Register() {
             }
         }
     };
-
-    useEffect(() => {
-        let genderToAssign = valueGender;
-        if (String(genderToAssign) == 'Male') {
-            setGender(true);
-        } else {
-            setGender(false);
-        }
-        [valueGender, gender];
-    });
 
     return (
         <>
@@ -239,20 +167,26 @@ export default function Register() {
                             )}
                         </Grid>
                     </Grid>
+
                     <Grid container justifyContent={'center'}>
-                        <Grid item marginTop={2} xs={10}>
+                        <Grid
+                            item
+                            marginTop={3}
+                            xs={10}
+                            justifyContent={'center'}
+                        >
                             <Controller
-                                name='emailUser'
+                                name='email'
                                 control={control}
                                 defaultValue=''
                                 render={({ field }) => (
                                     <TextField
                                         {...field}
-                                        id='emailUser'
+                                        id='email'
                                         label='Email'
-                                        type='text'
+                                        type='email'
                                         variant='outlined'
-                                        error={Boolean(errors.emailUser)}
+                                        error={Boolean(errors.email)}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position='end'>
@@ -263,17 +197,18 @@ export default function Register() {
                                     />
                                 )}
                             />
-                            {errors.emailUser && (
+                            {errors.email && (
                                 <Grid container justifyContent={'center'}>
                                     <Grid item xs={10}>
                                         <span className='errorText'>
-                                            {errors.emailUser.message}
+                                            {errors.email.message}
                                         </span>
                                     </Grid>
                                 </Grid>
                             )}
                         </Grid>
                     </Grid>
+
                     <Grid container justifyContent={'center'}>
                         <Grid item marginTop={2} xs={10}>
                             <Controller
@@ -378,199 +313,7 @@ export default function Register() {
                             )}
                         </Grid>
                     </Grid>
-                    <Grid container justifyContent={'center'}>
-                        <Grid item marginTop={2} xs={10}>
-                            <Controller
-                                name='yearBirth'
-                                control={control}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        id='yearBirth'
-                                        label='Year birth'
-                                        type='number'
-                                        variant='outlined'
-                                        error={Boolean(errors.yearBirth)}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position='end'>
-                                                    <CalendarMonth />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                )}
-                            />
-                            {errors.yearBirth && (
-                                <Grid container justifyContent={'center'}>
-                                    <Grid item xs={10}>
-                                        <span className='errorText'>
-                                            {errors.yearBirth.message}
-                                        </span>
-                                    </Grid>
-                                </Grid>
-                            )}
-                        </Grid>
-                    </Grid>
-                    <Grid container marginTop={2} justifyContent={'center'}>
-                        <Grid item xs={10}>
-                            <Controller
-                                name='isMale'
-                                control={control}
-                                render={({ field }) => (
-                                    <FormControl>
-                                        <Grid justifyContent={'center'}>
-                                            <FormLabel id='demo-radio-buttons-group-label'>
-                                                Gender
-                                            </FormLabel>
-                                        </Grid>
-                                        <RadioGroup
-                                            {...field}
-                                            aria-labelledby='demo-radio-buttons-group-label'
-                                            name='radio-buttons-group'
-                                            sx={{ color: 'black' }}
-                                            value={valueGender}
-                                            onChange={handleChangeGender}
-                                        >
-                                            <Grid
-                                                container
-                                                justifyContent={'center'}
-                                                flexDirection={'row'}
-                                            >
-                                                <FormControlLabel
-                                                    value={'Male'}
-                                                    control={<Radio />}
-                                                    label='Male'
-                                                />
-                                                <FormControlLabel
-                                                    value={'Female'}
-                                                    control={<Radio />}
-                                                    label='Female'
-                                                />
-                                                <FormControlLabel
-                                                    value={'Other'}
-                                                    control={<Radio />}
-                                                    label='Other'
-                                                />
-                                            </Grid>
-                                        </RadioGroup>
-                                    </FormControl>
-                                )}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container justifyContent={'center'}>
-                        <Grid item xs={10} marginTop={1}>
-                            <Grid container justifyContent={'center'}>
-                                <Grid item xs={10}>
-                                    <Typography color={'#555458'}>
-                                        Units measurements
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid
-                            container
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                        >
-                            <Typography color={'black'}>{'Lbs/In'}</Typography>
-                            <Controller
-                                name='isEuropeanUnitMeasure'
-                                control={control}
-                                defaultValue={false}
-                                render={({ field }) => (
-                                    <Switch
-                                        {...field}
-                                        size='medium'
-                                        inputProps={{
-                                            'aria-label': 'ant design',
-                                        }}
-                                        checked={watch('isEuropeanUnitMeasure')}
-                                    />
-                                )}
-                            />
 
-                            <Typography color={'black'}>{'Kg/Cm'}</Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container justifyContent={'center'}>
-                        <Grid item marginTop={2} xs={10}>
-                            <Controller
-                                name='bodySize'
-                                control={control}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        id='bodySize'
-                                        label='Body size (cm or inch)'
-                                        type='number'
-                                        variant='outlined'
-                                        error={Boolean(errors.bodySize)}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position='end'>
-                                                    {watch(
-                                                        'isEuropeanUnitMeasure'
-                                                    )
-                                                        ? 'cm'
-                                                        : 'inch'}
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                )}
-                            />
-                            {errors.bodySize && (
-                                <Grid container justifyContent={'center'}>
-                                    <Grid item xs={10}>
-                                        <span className='errorText'>
-                                            {errors.bodySize.message}
-                                        </span>
-                                    </Grid>
-                                </Grid>
-                            )}
-                        </Grid>
-                    </Grid>
-                    <Grid container justifyContent={'center'}>
-                        <Grid container marginTop={2} justifyContent={'center'}>
-                            <Grid item xs={10}>
-                                <Typography color={'#555458'}>
-                                    {'Goal weight'}
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                        <Grid container justifyContent={'center'}>
-                            <Grid
-                                item
-                                xs={10}
-                                justifyContent={'center'}
-                                alignItems={'center'}
-                                paddingX={{ xs: 5, md: 15 }}
-                                marginTop={4}
-                            >
-                                <Controller
-                                    name='goalWeight'
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Slider
-                                            {...field}
-                                            aria-label='Always visible'
-                                            size='medium'
-                                            defaultValue={85}
-                                            min={50}
-                                            max={200}
-                                            getAriaValueText={valuetextEU}
-                                            step={1}
-                                            value={watch('goalWeight')}
-                                            marks={marksEU}
-                                            valueLabelDisplay='on'
-                                        />
-                                    )}
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
                     <Grid
                         container
                         justifyContent={'center'}
@@ -644,4 +387,5 @@ export default function Register() {
             </Grid>
         </>
     );
-}
+};
+export default Register;

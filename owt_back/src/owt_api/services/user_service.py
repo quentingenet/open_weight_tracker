@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.db import IntegrityError
 from rest_framework import status
@@ -20,7 +20,7 @@ def register_step_one(data):
                         is_active = True,
                         last_login = None,
                         is_accepted_terms = data['is_accepted_terms'],
-                        joined_date = timezone.now()
+                        date_joined = timezone.now()
                         )   
             # Generate JWT
             token = AccessToken.for_user(user)
@@ -32,7 +32,6 @@ def register_step_one(data):
             return HttpResponse("Error, user not created",status=status.HTTP_400_BAD_REQUEST)
     except IntegrityError:
         return HttpResponse("Error, user could not be created due to integrity error", status=status.HTTP_400_BAD_REQUEST)
-
 
 
 def register_step_two(user_id, data): 

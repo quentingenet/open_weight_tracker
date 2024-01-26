@@ -33,7 +33,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/register/', register_user_step_one_view, name='register'),
     path('api/init/first-connexion/', set_initial_data_first_connexion_view, name='set_initial_data_first_connexion'),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api/auth/', include('rest_framework.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(router.urls))

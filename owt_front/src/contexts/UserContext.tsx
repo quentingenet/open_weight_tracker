@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useState } from 'react';
 
 interface IUserContext {
     jwt: string;
     setJwt: (jwt: string) => void;
+    isFirstConnection: boolean;
+    setIsFirstConnection: (isFirstConnection: boolean) => void;
     isUserLoggedIn: boolean;
     setIsUserLoggedIn: (isUserLoggedIn: boolean) => void;
     isEuropeanUnitMeasure: boolean;
@@ -11,17 +14,13 @@ interface IUserContext {
 
 export const UserContext = createContext<IUserContext>({
     jwt: '',
-    setJwt: () => {
-        ('');
-    },
+    setJwt: () => {},
+    isFirstConnection: false,
+    setIsFirstConnection: () => {},
     isUserLoggedIn: false,
-    setIsUserLoggedIn: () => {
-        ('');
-    },
+    setIsUserLoggedIn: () => {},
     isEuropeanUnitMeasure: true,
-    setIsEuropeanUnitMeasure: () => {
-        ('');
-    },
+    setIsEuropeanUnitMeasure: () => {},
 });
 
 export function useUserContext() {
@@ -34,6 +33,7 @@ export function UserContextProvider({
     children: React.ReactNode;
 }) {
     const [jwt, setJwt] = useState<string>('');
+    const [isFirstConnection, setIsFirstConnection] = useState<boolean>(true);
     const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
     const [isEuropeanUnitMeasure, setIsEuropeanUnitMeasure] =
         useState<boolean>(true);
@@ -41,6 +41,8 @@ export function UserContextProvider({
     const value: IUserContext = {
         jwt: jwt,
         setJwt: setJwt,
+        isFirstConnection: isFirstConnection,
+        setIsFirstConnection: setIsFirstConnection,
         isUserLoggedIn: isUserLoggedIn,
         setIsUserLoggedIn: setIsUserLoggedIn,
         isEuropeanUnitMeasure: isEuropeanUnitMeasure,
