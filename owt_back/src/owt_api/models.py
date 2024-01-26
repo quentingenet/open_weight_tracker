@@ -7,7 +7,7 @@ class AppUser(AbstractUser):
     is_accepted_terms = models.BooleanField(default=False, blank=False, null=False)
 
     def __str__(self):
-        return str(self.is_accepted_terms)
+        return f'id {self.id}, {self.username}, {self.email}'
 
 
 class InitialData(models.Model):
@@ -24,7 +24,7 @@ class InitialData(models.Model):
     is_european_unit_measure = models.BooleanField(default=True)
 
     def __str__(self):
-        return str(self.register_user_date)
+          return f'id {self.id}, birthdate {self.birthdate}'
 
 
 class Person(models.Model):
@@ -32,7 +32,7 @@ class Person(models.Model):
     initial_data = models.OneToOneField(InitialData, on_delete=models.CASCADE)
     
     def __str__(self):
-        return str(self.user)
+          return f'id {self.id}, {self.user.username}'
 
 
 class WeightRecord(models.Model):
@@ -46,6 +46,6 @@ class WeightRecord(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='weight_records')
     
     def __str__(self):
-        return str(self.weight_value)
+          return f'{self.weight_record_date}, {self.weight_value}'
 
 
