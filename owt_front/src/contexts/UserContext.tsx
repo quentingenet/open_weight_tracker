@@ -33,7 +33,7 @@ export function UserContextProvider({
     children: React.ReactNode;
 }) {
     const [jwt, setJwt] = useState<string>('');
-    const [isFirstConnection, setIsFirstConnection] = useState<boolean>(true);
+    const [isFirstConnection, setIsFirstConnection] = useState<boolean>(false);
     const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
     const [isEuropeanUnitMeasure, setIsEuropeanUnitMeasure] =
         useState<boolean>(true);

@@ -66,12 +66,21 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True  # To change in production by False and add the allowed origins
 
-# CORS_ALLOWED_ORIGINS = [
-#    'http://owt-api.quentingenet.fr',
-#    'https://owt-api.quentingenet.fr',
-#    'http://localhost:5173',
-#    'http://127.0.0.1:5173',
-# ]
+CORS_ALLOW_HEADERS = [
+    'Authorization',
+    'Content-Type'
+]
+
+CORS_EXPOSE_HEADERS = [
+    'Authorization',  
+    'Content-Type'
+]
+CORS_ALLOWED_ORIGINS = [
+   'http://owt-api.quentingenet.fr',
+   'https://owt-api.quentingenet.fr',
+   'http://localhost:5173',
+   'http://127.0.0.1:5173'
+   ]
 
 ROOT_URLCONF = 'owt_back_end.urls'
 

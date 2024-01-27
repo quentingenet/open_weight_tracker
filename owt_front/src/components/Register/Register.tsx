@@ -98,24 +98,40 @@ export const Register = () => {
         isAcceptedTerms: watch('isAcceptedTerms'),
     };
 
-    const submitRegister = () => {
+    const submitRegister = async () => {
         console.log(dataRegister);
+
+        // Assuming isValid is a boolean variable determining the form's validity
         if (isValid) {
             try {
                 setIsLoading(true);
-                registerService(dataRegister).then((response) => {
-                    if (response) {
-                        const localStorageJwt =
-                            localStorage.getItem('jwt') || '';
-                        userContext.setJwt(localStorageJwt);
-                        userContext.setIsUserLoggedIn(false);
-                        userContext.setIsFirstConnection(true);
-                        setIsLoading(false);
-                        //GERER L'INITIAL DATA STEP two
-                    }
-                });
+
+                // Using await to wait for the registerService promise to resolve
+                const response = await registerService(dataRegister);
+
+                console.log(
+                    '201 connection first ?',
+                    userContext.isFirstConnection
+                );
+
+                const localStorageJwt = localStorage.getItem('jwt') || '';
+
+                // Check if the JWT in local storage is valid and starts with 'Bearer'
+                if (localStorageJwt && localStorageJwt.startsWith('Bearer')) {
+                    userContext.setJwt(localStorageJwt);
+                }
+
+                userContext.setIsUserLoggedIn(false);
+                userContext.setIsFirstConnection(true);
+                setIsLoading(false);
+
+                // Assuming 'navigate' is a function to navigate to a specific route
+                navigate('/');
+
+                // GERER L'INITIAL DATA STEP two
             } catch (error) {
-                console.log('Incomplete form.');
+                // Handle errors gracefully
+                console.error("Erreur lors de l'inscription :", error);
             }
         }
     };

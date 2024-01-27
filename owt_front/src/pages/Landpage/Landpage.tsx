@@ -1,16 +1,15 @@
 import { Grid, Stack, Switch, Typography } from '@mui/material';
 import { useState } from 'react';
-import Register from '../../components/Register/Register';
 import Login from '../../components/Login/Login';
 import scale from '../../assets/scale-icon.png';
 //import css
 import './Landpage.css';
 import { Link } from 'react-router-dom';
 import { useUserContext } from '../../contexts/UserContext';
-import InitialData from '../../components/InitialData/InitialData';
+import RegisterSteps from '../RegisterSteps/RegisterSteps';
 export default function Landpage() {
     const userContext = useUserContext();
-    const [isRegister, setIsRegister] = useState<boolean>(true);
+    const [isRegistering, setIsRegister] = useState<boolean>(false);
 
     return (
         <>
@@ -57,7 +56,7 @@ export default function Landpage() {
                 </Grid>
                 <Grid container justifyContent={'center'}>
                     <Grid item xs={10}>
-                        {isRegister ? <Register /> : <Login />}
+                        {isRegistering ? <RegisterSteps /> : <Login />}
                     </Grid>
                 </Grid>
                 <Grid

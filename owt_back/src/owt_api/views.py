@@ -2,7 +2,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from django.http import HttpResponseForbidden
 
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .global_utils import check_first_connection, get_user_id_from_jwt
 from .services import user_service
 from .models import AppUser, Person, InitialData, WeightRecord
@@ -49,7 +49,8 @@ def register_user_step_one_view(request):
 
 # After registration set initial data only if first connexion
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
+@authentication_classes([])
 def set_initial_data_first_connexion_view(request):
     if request:
         user_id = get_user_id_from_jwt(request)

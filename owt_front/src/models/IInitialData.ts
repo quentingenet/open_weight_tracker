@@ -10,4 +10,5 @@ export interface IInitialData {
     isEuropeanUnitMeasure: boolean;
     bodySize: number;
     goalWeight: number;
+    initialWeight: number;
 }

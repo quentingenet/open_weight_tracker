@@ -1,9 +1,10 @@
+from datetime import datetime
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.db import IntegrityError
 from rest_framework import status
 from django.core.exceptions import ValidationError
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework_simplejwt.tokens import AccessToken
 from owt_api.models import AppUser, InitialData, Person
 
@@ -25,13 +26,13 @@ def register_step_one(data):
             # Generate JWT
             token = AccessToken.for_user(user)
             # Create a response and set the Authorization header with the JWT
-            response = HttpResponse(status=status.HTTP_201_CREATED)
+            response = JsonResponse({'message' :'Data registered'},status=201)
             response['Authorization'] = f'Bearer {str(token)}'
             return response
         else:
-            return HttpResponse("Error, user not created",status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'message' : 'Error, user not created'},status=400)
     except IntegrityError:
-        return HttpResponse("Error, user could not be created due to integrity error", status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse({'message' : 'Error, user could not be created due to integrity error'}, status=400)
 
 
 def register_step_two(user_id, data): 
@@ -44,17 +45,17 @@ def register_step_two(user_id, data):
         initial_data = InitialData.objects.create(
             body_size = data['body_size'], 
             gender = data['gender'], 
-            birthdate = data['birthdate'], 
+            birthdate = datetime.now(), # Gerer les dates coté front et back pour recuperer la birthdate
             initial_weight = data['initial_weight'], 
             goal_weight = data['goal_weight'], 
             is_european_unit_measure = data['is_european_unit_measure']
         )
     except ValidationError as e:
-        return HttpResponse(f"Error, initial data could not be created: {e}", status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponse(f'Error, initial data could not be created: {e}', status=status.HTTP_400_BAD_REQUEST)
 
     try:
         Person.objects.create(user=user, initial_data=initial_data)
     except ValidationError as e:
-        return HttpResponse(f"Error, person could not be created: {e}", status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponse(f'Error, person could not be created: {e}', status=status.HTTP_400_BAD_REQUEST)
     
-    return HttpResponse(status=status.HTTP_201_CREATED)
+    return JsonResponse({'message': 'Intial data created'},status=201)
