@@ -25,6 +25,7 @@ import './Register.css';
 import { useUserContext } from '../../contexts/UserContext';
 import { register as registerService } from '../../services/UserService';
 import { Link, useNavigate } from 'react-router-dom';
+import ModalOwt from '../Modal/ModalOwt';
 
 export const Register = () => {
     const userContext = useUserContext();
@@ -350,23 +351,11 @@ export const Register = () => {
                                     I confirm to have read, understand and
                                     accepted
                                 </Typography>
-                                <Typography>
-                                    <Link
-                                        style={{
-                                            color: 'black',
-                                            fontWeight: 'bold',
-                                        }}
-                                        to={'/owt-terms-and-conditions'}
-                                        target='_blank'
-                                        rel='noopener noreferrer'
-                                    >
-                                        Terms and conditions
-                                    </Link>
-                                </Typography>
+                                <ModalOwt />
                             </Grid>
                         </Grid>
                         <Grid container justifyContent={'center'}>
-                            <Grid item xs={10} my={3} sx={{ color: 'black' }}>
+                            <Grid item xs={10} mb={2} sx={{ color: 'black' }}>
                                 <Controller
                                     name='isAcceptedTerms'
                                     control={control}
