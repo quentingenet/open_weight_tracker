@@ -155,11 +155,11 @@ export const InitialData: React.FC = () => {
 
     return (
         <>
-            <form
-                className='register-form-input'
-                onSubmit={handleSubmit(submitInitialDataRegister)}
-            >
-                <Grid container marginTop={3} justifyContent={'center'}>
+            <Grid container marginTop={3} justifyContent={'center'}>
+                <form
+                    className='register-form-input'
+                    onSubmit={handleSubmit(submitInitialDataRegister)}
+                >
                     <Grid container marginTop={2} justifyContent={'center'}>
                         <Grid item xs={10}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -413,8 +413,8 @@ export const InitialData: React.FC = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </form>
+                </form>
+            </Grid>
         </>
     );
 };

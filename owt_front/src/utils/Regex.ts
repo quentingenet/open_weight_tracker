@@ -1,5 +1,5 @@
-export const passwordAtLeast4= /^.{4,}$/;
+export const passwordAtLeast4 = /^.{4,}$/;
 export const passwordWithNumber = /^(?=.*\d).+$/;
 export const passwordWithLetter = /^(?=.*[a-zA-Z]).+$/;
 export const emailValidator =
-/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    /^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]{2,40}@(?:[a-zA-Z0-9-]{2,40}\.)+[a-zA-Z]{2,6}$/;

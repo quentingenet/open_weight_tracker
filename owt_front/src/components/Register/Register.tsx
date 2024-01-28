@@ -16,6 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
+    emailValidator,
     passwordAtLeast4,
     passwordWithLetter,
     passwordWithNumber,
@@ -50,8 +51,12 @@ export const Register = () => {
             .string()
             .min(3, 'Username must contain at least 3 characters')
             .matches(/^[a-z0-9]+$/, 'Must be to lowercase')
-            .required('Enter your pseudonyme'),
-        email: yup.string().email().required('Enter your email'),
+            .required('Enter your username'),
+        email: yup
+            .string()
+            .email()
+            .matches(emailValidator, 'Email not valid')
+            .required('Enter your email'),
         isAcceptedTerms: yup
             .boolean()
             .required('You must accept terms to use OWT'),
