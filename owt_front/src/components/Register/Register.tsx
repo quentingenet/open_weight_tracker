@@ -7,7 +7,6 @@ import {
     Grid,
     IconButton,
     InputAdornment,
-    Modal,
     TextField,
     Typography,
 } from '@mui/material';

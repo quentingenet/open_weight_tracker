@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponse, JsonResponse
 from rest_framework_simplejwt.tokens import AccessToken
 from owt_api.models import AppUser, InitialData, Person
-
+from dateutil import parser
 
 def register_step_one(data):
     try:
@@ -45,11 +45,12 @@ def register_step_two(user_id, data):
         initial_data = InitialData.objects.create(
             body_size = data['body_size'], 
             gender = data['gender'], 
-            birthdate = datetime.now(), # Gerer les dates coté front et back pour recuperer la birthdate
+            birthdate = parser.parse(data['birthdate']).date(),  
             initial_weight = data['initial_weight'], 
             goal_weight = data['goal_weight'], 
             is_european_unit_measure = data['is_european_unit_measure']
         )
+      
     except ValidationError as e:
         return HttpResponse(f'Error, initial data could not be created: {e}', status=status.HTTP_400_BAD_REQUEST)
 

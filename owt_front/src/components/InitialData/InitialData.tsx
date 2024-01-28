@@ -1,5 +1,5 @@
-import { CalendarMonth } from '@mui/icons-material';
 import Radio from '@mui/material/Radio';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {
     Button,
     CircularProgress,
@@ -23,8 +23,12 @@ import { useUserContext } from '../../contexts/UserContext';
 import { initData as initDataService } from '../../services/UserService';
 import { useNavigate } from 'react-router-dom';
 import { Gender, IInitialData } from '../../models/IInitialData';
+import dayjs, { Dayjs } from 'dayjs';
+import React from 'react';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-export const InitialData = () => {
+export const InitialData: React.FC = () => {
     const userContext = useUserContext();
     const navigate = useNavigate();
     const [valueGender, setValueGender] = useState('M');
@@ -33,8 +37,6 @@ export const InitialData = () => {
     const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValueGender((event.target as HTMLInputElement).value);
     };
-
-    const currentYear = new Date().getFullYear();
 
     const initialWeightValues = [
         {
@@ -65,9 +67,12 @@ export const InitialData = () => {
     function valuetextEU(value: number) {
         return `${value}Kg`;
     }
+    const [valueBirthdate, setValueBirthdate] = React.useState<Dayjs | null>(
+        dayjs('1985-09-18')
+    );
 
     const initialValues: IInitialData = {
-        birthdate: new Date(currentYear - 20, 0, 1),
+        birthdate: dayjs(), //date now
         gender: Gender.Male,
         isEuropeanUnitMeasure: false,
         bodySize: 175,
@@ -76,10 +81,6 @@ export const InitialData = () => {
     };
 
     const validationSchema = yup.object({
-        birthdate: yup
-            .date()
-            .min('Birth year must be greater than 1900')
-            .required('Enter your year of birth'),
         isEuropeanUnitMeasure: yup.boolean().required('Select an unit measure'),
         gender: yup.mixed<Gender>().oneOf(Object.values(Gender)).required(),
         bodySize: yup
@@ -115,6 +116,7 @@ export const InitialData = () => {
     const submitInitialDataRegister = () => {
         if (isValid) {
             try {
+                console.log('SUBMIT INITIAL DATA', dataInitial);
                 setIsLoading(true);
                 initDataService(dataInitial).then((response) => {
                     if (response) {
@@ -141,40 +143,37 @@ export const InitialData = () => {
                 onSubmit={handleSubmit(submitInitialDataRegister)}
             >
                 <Grid container marginTop={3} justifyContent={'center'}>
-                    <Grid container justifyContent={'center'}>
-                        <Grid item marginTop={2} xs={10}>
-                            <Controller
-                                name='birthdate'
-                                control={control}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        id='birthdate'
-                                        label='Year birth'
-                                        type='number'
-                                        variant='outlined'
-                                        error={Boolean(errors.birthdate)}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position='end'>
-                                                    <CalendarMonth />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                )}
-                            />
-                            {errors.birthdate && (
-                                <Grid container justifyContent={'center'}>
-                                    <Grid item xs={10}>
-                                        <span className='errorText'>
-                                            {errors.birthdate.message}
-                                        </span>
-                                    </Grid>
-                                </Grid>
-                            )}
+                    <Grid container marginTop={2} justifyContent={'center'}>
+                        <Grid item xs={10}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <Controller
+                                    name='birthdate'
+                                    control={control}
+                                    render={({ field }) => (
+                                        <DatePicker
+                                            {...field}
+                                            slotProps={{
+                                                textField: {
+                                                    required: true,
+                                                },
+                                            }}
+                                            format='YYYY-MM-DD'
+                                            minDate={dayjs('1920-01-01')}
+                                            maxDate={dayjs()}
+                                            defaultValue={dayjs('1985-09-18')}
+                                            label='Date of birth'
+                                            value={valueBirthdate}
+                                            onChange={(newValue) => {
+                                                setValueBirthdate(newValue);
+                                                field.onChange(newValue);
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </LocalizationProvider>
                         </Grid>
                     </Grid>
+
                     <Grid container marginTop={2} justifyContent={'center'}>
                         <Grid item xs={10}>
                             <Controller

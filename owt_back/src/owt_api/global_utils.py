@@ -15,10 +15,7 @@ def get_user_id_from_jwt(request):
         jwt_token = jwt_token.strip(' "')
         
         try:
-            print("Token before decoding:", jwt_token)
             payload = jwt.decode(jwt_token, key=decouple.config('SECRET_KEY'), algorithms=["HS256"])
-            print("Decoded payload:", payload)
-
             user_id = payload.get('user_id')
             return user_id
         except jwt.InvalidTokenError as e:

@@ -95,14 +95,11 @@ export const initData = async (dataInitial: IInitialData) => {
             console.log(response);
 
             if (response.status === 204) {
-                return Promise.resolve(); // Pas de contenu dans la réponse
+                return Promise.resolve();
             } else {
                 const text = await response.text();
 
                 if (text.trim() === '') {
-                    console.log(
-                        "La réponse est vide, mais le statut n'est pas 204."
-                    );
                     return Promise.resolve();
                 } else {
                     try {
