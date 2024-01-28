@@ -80,7 +80,24 @@ export const InitialData: React.FC = () => {
         initialWeight: 85,
     };
 
+    interface DayjsSchema<T> {
+        (message?: string): yup.MixedSchema<T | undefined>;
+    }
+
+    const dayjsSchema: DayjsSchema<Dayjs | null> = (
+        message = 'Invalid date format'
+    ) =>
+        yup.mixed<Dayjs>().test('dayjsValidator', message, (value) => {
+            if (value === null || !value) {
+                return false;
+            }
+            return dayjs.isDayjs(value);
+        });
+
     const validationSchema = yup.object({
+        birthdate: dayjsSchema('Invalid date format').required(
+            'Enter your date of birth'
+        ),
         isEuropeanUnitMeasure: yup.boolean().required('Select an unit measure'),
         gender: yup.mixed<Gender>().oneOf(Object.values(Gender)).required(),
         bodySize: yup

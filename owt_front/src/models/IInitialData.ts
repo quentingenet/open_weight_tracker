@@ -7,7 +7,7 @@ export enum Gender {
 }
 
 export interface IInitialData {
-    birthdate?: Dayjs | null;
+    birthdate: Dayjs;
     gender: Gender;
     isEuropeanUnitMeasure: boolean;
     bodySize: number;
