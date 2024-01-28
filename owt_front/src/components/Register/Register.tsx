@@ -24,7 +24,7 @@ import {
 import './Register.css';
 import { useUserContext } from '../../contexts/UserContext';
 import { register as registerService } from '../../services/UserService';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ModalOwt from '../Modal/ModalOwt';
 
 export const Register = () => {

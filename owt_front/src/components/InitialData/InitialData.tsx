@@ -160,7 +160,7 @@ export const InitialData: React.FC = () => {
                     className='register-form-input'
                     onSubmit={handleSubmit(submitInitialDataRegister)}
                 >
-                    <Grid container marginTop={2} justifyContent={'center'}>
+                    <Grid container marginTop={4} justifyContent={'center'}>
                         <Grid item xs={10}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <Controller
@@ -225,11 +225,6 @@ export const InitialData: React.FC = () => {
                                                     value={Gender.Female}
                                                     control={<Radio />}
                                                     label='Female'
-                                                />
-                                                <FormControlLabel
-                                                    value={Gender.Neutral}
-                                                    control={<Radio />}
-                                                    label='Neutral'
                                                 />
                                             </Grid>
                                         </RadioGroup>

@@ -46,15 +46,18 @@ export default function ModalOwt() {
                     >
                         <strong>
                             The Open Weight Tracker Application is a free and
-                            open-source application developed by Quentin Genet.
-                            The purpose of the Application is to provide a tool
-                            for tracking weight and body measurements.
+                            open-source application under copyleft, developed by
+                            Quentin Genet. The purpose of the Application is to
+                            provide a tool for tracking weight and body
+                            measurements.
                             <br /> The Application is available on the website
                             https://owt.quentingenet.fr
                         </strong>
                         <ul>
                             <br />
-                            <li>1. Acceptance of Terms of Use</li>
+                            <li>
+                                <strong>1. Acceptance of Terms of Use</strong>
+                            </li>
                             1.1. The use of the Open Weight Tracker application
                             (hereinafter referred to as the "Application") is
                             subject to the unconditional acceptance of these
@@ -64,7 +67,9 @@ export default function ModalOwt() {
                             carefully and agrees to comply with all the
                             provisions stated herein.
                             <br />
-                            <li>2. Personal Use</li>
+                            <li>
+                                <strong>2. Personal Use</strong>
+                            </li>
                             2.1. The Open Weight Tracker Application is designed
                             solely for personal purposes of information and
                             weight tracking. The user is informed that the
@@ -76,7 +81,9 @@ export default function ModalOwt() {
                             to their diet or lifestyle based on the information
                             provided by the Application.
                             <br />
-                            <li>3. User Responsibility</li>
+                            <li>
+                                <strong>3. User Responsibility</strong>
+                            </li>
                             3.1. The user is entirely responsible for their
                             decisions, dietary choices, and actions resulting
                             from the use of the Open Weight Tracker Application.
@@ -86,7 +93,9 @@ export default function ModalOwt() {
                             the actions taken by the user based on the
                             information provided by the Application.
                             <br />
-                            <li>4. No Warranty</li>
+                            <li>
+                                <strong>4. No Warranty</strong>
+                            </li>
                             4.1. The Open Weight Tracker Application is provided
                             "as is" without warranty of accuracy, reliability,
                             or fitness for a particular purpose.
@@ -97,8 +106,10 @@ export default function ModalOwt() {
                             errors, inaccuracies, or omissions in the
                             information provided.
                             <li>
-                                5. Non-Disclosure of User Data for Advertising
-                                or Marketing Purposes
+                                <strong>
+                                    5. Non-Disclosure of User Data for
+                                    Advertising or Marketing Purposes
+                                </strong>
                             </li>
                             5.1. The creators of the Open Weight Tracker
                             Application commit to not disclosing user data to
@@ -108,24 +119,37 @@ export default function ModalOwt() {
                             sold, rented, or shared with third parties for
                             commercial prospecting without the explicit consent
                             of the user.
-                            <br /> <li>6. Service Interruption</li>
+                            <br />{' '}
+                            <li>
+                                <strong>6. Service Interruption</strong>
+                            </li>
                             6.1. The user acknowledges that the Application may
                             experience temporary interruptions for technical,
                             maintenance, or other reasons, and the creators of
                             the Application are not responsible for disruptions
                             in use. <br />
-                            <li>7. Collection and Use of Data</li>
+                            <li>
+                                <strong>7. Collection and Use of Data</strong>
+                            </li>
                             7.1. The user consents to the collection, storage,
                             and use of their data in accordance with the privacy
                             policy of the Open Weight Tracker Application,
-                            accessible on the Application's website.
+                            accessible on the Application's website. No user
+                            data is transferred to a third party or for
+                            marketing or analysis purposes.
                             <br />
-                            <li>8. Modification of Terms of Use</li>
+                            <li>
+                                <strong>8. Modification of Terms of Use</strong>
+                            </li>
                             8.1. The creators of the Open Weight Tracker
                             Application reserve the right to modify the Terms at
                             any time. It is the user's responsibility to
                             regularly check for updates.
-                            <li>9. Applicable Law and Jurisdiction</li>
+                            <li>
+                                <strong>
+                                    9. Applicable Law and Jurisdiction
+                                </strong>
+                            </li>
                             9.1. These Terms are governed by French law. Any
                             dispute arising from the use of the Application
                             falls under the exclusive jurisdiction of French

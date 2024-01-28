@@ -14,7 +14,6 @@ class InitialData(models.Model):
     class Gender(models.TextChoices):
         MALE = 'M'
         FEMALE = 'F'
-        NEUTRAL = 'N'
 
     body_size = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(250)])
     birthdate = models.DateField()

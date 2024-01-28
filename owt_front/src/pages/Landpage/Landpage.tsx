@@ -29,9 +29,6 @@ export default function Landpage() {
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                     <div className='descriptionLandpage'>
                         <p>
-                            Track your weight... <br />
-                            It's free and open source
-                            <br />
                             <span className='firstTime'>
                                 Is it your first time here ?
                             </span>

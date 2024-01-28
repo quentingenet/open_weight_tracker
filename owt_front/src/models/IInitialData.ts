@@ -3,7 +3,6 @@ import { Dayjs } from 'dayjs';
 export enum Gender {
     Male = 'M',
     Female = 'F',
-    Neutral = 'N',
 }
 
 export interface IInitialData {
