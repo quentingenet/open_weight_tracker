@@ -11,13 +11,13 @@ class AppUser(AbstractUser):
 
 
 class InitialData(models.Model):
-    class Gender(models.TextChoices):
+    class Sex(models.TextChoices):
         MALE = 'M'
         FEMALE = 'F'
 
-    body_size = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(250)])
+    height = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(250)])
     birthdate = models.DateField()
-    gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.MALE)
+    sex = models.CharField(max_length=1, choices=Sex.choices, default=Sex.MALE)
     initial_weight = models.DecimalField(max_digits=4, decimal_places=1)
     goal_weight = models.DecimalField(max_digits=4, decimal_places=1)
     is_european_unit_measure = models.BooleanField(default=True)

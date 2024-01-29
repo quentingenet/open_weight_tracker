@@ -22,7 +22,7 @@ import './InitialData.css';
 import { useUserContext } from '../../contexts/UserContext';
 import { initData as initDataService } from '../../services/UserService';
 import { useNavigate } from 'react-router-dom';
-import { Gender, IInitialData } from '../../models/IInitialData';
+import { Sex, IInitialData } from '../../models/IInitialData';
 import dayjs, { Dayjs } from 'dayjs';
 import React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -31,11 +31,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 export const InitialData: React.FC = () => {
     const userContext = useUserContext();
     const navigate = useNavigate();
-    const [valueGender, setValueGender] = useState('M');
+    const [valueSex, setValueSex] = useState('M');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValueGender((event.target as HTMLInputElement).value);
+    const handleChangeSex = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValueSex((event.target as HTMLInputElement).value);
     };
 
     const initialWeightValues = [
@@ -73,9 +73,9 @@ export const InitialData: React.FC = () => {
 
     const initialValues: IInitialData = {
         birthdate: dayjs(), //date now
-        gender: Gender.Male,
+        sex: Sex.Male,
         isEuropeanUnitMeasure: false,
-        bodySize: 175,
+        height: 175,
         goalWeight: 80,
         initialWeight: 85,
     };
@@ -99,8 +99,8 @@ export const InitialData: React.FC = () => {
             'Enter your date of birth'
         ),
         isEuropeanUnitMeasure: yup.boolean().required('Select an unit measure'),
-        gender: yup.mixed<Gender>().oneOf(Object.values(Gender)).required(),
-        bodySize: yup
+        sex: yup.mixed<Sex>().oneOf(Object.values(Sex)).required(),
+        height: yup
             .number()
             .positive()
             .integer()
@@ -123,9 +123,9 @@ export const InitialData: React.FC = () => {
 
     const dataInitial: IInitialData = {
         birthdate: watch('birthdate'),
-        gender: watch('gender'),
+        sex: watch('sex'),
         isEuropeanUnitMeasure: watch('isEuropeanUnitMeasure'),
-        bodySize: watch('bodySize'),
+        height: watch('height'),
         goalWeight: watch('goalWeight'),
         initialWeight: 90,
     };
@@ -194,7 +194,7 @@ export const InitialData: React.FC = () => {
                     <Grid container marginTop={2} justifyContent={'center'}>
                         <Grid item xs={10}>
                             <Controller
-                                name='gender'
+                                name='sex'
                                 control={control}
                                 render={({ field }) => (
                                     <FormControl>
@@ -208,8 +208,8 @@ export const InitialData: React.FC = () => {
                                             aria-labelledby='demo-radio-buttons-group-label'
                                             name='radio-buttons-group'
                                             sx={{ color: 'black' }}
-                                            value={valueGender}
-                                            onChange={handleChangeGender}
+                                            value={valueSex}
+                                            onChange={handleChangeSex}
                                         >
                                             <Grid
                                                 container
@@ -217,12 +217,12 @@ export const InitialData: React.FC = () => {
                                                 flexDirection={'row'}
                                             >
                                                 <FormControlLabel
-                                                    value={Gender.Male}
+                                                    value={Sex.Male}
                                                     control={<Radio />}
                                                     label='Male'
                                                 />
                                                 <FormControlLabel
-                                                    value={Gender.Female}
+                                                    value={Sex.Female}
                                                     control={<Radio />}
                                                     label='Female'
                                                 />
@@ -271,16 +271,16 @@ export const InitialData: React.FC = () => {
                     <Grid container justifyContent={'center'}>
                         <Grid item marginTop={2} xs={10}>
                             <Controller
-                                name='bodySize'
+                                name='height'
                                 control={control}
                                 render={({ field }) => (
                                     <TextField
                                         {...field}
-                                        id='bodySize'
-                                        label='Body size (cm or inch)'
+                                        id='height'
+                                        label='Height (cm or inch)'
                                         type='number'
                                         variant='outlined'
-                                        error={Boolean(errors.bodySize)}
+                                        error={Boolean(errors.height)}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position='end'>
@@ -295,11 +295,11 @@ export const InitialData: React.FC = () => {
                                     />
                                 )}
                             />
-                            {errors.bodySize && (
+                            {errors.height && (
                                 <Grid container justifyContent={'center'}>
                                     <Grid item xs={10}>
                                         <span className='errorText'>
-                                            {errors.bodySize.message}
+                                            {errors.height.message}
                                         </span>
                                     </Grid>
                                 </Grid>

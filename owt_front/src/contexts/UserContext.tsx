@@ -10,6 +10,10 @@ interface IUserContext {
     setIsUserLoggedIn: (isUserLoggedIn: boolean) => void;
     isEuropeanUnitMeasure: boolean;
     setIsEuropeanUnitMeasure: (isEuropeanUnitMeasure: boolean) => void;
+    height: number;
+    setHeight: (height: number) => void;
+    age: number;
+    setAge: (age: number) => void;
 }
 
 export const UserContext = createContext<IUserContext>({
@@ -21,6 +25,10 @@ export const UserContext = createContext<IUserContext>({
     setIsUserLoggedIn: () => {},
     isEuropeanUnitMeasure: true,
     setIsEuropeanUnitMeasure: () => {},
+    height: 150,
+    setHeight: () => {},
+    age: 18,
+    setAge: () => {},
 });
 
 export function useUserContext() {
@@ -37,6 +45,8 @@ export function UserContextProvider({
     const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
     const [isEuropeanUnitMeasure, setIsEuropeanUnitMeasure] =
         useState<boolean>(true);
+    const [height, setHeight] = useState<number>(150);
+    const [age, setAge] = useState<number>(18);
 
     const value: IUserContext = {
         jwt: jwt,
@@ -47,6 +57,10 @@ export function UserContextProvider({
         setIsUserLoggedIn: setIsUserLoggedIn,
         isEuropeanUnitMeasure: isEuropeanUnitMeasure,
         setIsEuropeanUnitMeasure: setIsEuropeanUnitMeasure,
+        height: height,
+        setHeight: setHeight,
+        age: age,
+        setAge: setAge,
     };
 
     return (

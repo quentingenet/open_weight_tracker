@@ -40,13 +40,13 @@ export default function Landpage() {
                         justifyContent={'center'}
                         alignItems='center'
                     >
-                        <Typography variant='h5'>Login</Typography>
+                        <Typography variant='h6'>Login</Typography>
                         <Switch
                             size='medium'
                             inputProps={{ 'aria-label': 'ant design' }}
                             onChange={(e) => setIsRegister(e.target.checked)}
                         />
-                        <Typography variant='h5'>Register</Typography>
+                        <Typography variant='h6'>Register</Typography>
                     </Stack>
                 </Grid>
                 <Grid container justifyContent={'center'}>

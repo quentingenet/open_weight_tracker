@@ -74,9 +74,9 @@ export const initData = async (dataInitial: IInitialData) => {
     try {
         const requestDataInitial = {
             birthdate: dataInitial.birthdate,
-            gender: dataInitial.gender,
+            sex: dataInitial.sex,
             is_european_unit_measure: dataInitial.isEuropeanUnitMeasure,
-            body_size: dataInitial.bodySize,
+            body_size: dataInitial.height,
             goal_weight: dataInitial.goalWeight,
             initial_weight: dataInitial.initialWeight,
         };

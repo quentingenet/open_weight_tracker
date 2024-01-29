@@ -10,7 +10,7 @@ class PersonAdmin(admin.ModelAdmin):
 
 class InitialDataAdmin(admin.ModelAdmin):
     list_display = (
-    'body_size', 'birthdate', 'initial_weight', 'goal_weight', 'is_european_unit_measure',)
+    'height', 'birthdate', 'initial_weight', 'goal_weight', 'is_european_unit_measure',)
 
 class WeightRecordAdmin(admin.ModelAdmin):
     list_display = (

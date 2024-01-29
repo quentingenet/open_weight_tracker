@@ -43,8 +43,8 @@ def register_step_two(user_id, data):
 
     try:
         initial_data = InitialData.objects.create(
-            body_size = data['body_size'], 
-            gender = data['gender'], 
+            height = data['height'], 
+            sex = data['sex'], 
             birthdate = parser.parse(data['birthdate']).date(),  
             initial_weight = data['initial_weight'], 
             goal_weight = data['goal_weight'], 

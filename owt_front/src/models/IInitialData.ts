@@ -1,15 +1,15 @@
 import { Dayjs } from 'dayjs';
 
-export enum Gender {
+export enum Sex {
     Male = 'M',
     Female = 'F',
 }
 
 export interface IInitialData {
     birthdate: Dayjs;
-    gender: Gender;
+    sex: Sex;
     isEuropeanUnitMeasure: boolean;
-    bodySize: number;
+    height: number;
     goalWeight: number;
     initialWeight: number;
 }

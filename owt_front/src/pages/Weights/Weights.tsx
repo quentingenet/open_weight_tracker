@@ -22,7 +22,7 @@ import { useState } from 'react';
 
 export default function Weights() {
     const userContext = useUserContext();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     function createData(
         idWeigth: number,
