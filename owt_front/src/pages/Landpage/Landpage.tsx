@@ -5,10 +5,8 @@ import scale from '../../assets/scale-icon.png';
 //import css
 import './Landpage.css';
 import { Link } from 'react-router-dom';
-import { useUserContext } from '../../contexts/UserContext';
 import RegisterSteps from '../RegisterSteps/RegisterSteps';
 export default function Landpage() {
-    const userContext = useUserContext();
     const [isRegistering, setIsRegister] = useState<boolean>(false);
 
     return (

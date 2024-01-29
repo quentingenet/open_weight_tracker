@@ -112,7 +112,7 @@ export const Register = () => {
                 setIsLoading(true);
 
                 // Using await to wait for the registerService promise to resolve
-                const response = await registerService(dataRegister);
+                await registerService(dataRegister);
 
                 console.log(
                     '201 connection first ?',
@@ -292,7 +292,7 @@ export const Register = () => {
                                     <TextField
                                         {...field}
                                         id='passwordBis'
-                                        label='Password confirmation'
+                                        label='Confirm password'
                                         type={
                                             showPassword ? 'text' : 'password'
                                         }

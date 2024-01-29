@@ -4,24 +4,30 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    overflowY: 'scroll',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    maxHeight: '50%',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
 export default function ModalOwt() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        overflowY: 'scroll',
+        transform: 'translate(-50%, -50%)',
+        width: {
+            xs: '50%',
+            sm: '60%',
+            md: '50%',
+            lg: '40%',
+            xl: '30%',
+        },
+        maxHeight: '50%',
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
 
     return (
         <>
@@ -53,7 +59,11 @@ export default function ModalOwt() {
                             <br /> The Application is available on the website
                             https://owt.quentingenet.fr
                         </strong>
-                        <ul>
+                        <ul
+                            style={{
+                                listStyleType: 'none',
+                            }}
+                        >
                             <br />
                             <li>
                                 <strong>1. Acceptance of Terms of Use</strong>

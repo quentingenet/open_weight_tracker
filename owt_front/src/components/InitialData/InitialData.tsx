@@ -200,7 +200,7 @@ export const InitialData: React.FC = () => {
                                     <FormControl>
                                         <Grid justifyContent={'center'}>
                                             <FormLabel id='demo-radio-buttons-group-label'>
-                                                Gender
+                                                Select your sex
                                             </FormLabel>
                                         </Grid>
                                         <RadioGroup
