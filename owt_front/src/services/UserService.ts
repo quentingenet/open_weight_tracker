@@ -76,7 +76,7 @@ export const initData = async (dataInitial: IInitialData) => {
             birthdate: dataInitial.birthdate,
             sex: dataInitial.sex,
             is_european_unit_measure: dataInitial.isEuropeanUnitMeasure,
-            body_size: dataInitial.height,
+            height: dataInitial.height,
             goal_weight: dataInitial.goalWeight,
             initial_weight: dataInitial.initialWeight,
         };

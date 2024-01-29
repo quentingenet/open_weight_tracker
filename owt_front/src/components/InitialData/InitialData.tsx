@@ -106,7 +106,7 @@ export const InitialData: React.FC = () => {
             .integer()
             .min(100)
             .max(250)
-            .required('Enter your body size'),
+            .required('Enter your height'),
         initialWeight: yup.number().required('Enter your initial weight'),
         goalWeight: yup.number().required('Enter a goal weight'),
     });
@@ -125,7 +125,7 @@ export const InitialData: React.FC = () => {
         birthdate: watch('birthdate'),
         sex: watch('sex'),
         isEuropeanUnitMeasure: watch('isEuropeanUnitMeasure'),
-        height: watch('height'),
+        height: Number(watch('height')),
         goalWeight: watch('goalWeight'),
         initialWeight: 90,
     };
@@ -174,6 +174,8 @@ export const InitialData: React.FC = () => {
                                                     required: true,
                                                 },
                                             }}
+                                            views={['year', 'month', 'day']}
+                                            openTo='year'
                                             format='YYYY-MM-DD'
                                             minDate={dayjs('1920-01-01')}
                                             maxDate={dayjs()}
