@@ -1,5 +1,6 @@
 import {
     Grid,
+    IconButton,
     Paper,
     Table,
     TableBody,
@@ -7,17 +8,21 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Tooltip,
     Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 import { formatDate } from '../../utils/GlobalUtils';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useUserContext } from '../../contexts/UserContext';
-import AddIcon from '@mui/icons-material/Add';
+import { AddCircleOutlineOutlined } from '@mui/icons-material';
+import AddWeightModal from '../../components/Weights/AddWeightModal';
+import { useState } from 'react';
+
 export default function Weights() {
     const userContext = useUserContext();
+    const [open, setOpen] = useState(false);
 
     function createData(
         idWeigth: number,
@@ -54,6 +59,7 @@ export default function Weights() {
                 justifyContent={'center'}
                 flexDirection={'column'}
             >
+                {open && <AddWeightModal open={open} setOpen={setOpen} />}
                 <Typography variant='h2'>My weights</Typography>
             </Grid>
             <Grid container justifyContent={'center'}>
@@ -65,26 +71,29 @@ export default function Weights() {
                     justifyContent={'center'}
                     flexDirection={'column'}
                 >
-                    <TableContainer component={Paper}>
+                    <TableContainer
+                        component={Paper}
+                        sx={{ overflowX: 'hidden' }}
+                    >
                         <Table aria-label='simple table'>
                             <TableHead>
                                 <TableRow>
                                     <TableCell align='center' width='1%'>
-                                        <AddIcon sx={{ cursor: 'pointer' }} />
+                                        <Tooltip title='Add new weight'>
+                                            <IconButton>
+                                                <AddCircleOutlineOutlined
+                                                    onClick={() => {
+                                                        setOpen(true);
+                                                    }}
+                                                    sx={{ cursor: 'pointer' }}
+                                                />
+                                            </IconButton>
+                                        </Tooltip>
                                     </TableCell>
                                     <TableCell
                                         align='center'
                                         width='1%'
                                     ></TableCell>
-                                    <TableCell
-                                        align='center'
-                                        width='1%'
-                                    ></TableCell>
-                                    <TableCell align='center' width='3%'>
-                                        <span style={{ fontWeight: 'bold' }}>
-                                            Id
-                                        </span>
-                                    </TableCell>
                                     <TableCell align='center' width='3%'>
                                         <span style={{ fontWeight: 'bold' }}>
                                             Date
@@ -111,26 +120,26 @@ export default function Weights() {
                                         }}
                                     >
                                         <TableCell align='center'>
-                                            <RemoveRedEyeIcon
-                                                sx={{ cursor: 'pointer' }}
-                                            />
-                                        </TableCell>
-                                        <TableCell
-                                            component='th'
-                                            align='center'
-                                            scope='row'
-                                        >
-                                            <ModeEditIcon
-                                                sx={{ cursor: 'pointer' }}
-                                            />
+                                            <Tooltip title='Check weight'>
+                                                <IconButton>
+                                                    <RemoveRedEyeIcon
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    />
+                                                </IconButton>
+                                            </Tooltip>
                                         </TableCell>
                                         <TableCell align='center'>
-                                            <DeleteIcon
-                                                sx={{ cursor: 'pointer' }}
-                                            />
-                                        </TableCell>
-                                        <TableCell align='center'>
-                                            {row.idWeigth}
+                                            <Tooltip title='Delete'>
+                                                <IconButton>
+                                                    <DeleteIcon
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    />
+                                                </IconButton>
+                                            </Tooltip>
                                         </TableCell>
                                         <TableCell align='center'>
                                             {row.dateWeight}
