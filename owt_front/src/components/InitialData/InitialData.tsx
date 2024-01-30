@@ -138,6 +138,7 @@ export const InitialData: React.FC = () => {
                 initDataService(dataInitial).then((response) => {
                     if (response) {
                         setIsLoading(false);
+                        userContext.setHeight(Number(watch('height')));
                         userContext.setIsFirstConnection(false);
                         userContext.setIsUserLoggedIn(true);
                         console.log(
@@ -279,7 +280,11 @@ export const InitialData: React.FC = () => {
                                     <TextField
                                         {...field}
                                         id='height'
-                                        label='Height (cm or inch)'
+                                        label={
+                                            watch('isEuropeanUnitMeasure')
+                                                ? 'Height in cm'
+                                                : 'Height in inches'
+                                        }
                                         type='number'
                                         variant='outlined'
                                         error={Boolean(errors.height)}
@@ -290,7 +295,7 @@ export const InitialData: React.FC = () => {
                                                         'isEuropeanUnitMeasure'
                                                     )
                                                         ? 'cm'
-                                                        : 'inch'}
+                                                        : 'inches'}
                                                 </InputAdornment>
                                             ),
                                         }}
@@ -340,7 +345,7 @@ export const InitialData: React.FC = () => {
                                             getAriaValueText={
                                                 valueinitialWeightValuesText
                                             }
-                                            step={1}
+                                            step={0.5}
                                             value={watch('initialWeight')}
                                             marks={initialWeightValues}
                                             valueLabelDisplay='on'
@@ -383,7 +388,7 @@ export const InitialData: React.FC = () => {
                                                 min={50}
                                                 max={200}
                                                 getAriaValueText={valuetextEU}
-                                                step={1}
+                                                step={0.5}
                                                 value={watch('goalWeight')}
                                                 marks={marksEU}
                                                 valueLabelDisplay='on'

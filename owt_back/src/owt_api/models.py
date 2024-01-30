@@ -15,7 +15,7 @@ class InitialData(models.Model):
         MALE = 'M'
         FEMALE = 'F'
 
-    height = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(250)])
+    height = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(100), MaxValueValidator(250)])
     birthdate = models.DateField()
     sex = models.CharField(max_length=1, choices=Sex.choices, default=Sex.MALE)
     initial_weight = models.DecimalField(max_digits=4, decimal_places=1)
