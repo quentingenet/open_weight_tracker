@@ -17,7 +17,7 @@ import { calculateBmi } from '../../utils/WeightUtils';
 import { Typography } from '@mui/material';
 
 export default function AddWeightModal(props: any) {
-    const { open, setOpen } = props;
+    const { open, setOpen, newWeightAdded, setNewWeightAdded } = props;
 
     const userContext = useUserContext();
     const handleClose = () => {
@@ -72,6 +72,7 @@ export default function AddWeightModal(props: any) {
             try {
                 console.log('SUBMIT new weight', dataNewWeight);
                 addNewWeightService(dataNewWeight);
+                setNewWeightAdded(true);
                 handleClose();
             } catch (error) {
                 console.log('Incomplete form.');

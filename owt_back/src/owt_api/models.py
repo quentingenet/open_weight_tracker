@@ -21,8 +21,7 @@ class InitialData(models.Model):
     initial_weight = models.DecimalField(max_digits=4, decimal_places=1)
     goal_weight = models.DecimalField(max_digits=4, decimal_places=1)
     is_european_unit_measure = models.BooleanField(default=True)
-    #person_initial_data = models.OneToOneField('Person', on_delete=models.PROTECT, related_name='person_initial_data')
-    
+        
     def __str__(self):
           return f'id {self.id}, birthdate {self.birthdate}'
 

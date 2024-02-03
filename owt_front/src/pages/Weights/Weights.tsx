@@ -12,44 +12,52 @@ import {
     Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-import { formatDate } from '../../utils/GlobalUtils';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useUserContext } from '../../contexts/UserContext';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import AddWeightModal from '../../components/Weights/AddWeightModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {
+    deleteWeight as deleteWeightService,
+    getWeights as getWeightsService,
+} from '../../services/WeightService';
+import { IWeight } from '../../models/IWeight';
+import dayjs from 'dayjs';
 
 export default function Weights() {
     const userContext = useUserContext();
     const [open, setOpen] = useState<boolean>(false);
+    const [newWeightAdded, setNewWeightAdded] = useState<boolean>(false);
+    const [weightDeleted, setWeightDeleted] = useState<boolean>(false);
+    const [weights, setWeights] = useState<IWeight[]>([]);
 
-    function createData(
-        idWeigth: number,
-        dateWeight: string,
-        weightValue: number,
-        muscularMass: number,
-        fatMass: number,
-        bodyWater: number,
-        boneMass: number
-    ) {
-        return {
-            idWeigth,
-            dateWeight,
-            weightValue,
-            muscularMass,
-            fatMass,
-            bodyWater,
-            boneMass,
-        };
-    }
+    const deleteWeight = async (weightId: number) => {
+        try {
+            await deleteWeightService(weightId);
+            setWeightDeleted(true);
+        } catch (error) {
+            console.error('Error deleting weight:', error);
+        }
+    };
 
-    const rows = [
-        createData(1, formatDate(new Date()), 95.8, 1, 6.0, 24, 5),
-        createData(1, formatDate(new Date()), 99, 1, 6.0, 24, 4.0),
-        createData(1, formatDate(new Date()), 84, 1, 6.0, 24, 4.0),
-        createData(1, formatDate(new Date()), 82, 1, 6.0, 24, 4.0),
-    ];
+    useEffect(() => {
+        getWeightsService().then((response) => {
+            setWeights(
+                response.map((w: any) => ({
+                    id: w.id,
+                    date: w.weight_record_date,
+                    weightValue: w.weight_value,
+                    muscularMass: w.muscular_mass,
+                    fatMass: w.fat_mass,
+                    boneMass: w.bone_mass,
+                    waterMass: w.body_water,
+                    bmi: w.bmi,
+                }))
+            );
+            setNewWeightAdded(false);
+            setWeightDeleted(false);
+        });
+    }, [newWeightAdded, weightDeleted]);
 
     return (
         <>
@@ -59,7 +67,14 @@ export default function Weights() {
                 justifyContent={'center'}
                 flexDirection={'column'}
             >
-                {open && <AddWeightModal open={open} setOpen={setOpen} />}
+                {open && (
+                    <AddWeightModal
+                        open={open}
+                        setOpen={setOpen}
+                        newWeightAdded={newWeightAdded}
+                        setNewWeightAdded={setNewWeightAdded}
+                    />
+                )}
                 <Typography variant='h2'>My weights</Typography>
             </Grid>
             <Grid container justifyContent={'center'}>
@@ -109,9 +124,9 @@ export default function Weights() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
+                                {weights.map((weight) => (
                                     <TableRow
-                                        key={row.idWeigth}
+                                        key={weight.id}
                                         sx={{
                                             '&:last-child td, &:last-child th':
                                                 {
@@ -134,6 +149,13 @@ export default function Weights() {
                                             <Tooltip title='Delete'>
                                                 <IconButton>
                                                     <DeleteIcon
+                                                        onClick={() => {
+                                                            deleteWeight(
+                                                                Number(
+                                                                    weight.id
+                                                                )
+                                                            );
+                                                        }}
                                                         sx={{
                                                             cursor: 'pointer',
                                                         }}
@@ -142,10 +164,13 @@ export default function Weights() {
                                             </Tooltip>
                                         </TableCell>
                                         <TableCell align='center'>
-                                            {row.dateWeight}
+                                            {weight.date &&
+                                                dayjs(weight.date).format(
+                                                    'DD-MM-YYYY hh:mm A'
+                                                )}
                                         </TableCell>
                                         <TableCell align='center'>
-                                            {row.weightValue}
+                                            {weight.weightValue}
                                         </TableCell>
                                     </TableRow>
                                 ))}

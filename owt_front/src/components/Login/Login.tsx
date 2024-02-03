@@ -13,7 +13,7 @@ import { useState } from 'react';
 import './Login.css';
 import { Email, Person2, Visibility, VisibilityOff } from '@mui/icons-material';
 import { ILoginForm } from '../../models/ILoginForm';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, set, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { login as loginService } from '../../services/UserService';
@@ -93,6 +93,9 @@ export default function Login() {
                     }
                 });
             } catch (error) {
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 150);
                 console.log('Incomplete form.');
             }
         }

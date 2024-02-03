@@ -15,7 +15,7 @@ from .serializers import AppUserSerializer, PersonSerializer, InitialDataSeriali
 class AppUserModelViewSet(ModelViewSet):
     serializer_class = AppUserSerializer
 
-    def get_queryset(self):
+    def get_queryset(self, request):
         return AppUser.objects.all()
 
     # New user registration
@@ -57,12 +57,17 @@ class InitialDataModelViewSet(ModelViewSet):
 class WeightRecordModelViewSet(ModelViewSet):
     serializer_class = WeightRecordSerializer
     permission_classes = [IsAuthenticated]
+    queryset = WeightRecord.objects.all()
 
-    def get_queryset(self, request):
+    @action(detail=False, methods=['get'])
+    def get_weights(self, request):
         user_id = get_user_id_from_jwt(request)
-        return WeightRecord.objects.all(user_id=user_id)
-
+        person_connected = get_object_or_404(Person, user__id=user_id)
+        weights = WeightRecord.objects.filter(person=person_connected)
+        serializer = WeightRecordSerializer(weights, many=True)
+        return Response(serializer.data)
     @action(detail=False, methods=['post'])
+    
     def create_weight(self, request):
         print("REQUEST DATA =", request.data)
         user_id = get_user_id_from_jwt(request)
@@ -89,3 +94,20 @@ class WeightRecordModelViewSet(ModelViewSet):
             return Response({"error": "Error, weight could not be created due to integrity error"}, status=status.HTTP_400_BAD_REQUEST)
 
     
+    @action(detail=False, methods=['delete'])
+    def delete_weight(self, request):
+        print("REQUEST DATA =", request.data)
+        weight_id = request.data.get('weight_id')
+        print("WEIGHT ID =", weight_id)
+
+        user_id = get_user_id_from_jwt(request)
+        user_connected = get_object_or_404(AppUser, id=user_id)
+        person_connected = get_object_or_404(Person, user=user_connected)
+
+        weight = get_object_or_404(WeightRecord, id=weight_id, person=person_connected)
+
+        if weight.person.user != user_connected:
+            return Response({"error": "You are not authorized to delete this weight record"}, status=status.HTTP_403_FORBIDDEN)
+
+        weight.delete()
+        return Response({"message": "Weight record deleted successfully"}, status=status.HTTP_200_OK)
