@@ -25,11 +25,11 @@ export default function AddWeightModal(props: any) {
     };
 
     const validationSchema = yup.object({
-        weightValue: yup.number().required(),
-        muscularMass: yup.number().required(),
-        bodyFatMass: yup.number().required(),
-        boneMass: yup.number().required(),
-        waterMass: yup.number().required(),
+        weightValue: yup.number().min(20).max(250).required(),
+        muscularMass: yup.number().min(10).max(100).required(),
+        bodyFatMass: yup.number().min(5).max(70).required(),
+        boneMass: yup.number().min(1).max(10).required(),
+        waterMass: yup.number().min(25).max(70).required(),
         bmi: yup.number().required(),
     });
 
@@ -55,13 +55,13 @@ export default function AddWeightModal(props: any) {
 
     const dataNewWeight: IWeight = {
         date: newWeightInitialValues.date,
-        weightValue: watch('weightValue'),
-        muscularMass: watch('muscularMass'),
-        bodyFatMass: watch('bodyFatMass'),
-        boneMass: watch('boneMass'),
-        waterMass: watch('waterMass'),
+        weightValue: Number(watch('weightValue')),
+        muscularMass: Number(watch('muscularMass')),
+        bodyFatMass: Number(watch('bodyFatMass')),
+        boneMass: Number(watch('boneMass')),
+        waterMass: Number(watch('waterMass')),
         bmi: calculateBmi(
-            watch('weightValue'),
+            Number(watch('weightValue')),
             userContext.height,
             userContext.isEuropeanUnitMeasure
         ),
@@ -87,7 +87,7 @@ export default function AddWeightModal(props: any) {
                     <DialogTitle sx={{ textAlign: 'center' }}>
                         {newWeightInitialValues.date
                             ? newWeightInitialValues.date?.format(
-                                  'DD/MM/YYYY hh:mm'
+                                  'DD/MM/YYYY hh:mm A'
                               )
                             : 'New weight'}
                     </DialogTitle>
@@ -114,7 +114,12 @@ export default function AddWeightModal(props: any) {
                                             type='number'
                                             variant='outlined'
                                             error={Boolean(errors.weightValue)}
-                                            inputProps={{ step: 0.1 }}
+                                            inputProps={{
+                                                step: 0.1,
+                                                min: 20,
+                                                max: 250,
+                                            }}
+                                            style={{ width: '100%' }}
                                         />
                                     )}
                                 />
@@ -148,7 +153,12 @@ export default function AddWeightModal(props: any) {
                                             type='number'
                                             variant='outlined'
                                             error={Boolean(errors.muscularMass)}
-                                            inputProps={{ step: 0.1 }}
+                                            inputProps={{
+                                                step: 0.1,
+                                                min: 15,
+                                                max: 100,
+                                            }}
+                                            style={{ width: '100%' }}
                                         />
                                     )}
                                 />
@@ -182,7 +192,12 @@ export default function AddWeightModal(props: any) {
                                             type='number'
                                             variant='outlined'
                                             error={Boolean(errors.bodyFatMass)}
-                                            inputProps={{ step: 0.1 }}
+                                            inputProps={{
+                                                step: 0.1,
+                                                min: 5,
+                                                max: 70,
+                                            }}
+                                            style={{ width: '100%' }}
                                         />
                                     )}
                                 />
@@ -216,7 +231,12 @@ export default function AddWeightModal(props: any) {
                                             type='number'
                                             variant='outlined'
                                             error={Boolean(errors.boneMass)}
-                                            inputProps={{ step: 0.1 }}
+                                            inputProps={{
+                                                step: 0.1,
+                                                min: 1,
+                                                max: 10,
+                                            }}
+                                            style={{ width: '100%' }}
                                         />
                                     )}
                                 />
@@ -250,7 +270,12 @@ export default function AddWeightModal(props: any) {
                                             type='number'
                                             variant='outlined'
                                             error={Boolean(errors.waterMass)}
-                                            inputProps={{ step: 0.1 }}
+                                            inputProps={{
+                                                step: 0.1,
+                                                min: 25,
+                                                max: 70,
+                                            }}
+                                            style={{ width: '100%' }}
                                         />
                                     )}
                                 />

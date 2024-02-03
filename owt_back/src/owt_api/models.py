@@ -36,11 +36,11 @@ class Person(models.Model):
 
 class WeightRecord(models.Model):
     weight_record_date = models.DateTimeField(auto_now_add=True)
-    weight_value = models.DecimalField(max_digits=4, decimal_places=1)
-    body_water = models.DecimalField(max_digits=4, decimal_places=1)
-    fat_mass = models.DecimalField(max_digits=4, decimal_places=1)
-    bone_mass = models.DecimalField(max_digits=4, decimal_places=1)
-    muscular_mass = models.DecimalField(max_digits=4, decimal_places=1)
+    weight_value = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(20), MaxValueValidator(250)])
+    body_water = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(25), MaxValueValidator(70)])
+    fat_mass = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(5), MaxValueValidator(70)])
+    bone_mass = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    muscular_mass = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(10), MaxValueValidator(100)])
     bmi = models.DecimalField(max_digits=3, decimal_places=1)
     person = models.ForeignKey(Person, on_delete=models.PROTECT, related_name='weight_records')
     
