@@ -75,16 +75,19 @@ export default function Login() {
                 setIsLoading(true);
                 loginService(dataLogin).then((response) => {
                     if (response) {
-                        userContext.setIsUserLoggedIn(true);
                         const localStorageJwt =
                             localStorage.getItem('jwt') || '';
                         if (
                             localStorageJwt !== null &&
-                            localStorageJwt !== '' &&
-                            localStorageJwt?.startsWith('Bearer')
+                            localStorageJwt !== ''
                         ) {
-                            userContext.setJwt(localStorageJwt);
+                            localStorageJwt?.startsWith('Bearer')
+                                ? userContext.setJwt(localStorageJwt)
+                                : userContext.setJwt(
+                                      `Bearer ${localStorageJwt}`
+                                  );
                             setIsLoading(false);
+                            userContext.setIsUserLoggedIn(true);
                             navigate('/dashboard');
                         }
                     }

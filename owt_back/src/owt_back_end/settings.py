@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'rest_framework',
     'rest_framework_simplejwt',
     'owt_api',
@@ -75,6 +76,7 @@ CORS_EXPOSE_HEADERS = [
     'Authorization',  
     'Content-Type'
 ]
+
 CORS_ALLOWED_ORIGINS = [
    'http://owt-api.quentingenet.fr',
    'https://owt-api.quentingenet.fr',

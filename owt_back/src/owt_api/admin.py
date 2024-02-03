@@ -3,14 +3,13 @@ from .models import AppUser, WeightRecord, InitialData, Person
 
 
 class AppUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'date_joined', 'is_active', 'is_staff', 'is_superuser', 'is_accepted_terms')
+    list_display = ('id','username', 'email', 'date_joined', 'is_active', 'is_staff', 'is_superuser', 'is_accepted_terms')
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('initial_data', 'user')
+    list_display = ('id', 'user',)
 
 class InitialDataAdmin(admin.ModelAdmin):
-    list_display = (
-    'height', 'birthdate', 'initial_weight', 'goal_weight', 'is_european_unit_measure',)
+    list_display = ('person_initial_data','height', 'birthdate', 'initial_weight', 'goal_weight', 'is_european_unit_measure')
 
 class WeightRecordAdmin(admin.ModelAdmin):
     list_display = (

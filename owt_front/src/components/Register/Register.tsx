@@ -104,39 +104,39 @@ export const Register = () => {
     };
 
     const submitRegister = async () => {
-        console.log(dataRegister);
-
-        // Assuming isValid is a boolean variable determining the form's validity
         if (isValid) {
             try {
                 setIsLoading(true);
 
-                // Using await to wait for the registerService promise to resolve
-                await registerService(dataRegister);
+                const response = await registerService(dataRegister);
 
                 console.log(
-                    '201 connection first ?',
-                    userContext.isFirstConnection
+                    'Response from registerService in submitRegister:',
+                    response
                 );
 
-                const localStorageJwt = localStorage.getItem('jwt') || '';
+                if (response) {
+                    const localStorageJwt = localStorage.getItem('jwt') || '';
 
-                // Check if the JWT in local storage is valid and starts with 'Bearer'
-                if (localStorageJwt && localStorageJwt.startsWith('Bearer')) {
-                    userContext.setJwt(localStorageJwt);
+                    if (localStorageJwt !== null && localStorageJwt !== '') {
+                        userContext.setJwt(
+                            localStorageJwt.startsWith('Bearer')
+                                ? localStorageJwt
+                                : `Bearer ${localStorageJwt}`
+                        );
+
+                        setIsLoading(false);
+                        userContext.setIsFirstConnection(true);
+                        userContext.setIsUserLoggedIn(false);
+                        navigate('/');
+                    }
                 }
-
-                userContext.setIsUserLoggedIn(false);
-                userContext.setIsFirstConnection(true);
-                setIsLoading(false);
-
-                // Assuming 'navigate' is a function to navigate to a specific route
-                navigate('/');
-
-                // GERER L'INITIAL DATA STEP two
             } catch (error) {
-                // Handle errors gracefully
                 console.error("Erreur lors de l'inscription :", error);
+            } finally {
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 500);
             }
         }
     };
@@ -347,8 +347,8 @@ export const Register = () => {
                                 justifyContent={'center'}
                                 sx={{ color: 'black', fontSize: '0.8em' }}
                             >
-                                <Typography>
-                                    I confirm to have read, understand and
+                                <Typography paddingX={{ xs: 8, lg: 18 }}>
+                                    I confirm that I have read, understood, and
                                     accepted
                                 </Typography>
                                 <ModalOwt />

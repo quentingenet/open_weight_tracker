@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.db import IntegrityError
@@ -34,7 +33,9 @@ def register_step_one(data):
     except IntegrityError:
         return JsonResponse({'message' : 'Error, user could not be created due to integrity error'}, status=400)
 
+from django.db import transaction
 
+@transaction.atomic
 def register_step_two(user_id, data): 
     try:
         user = AppUser.objects.get(id=user_id)
@@ -43,20 +44,21 @@ def register_step_two(user_id, data):
 
     try:
         initial_data = InitialData.objects.create(
-            height = data['height'], 
-            sex = data['sex'], 
-            birthdate = parser.parse(data['birthdate']).date(),  
-            initial_weight = data['initial_weight'], 
-            goal_weight = data['goal_weight'], 
-            is_european_unit_measure = data['is_european_unit_measure']
+            height=data['height'], 
+            sex=data['sex'], 
+            birthdate=parser.parse(data['birthdate']).date(),  
+            initial_weight=data['initial_weight'], 
+            goal_weight=data['goal_weight'], 
+            is_european_unit_measure=data['is_european_unit_measure'],
         )
-      
     except ValidationError as e:
         return HttpResponse(f'Error, initial data could not be created: {e}', status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        Person.objects.create(user=user, initial_data=initial_data)
-    except ValidationError as e:
+        with transaction.atomic():
+            person_connected = Person.objects.create(user=user, initial_data=initial_data)
+    except IntegrityError as e:
+        # Handle the case where the person could not be created due to an IntegrityError
         return HttpResponse(f'Error, person could not be created: {e}', status=status.HTTP_400_BAD_REQUEST)
-    
-    return JsonResponse({'message': 'Intial data created'},status=201)
+
+    return JsonResponse({'message': 'Initial data created'}, status=201)

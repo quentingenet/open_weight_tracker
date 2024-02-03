@@ -6,7 +6,10 @@ export const RegisterSteps = () => {
     const userContext = useUserContext();
 
     return (
-        console.log('FIRST CONNECTION ?', userContext.isFirstConnection),
+        console.log(
+            'FIRST CONNECTION from registersSteps?',
+            userContext.isFirstConnection
+        ),
         (<>{userContext.isFirstConnection ? <InitialData /> : <Register />}</>)
     );
 };

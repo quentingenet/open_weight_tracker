@@ -19,8 +19,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from owt_api.views import AppUserModelViewSet, PersonModelViewSet, InitialDataModelViewSet, WeightRecordModelViewSet, \
-    register_user_step_one_view, set_initial_data_first_connexion_view
+from owt_api.views import AppUserModelViewSet, InitialDataModelViewSet, PersonModelViewSet, WeightRecordModelViewSet
 
 router = routers.SimpleRouter()
 router.register('users', AppUserModelViewSet, basename='users')
@@ -31,10 +30,9 @@ router.register('weights', WeightRecordModelViewSet, basename='weights')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/register/', register_user_step_one_view, name='register'),
-    path('api/init/first-connexion/', set_initial_data_first_connexion_view, name='set_initial_data_first_connexion'),
+    #path('api/register/', register_user_step_one, name='register'),
+    #path('api/init/first-connexion/', set_initial_data_first_connexion, name='set_initial_data_first_connexion'),
     path('api/auth/', include('rest_framework.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/', include(router.urls))
 ]

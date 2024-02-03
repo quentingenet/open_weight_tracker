@@ -15,6 +15,7 @@ def get_user_id_from_jwt(request):
         jwt_token = jwt_token.strip(' "')
         
         try:
+            print(f"JWT token: {jwt_token}")
             payload = jwt.decode(jwt_token, key=decouple.config('SECRET_KEY'), algorithms=["HS256"])
             user_id = payload.get('user_id')
             return user_id

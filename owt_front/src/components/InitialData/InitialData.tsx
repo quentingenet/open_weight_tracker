@@ -130,25 +130,28 @@ export const InitialData: React.FC = () => {
         initialWeight: 90,
     };
 
-    const submitInitialDataRegister = () => {
+    const submitInitialDataRegister = async () => {
         if (isValid) {
             try {
                 console.log('SUBMIT INITIAL DATA', dataInitial);
                 setIsLoading(true);
-                initDataService(dataInitial).then((response) => {
-                    if (response) {
-                        setIsLoading(false);
-                        userContext.setHeight(Number(watch('height')));
-                        userContext.setIsFirstConnection(false);
-                        userContext.setIsUserLoggedIn(true);
-                        console.log(
-                            'IS USER LOGGEDIN',
-                            userContext.isUserLoggedIn
-                        );
-                        navigate('/');
-                    }
-                });
+                const response = await initDataService(dataInitial);
+                console.log(
+                    'Response from initialService in submitInitialDataRegister:',
+                    response
+                );
+                if (response) {
+                    setIsLoading(false);
+                    userContext.setHeight(Number(watch('height')));
+                    userContext.setIsFirstConnection(false);
+                    userContext.setIsUserLoggedIn(true);
+                    console.log('IS USER LOGGEDIN', userContext.isUserLoggedIn);
+                    navigate('/');
+                }
             } catch (error) {
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 400);
                 console.log('Incomplete form.');
             }
         }

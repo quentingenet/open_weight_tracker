@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,16 +8,17 @@ import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IWeight } from '../../models/IWeight';
-import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import dayjs from 'dayjs';
+
 import { AddNewWeight as addNewWeightService } from '../../services/WeightService';
 import Grid from '@mui/material/Grid';
 import { useUserContext } from '../../contexts/UserContext';
 import { calculateBmi } from '../../utils/WeightUtils';
 import { Typography } from '@mui/material';
+
 export default function AddWeightModal(props: any) {
     const { open, setOpen } = props;
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const userContext = useUserContext();
     const handleClose = () => {
         setOpen(false);
@@ -67,17 +67,12 @@ export default function AddWeightModal(props: any) {
         ),
     };
 
-    const submitAddWeight = () => {
+    const addNewWeight = () => {
         if (isValid) {
             try {
                 console.log('SUBMIT new weight', dataNewWeight);
-
-                addNewWeightService(dataNewWeight).then((response) => {
-                    setIsLoading(true);
-                    if (response) {
-                        setIsLoading(false);
-                    }
-                });
+                addNewWeightService(dataNewWeight, userContext.jwt);
+                handleClose();
             } catch (error) {
                 console.log('Incomplete form.');
             }
@@ -86,32 +81,16 @@ export default function AddWeightModal(props: any) {
 
     return (
         <>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                    component: 'form',
-                    onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-                        event.preventDefault();
-                        const formData = new FormData(event.currentTarget);
-                        const formJson = Object.fromEntries(
-                            (formData as FormData).entries()
-                        );
-                        const email = formJson.email;
-                        console.log(email);
-                        handleClose();
-                    },
-                }}
-            >
-                <DialogTitle sx={{ textAlign: 'center' }}>
-                    {newWeightInitialValues.date
-                        ? newWeightInitialValues.date?.format(
-                              'DD/MM/YYYY hh:mm'
-                          )
-                        : 'New weight'}
-                </DialogTitle>
-                <DialogContent>
-                    <form onSubmit={handleSubmit(submitAddWeight)}>
+            <Dialog open={open} onClose={handleClose}>
+                <form onSubmit={handleSubmit(addNewWeight)}>
+                    <DialogTitle sx={{ textAlign: 'center' }}>
+                        {newWeightInitialValues.date
+                            ? newWeightInitialValues.date?.format(
+                                  'DD/MM/YYYY hh:mm'
+                              )
+                            : 'New weight'}
+                    </DialogTitle>
+                    <DialogContent>
                         <Grid container justifyContent={'center'}>
                             <Grid
                                 item
@@ -285,20 +264,22 @@ export default function AddWeightModal(props: any) {
                                 )}
                             </Grid>
                         </Grid>
-                    </form>
-                    <Grid container justifyContent={'center'}>
-                        <Grid item marginTop={2}>
-                            <Typography textAlign={'center'}>
-                                {dataNewWeight.bmi !== 0 &&
-                                    'BMI = ' + dataNewWeight.bmi}
-                            </Typography>
+
+                        <Grid container justifyContent={'center'}>
+                            <Grid item marginTop={2}>
+                                <Typography textAlign={'center'}>
+                                    {dataNewWeight.bmi !== 0 &&
+                                        'BMI = ' + dataNewWeight.bmi}
+                                </Typography>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type='submit'>Save</Button>
-                </DialogActions>
+                    </DialogContent>
+
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button type='submit'>Save</Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </>
     );

@@ -21,15 +21,16 @@ class InitialData(models.Model):
     initial_weight = models.DecimalField(max_digits=4, decimal_places=1)
     goal_weight = models.DecimalField(max_digits=4, decimal_places=1)
     is_european_unit_measure = models.BooleanField(default=True)
-
+    #person_initial_data = models.OneToOneField('Person', on_delete=models.PROTECT, related_name='person_initial_data')
+    
     def __str__(self):
           return f'id {self.id}, birthdate {self.birthdate}'
 
 
 class Person(models.Model):
     user = models.OneToOneField(AppUser, on_delete=models.CASCADE)
-    initial_data = models.OneToOneField(InitialData, on_delete=models.CASCADE)
-    
+    initial_data = models.OneToOneField(InitialData, on_delete=models.PROTECT, related_name='person_initial_data')
+
     def __str__(self):
           return f'id {self.id}, {self.user.username}'
 
@@ -42,7 +43,7 @@ class WeightRecord(models.Model):
     bone_mass = models.DecimalField(max_digits=4, decimal_places=1)
     muscular_mass = models.DecimalField(max_digits=4, decimal_places=1)
     bmi = models.DecimalField(max_digits=3, decimal_places=1)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='weight_records')
+    person = models.ForeignKey(Person, on_delete=models.PROTECT, related_name='weight_records')
     
     def __str__(self):
           return f'{self.weight_record_date}, {self.weight_value}'
