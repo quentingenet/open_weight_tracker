@@ -23,6 +23,7 @@ import {
 } from '../../services/WeightService';
 import { IWeight } from '../../models/IWeight';
 import dayjs from 'dayjs';
+import DisplayWeightModal from '../../components/Weights/DisplayWeightModal';
 
 export default function Weights() {
     const userContext = useUserContext();
@@ -30,7 +31,10 @@ export default function Weights() {
     const [newWeightAdded, setNewWeightAdded] = useState<boolean>(false);
     const [weightDeleted, setWeightDeleted] = useState<boolean>(false);
     const [weights, setWeights] = useState<IWeight[]>([]);
-
+    const [openDisplayWeightModal, setOpenDisplayWeightModal] = useState(false);
+    const [weightToDisplay, setWeightToDisplay] = useState<IWeight>(
+        {} as IWeight
+    );
     const deleteWeight = async (weightId: number) => {
         try {
             await deleteWeightService(weightId);
@@ -38,6 +42,10 @@ export default function Weights() {
         } catch (error) {
             console.error('Error deleting weight:', error);
         }
+    };
+
+    const displayWeight = (weight: IWeight) => {
+        setWeightToDisplay(weight);
     };
 
     useEffect(() => {
@@ -61,6 +69,11 @@ export default function Weights() {
 
     return (
         <>
+            <DisplayWeightModal
+                weightData={weightToDisplay}
+                openDisplayWeightModal={openDisplayWeightModal}
+                setOpenDisplayWeightModal={setOpenDisplayWeightModal}
+            />
             <Grid
                 container
                 marginTop={6}
@@ -136,7 +149,14 @@ export default function Weights() {
                                     >
                                         <TableCell align='center'>
                                             <Tooltip title='Check weight'>
-                                                <IconButton>
+                                                <IconButton
+                                                    onClick={() => {
+                                                        displayWeight(weight);
+                                                        setOpenDisplayWeightModal(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
                                                     <RemoveRedEyeIcon
                                                         sx={{
                                                             cursor: 'pointer',
@@ -147,15 +167,14 @@ export default function Weights() {
                                         </TableCell>
                                         <TableCell align='center'>
                                             <Tooltip title='Delete'>
-                                                <IconButton>
+                                                <IconButton
+                                                    onClick={() => {
+                                                        deleteWeight(
+                                                            Number(weight.id)
+                                                        );
+                                                    }}
+                                                >
                                                     <DeleteIcon
-                                                        onClick={() => {
-                                                            deleteWeight(
-                                                                Number(
-                                                                    weight.id
-                                                                )
-                                                            );
-                                                        }}
                                                         sx={{
                                                             cursor: 'pointer',
                                                         }}
