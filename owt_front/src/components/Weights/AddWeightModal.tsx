@@ -71,7 +71,7 @@ export default function AddWeightModal(props: any) {
         if (isValid) {
             try {
                 console.log('SUBMIT new weight', dataNewWeight);
-                addNewWeightService(dataNewWeight, userContext.jwt);
+                addNewWeightService(dataNewWeight);
                 handleClose();
             } catch (error) {
                 console.log('Incomplete form.');

@@ -1,7 +1,7 @@
 import { IWeight } from '../models/IWeight';
 import { API_URL } from '../utils/GlobalUtils';
 
-export const AddNewWeight = async (dataWeight: IWeight, userJwt: string) => {
+export const AddNewWeight = async (dataWeight: IWeight) => {
     try {
         const requestDataWeight = {
             weight_record_date: dataWeight.date,
