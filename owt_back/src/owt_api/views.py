@@ -85,6 +85,14 @@ class InitialDataModelViewSet(ModelViewSet):
     def get_queryset(self):
         return InitialData.objects.all()
 
+    @action(detail=False, methods=['get'])
+    def get_weights(self, request):
+        user_id = get_user_id_from_jwt(request)
+        person_connected = get_object_or_404(Person, user__id=user_id)
+        initial_data = InitialData.objects.filter(person_initial_data=person_connected)
+        serializer = InitialDataSerializer(initial_data, many=True)
+        return Response(serializer.data)
+
 
 class WeightRecordModelViewSet(ModelViewSet):
     serializer_class = WeightRecordSerializer
@@ -98,8 +106,8 @@ class WeightRecordModelViewSet(ModelViewSet):
         weights = WeightRecord.objects.filter(person=person_connected)
         serializer = WeightRecordSerializer(weights, many=True)
         return Response(serializer.data)
-    @action(detail=False, methods=['post'])
     
+    @action(detail=False, methods=['post'])
     def create_weight(self, request):
         print("REQUEST DATA =", request.data)
         user_id = get_user_id_from_jwt(request)
