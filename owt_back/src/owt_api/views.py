@@ -1,6 +1,8 @@
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+
+from rest_framework.fields import ObjectDoesNotExist
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -11,7 +13,37 @@ from .global_utils import check_first_connection, get_user_id_from_jwt
 from .services import user_service
 from .models import AppUser, Person, InitialData, WeightRecord
 from .serializers import AppUserSerializer, PersonSerializer, InitialDataSerializer, WeightRecordSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    @action(detail=False, methods=['post'])
+    def post(self, request, *args, **kwargs):
+        print("REQUEST DATA", request.data)
+        try:
+            user = AppUser.objects.get(username=request.data['username'])
+            person_connected = Person.objects.get(user=user)
+            heightUser = person_connected.initial_data.height
+        except ObjectDoesNotExist:
+            return Response({'error': 'User or InitialData not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        response = super().post(request, *args, **kwargs)
+        
+        try:
+            refresh = RefreshToken.for_user(user)
+            jwt_token = str(refresh.access_token)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        print("JWT TOKEN", jwt_token)
+        print("RESPONSE DATA", response.data)
+        response.data['Authorization'] = f'Bearer {jwt_token}'
+        response.data['height'] = heightUser
+
+        return response
+        
 class AppUserModelViewSet(ModelViewSet):
     serializer_class = AppUserSerializer
 

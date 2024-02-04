@@ -73,7 +73,6 @@ export default function ResetChangePassword() {
         if (isValid) {
             try {
                 resetAndChangePassword(dataResetPassword.passwordChanged);
-                //const localStorageJwt = localStorage.getItem('jwt') || '';
                 navigate('/');
             } catch (error) {
                 console.log('Incomplete form.');

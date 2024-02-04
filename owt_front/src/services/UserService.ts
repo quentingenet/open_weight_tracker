@@ -26,11 +26,11 @@ export const login = (data: ILoginForm) => {
         .then((responseBody) => {
             console.log('responseBody', responseBody);
             const accessToken = responseBody.access;
-
-            // Faites quelque chose avec le jeton d'accès, par exemple, le stocker dans le stockage local.
+            const height = responseBody.height;
             localStorage.setItem('jwt', accessToken);
+            localStorage.setItem('height', height);
 
-            return responseBody; // Vous pouvez retourner toute la réponse JSON si nécessaire.
+            return responseBody;
         })
         .catch((error) => {
             throw new Error("Erreur lors de l'appel à l'API :" + error);
@@ -56,13 +56,11 @@ export const register = (dataRegister: IRegisterForm) => {
             if (response.ok) {
                 const jwt = response.headers.get('Authorization') || '';
 
-                // Clear existing JWT from localStorage only if it's present
                 const localStorageJwt = localStorage.getItem('jwt');
                 if (localStorageJwt) {
                     localStorage.removeItem('jwt');
                 }
 
-                // Set new JWT to localStorage
                 if (jwt) {
                     localStorage.setItem('jwt', JSON.stringify(jwt));
                 } else {

@@ -145,7 +145,6 @@ export const InitialData: React.FC = () => {
                     userContext.setHeight(Number(watch('height')));
                     userContext.setIsFirstConnection(false);
                     userContext.setIsUserLoggedIn(true);
-                    console.log('IS USER LOGGEDIN', userContext.isUserLoggedIn);
                     navigate('/');
                 }
             } catch (error) {
