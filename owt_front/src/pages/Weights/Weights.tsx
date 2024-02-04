@@ -108,11 +108,12 @@ export default function Weights() {
                                 <TableRow>
                                     <TableCell align='center' width='1%'>
                                         <Tooltip title='Add new weight'>
-                                            <IconButton>
+                                            <IconButton
+                                                onClick={() => {
+                                                    setOpen(true);
+                                                }}
+                                            >
                                                 <AddCircleOutlineOutlined
-                                                    onClick={() => {
-                                                        setOpen(true);
-                                                    }}
                                                     sx={{ cursor: 'pointer' }}
                                                 />
                                             </IconButton>
