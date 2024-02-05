@@ -15,24 +15,36 @@ import { IWeight } from '../../models/IWeight';
 import dayjs from 'dayjs';
 import { getInitialData } from '../../services/InitialDataService';
 import { IInitialData } from '../../models/IInitialData';
+import { ChartWeights } from '../../components/Charts/ChartWeights';
+import ChartSingleWeight from '../../components/Charts/ChartSingleWeight';
 
 export default function Dashboard() {
     ChartJS.register(ArcElement, ToolTipChartJS, Legend);
     const userContext = useUserContext();
     const [initialData, setInitialData] = useState<IInitialData[]>([]);
     const [weightsData, setWeightsData] = useState<IWeight[]>([]);
+    const [displayGlobalChartWeights, setDisplayGlobalChartWeights] =
+        useState<boolean>(true);
+    const [displayChartSingleWeight, setDisplayChartSingleWeight] =
+        useState<boolean>(false);
     const lastWeight = weightsData[weightsData.length - 1];
 
+    const handleChangeChart = () => {
+        setDisplayGlobalChartWeights(!displayGlobalChartWeights);
+        setDisplayChartSingleWeight(!displayChartSingleWeight);
+    };
     const fetchWeights = async () => {
         try {
             const response = await getWeights().then((res) => {
-                console.log('res', res);
                 const transformedData = res.map((weight: any) => ({
                     weightValue: weight.weight_value,
+                    muscularMass: weight.muscular_mass,
+                    boneMass: weight.bone_mass,
+                    waterMass: weight.body_water,
                     date: weight.weight_record_date,
                     bmi: weight.bmi,
                 }));
-                console.log('transformedData', transformedData);
+
                 return setWeightsData(transformedData);
             });
         } catch (error) {
@@ -43,14 +55,12 @@ export default function Dashboard() {
     const fetchInitialData = async () => {
         try {
             const response = await getInitialData().then((res) => {
-                console.log('res', res);
                 const transformedInitialData = res.map((initialData: any) => ({
                     goalWeight: initialData.goal_weight,
                     initialWeight: initialData.initial_weight,
                     height: initialData.height,
                     age: initialData.age,
                 }));
-                console.log('transformedInitialData', transformedInitialData);
                 return setInitialData(transformedInitialData);
             });
         } catch (error) {
@@ -68,28 +78,33 @@ export default function Dashboard() {
     ).toFixed(1);
     return (
         <>
-            <Grid container marginTop={{ xs: 3, lg: 6 }}>
+            <Grid container marginTop={{ xs: 1, lg: 2 }}>
                 <Grid item xs={12} justifyContent={'center'}>
-                    <Typography variant='h4' component='h2'>
-                        Personal dashboard
-                    </Typography>
+                    <h1>Dashboard</h1>
                 </Grid>
                 <Grid
                     container
-                    marginTop={4}
+                    marginTop={1}
                     justifyContent={'center'}
                     alignItems={'center'}
-                    flexDirection={'row'}
+                    flexDirection={{ xs: 'column', lg: 'row' }}
                     gap={2}
                 >
-                    <Grid item xs={3}>
+                    <Grid
+                        item
+                        xs={6}
+                        lg={3}
+                        justifyContent={'center'}
+                        alignItems={'center'}
+                    >
                         <Tooltip title='Check my weight stats'>
                             <Card
+                                onClick={handleChangeChart}
                                 elevation={12}
                                 sx={{
-                                    minWidth: 250,
-                                    maxWidth: 300,
-                                    height: 200,
+                                    cursor: 'pointer',
+                                    width: { xs: '200px', lg: '100%' },
+                                    height: { xs: 200, lg: 170 },
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
@@ -131,14 +146,20 @@ export default function Dashboard() {
                         </Tooltip>
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid
+                        item
+                        xs={6}
+                        lg={3}
+                        justifyContent={'center'}
+                        alignItems={'center'}
+                    >
                         <Tooltip title='Check my initial data'>
                             <Card
                                 elevation={12}
                                 sx={{
-                                    minWidth: 250,
-                                    maxWidth: 300,
-                                    height: 200,
+                                    cursor: 'pointer',
+                                    width: { xs: '200px', lg: '100%' },
+                                    height: { xs: 200, lg: 170 },
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
@@ -169,24 +190,29 @@ export default function Dashboard() {
                                             ? 'kg'
                                             : 'lbs'}
                                         <br />
-                                        left to reach your weight goal!
+                                        left to reach
+                                        <br /> your weight goal!
                                     </Typography>
                                 </CardContent>
                             </Card>
                         </Tooltip>
                     </Grid>
                 </Grid>
-                <Grid container marginTop={4} justifyContent={'center'}>
-                    <Grid item xs={8}>
-                        <Card elevation={12}>
-                            <CardContent>
-                                <canvas
-                                    id='owtChart'
-                                    width='400'
-                                    height='400'
-                                ></canvas>
-                            </CardContent>
-                        </Card>
+                <Grid
+                    container
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                    flexDirection={'column'}
+                    marginTop={{ xs: 1, lg: 3 }}
+                >
+                    <Grid item xs={12}>
+                        {displayGlobalChartWeights ? (
+                            <ChartWeights weightsData={weightsData} />
+                        ) : displayChartSingleWeight ? (
+                            <ChartSingleWeight singleWeightData={lastWeight} />
+                        ) : (
+                            <ChartWeights weightsData={weightsData} />
+                        )}
                     </Grid>
                 </Grid>
             </Grid>
