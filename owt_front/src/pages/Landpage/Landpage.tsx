@@ -50,7 +50,7 @@ export default function Landpage() {
                     </Stack>
                 </Grid>
                 <Grid container justifyContent={'center'}>
-                    <Grid item xs={10}>
+                    <Grid item xs={10} className='entrance'>
                         {isRegistering ? <RegisterSteps /> : <Login />}
                     </Grid>
                 </Grid>
