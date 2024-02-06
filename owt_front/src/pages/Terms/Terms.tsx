@@ -1,18 +1,26 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 export default function Terms() {
     const navigate = useNavigate();
     return (
         <>
-            <Box>
+            <Grid
+                container
+                direction='column'
+                justifyContent='center'
+                alignItems='center'
+            >
                 <Typography
-                    variant='h6'
+                    variant='h4'
                     component='h2'
                     sx={{ color: 'white', textAlign: 'center' }}
                 >
-                    Terms of Use for the Open Weight Tracker Application
+                    <strong>
+                        Terms of Use for the Open Weight Tracker Application
+                    </strong>
                 </Typography>
+
                 <Typography sx={{ mt: 2, color: 'white' }}>
                     <strong>
                         The Open Weight Tracker Application is a free and
@@ -139,7 +147,7 @@ export default function Terms() {
                         exclusive jurisdiction of French courts.
                     </ul>
                 </Typography>
-            </Box>
+            </Grid>
             <Button onClick={() => navigate('/')}>BACK TO LOGIN</Button>
         </>
     );

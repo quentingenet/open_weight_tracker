@@ -25,12 +25,12 @@ export default function ResetChangePassword() {
     };
 
     const resetPasswordInitialValues: IChangeResetPassword = {
-        passwordChanged: '',
-        passwordChangedBis: '',
+        password: '',
+        passwordBis: '',
     };
 
     const validationSchema = yup.object({
-        passwordChanged: yup
+        password: yup
             .string()
             .required('You must enter your password.')
             .matches(passwordWithLetter, 'Your password must contain a letter.')
@@ -39,7 +39,7 @@ export default function ResetChangePassword() {
                 passwordAtLeast4,
                 'Your password must contain at least 4 characters.'
             ),
-        passwordChangedBis: yup
+        passwordBis: yup
             .string()
             .required('You must enter your password.')
             .matches(passwordWithLetter, 'Your password must contain a letter.')
@@ -65,14 +65,14 @@ export default function ResetChangePassword() {
     });
 
     const dataResetPassword: IChangeResetPassword = {
-        passwordChanged: watch('passwordChanged'),
-        passwordChangedBis: watch('passwordChangedBis'),
+        password: watch('password'),
+        passwordBis: watch('passwordBis'),
     };
 
     const submitResetPassword = () => {
         if (isValid) {
             try {
-                resetAndChangePassword(dataResetPassword.passwordChanged);
+                resetAndChangePassword(dataResetPassword.password);
                 navigate('/');
             } catch (error) {
                 console.log('Incomplete form.');
@@ -90,7 +90,7 @@ export default function ResetChangePassword() {
                     >
                         <Grid item marginY={3} xs={12}>
                             <Controller
-                                name='passwordChanged'
+                                name='password'
                                 control={control}
                                 defaultValue=''
                                 render={({ field }) => (
@@ -102,7 +102,7 @@ export default function ResetChangePassword() {
                                             showPassword ? 'text' : 'password'
                                         }
                                         variant='outlined'
-                                        error={Boolean(errors.passwordChanged)}
+                                        error={Boolean(errors.passwordBis)}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position='end'>
@@ -128,17 +128,17 @@ export default function ResetChangePassword() {
                                     />
                                 )}
                             />
-                            {errors.passwordChanged && (
+                            {errors.password && (
                                 <Grid item xs={12}>
                                     <span className='errorText'>
-                                        {errors.passwordChanged.message}
+                                        {errors.password.message}
                                     </span>
                                 </Grid>
                             )}
                         </Grid>
                         <Grid item marginY={3} xs={12}>
                             <Controller
-                                name='passwordChangedBis'
+                                name='passwordBis'
                                 control={control}
                                 defaultValue=''
                                 render={({ field }) => (
@@ -150,9 +150,7 @@ export default function ResetChangePassword() {
                                             showPassword ? 'text' : 'password'
                                         }
                                         variant='outlined'
-                                        error={Boolean(
-                                            errors.passwordChangedBis
-                                        )}
+                                        error={Boolean(errors.passwordBis)}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position='end'>
@@ -178,10 +176,10 @@ export default function ResetChangePassword() {
                                     />
                                 )}
                             />
-                            {errors.passwordChangedBis && (
+                            {errors.passwordBis && (
                                 <Grid item xs={12}>
                                     <span className='errorText'>
-                                        {errors.passwordChangedBis.message}
+                                        {errors.passwordBis.message}
                                     </span>
                                 </Grid>
                             )}

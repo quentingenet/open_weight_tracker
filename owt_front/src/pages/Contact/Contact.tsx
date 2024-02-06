@@ -123,6 +123,7 @@ export default function Contact() {
                                 item
                                 marginTop={3}
                                 xs={12}
+                                padding={1}
                                 justifyContent={'center'}
                             >
                                 <Controller
@@ -135,7 +136,9 @@ export default function Contact() {
                                                 width: '90%',
                                                 padding: '10px',
                                                 fontSize: '16px',
-                                                backgroundColor: 'white',
+                                                fontFamily: 'Arial',
+                                                backgroundColor: '#D4D3DB',
+                                                borderRadius: '5px',
                                             }}
                                             maxRows={15}
                                             maxLength={1000}

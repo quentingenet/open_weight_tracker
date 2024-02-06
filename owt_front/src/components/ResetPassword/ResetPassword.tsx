@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Supposons que vous avez une fonction resetPassword dans votre fichier d'API
 import {
     Button,
-    CircularProgress,
     Grid,
     IconButton,
     InputAdornment,
@@ -34,13 +33,11 @@ function ResetPassword() {
     ) => {
         event.preventDefault();
     };
-    // Récupérer le token de réinitialisation de mot de passe à partir de l'URL
+
     useEffect(() => {
         const tokenFromUrl = location.pathname.split('/').pop() || '';
         setToken(tokenFromUrl);
     }, [location]);
-
-    // Fonction pour réinitialiser le mot de passe
 
     const initialRegisterValues: IChangeResetPassword = {
         password: '',
@@ -224,7 +221,7 @@ function ResetPassword() {
                         variant='contained'
                         color='primary'
                         size='large'
-                        //disabled={isValid ? true : false}
+                        disabled={isValid ? true : false}
                     >
                         RESET PASSWORD
                     </Button>
