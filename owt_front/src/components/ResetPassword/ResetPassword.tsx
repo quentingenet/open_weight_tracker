@@ -221,7 +221,6 @@ function ResetPassword() {
                         variant='contained'
                         color='primary'
                         size='large'
-                        disabled={isValid ? true : false}
                     >
                         RESET PASSWORD
                     </Button>

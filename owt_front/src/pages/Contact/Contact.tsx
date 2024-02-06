@@ -78,12 +78,13 @@ export default function Contact() {
                         onSubmit={handleSubmit(submitContact)}
                         className='contactForm'
                     >
-                        <Grid container justifyContent={'center'}>
+                        <Grid container justifyContent={'center'} xs={12}>
                             <Grid
                                 item
                                 marginTop={3}
                                 xs={12}
                                 justifyContent={'center'}
+                                padding={1}
                             >
                                 <Controller
                                     name='email'
@@ -187,7 +188,7 @@ export default function Contact() {
                         color='primary'
                         size='large'
                     >
-                        Back to Login
+                        Back
                     </Button>
                 </Grid>
             </Grid>

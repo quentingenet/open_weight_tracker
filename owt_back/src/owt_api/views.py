@@ -99,9 +99,9 @@ class PasswordResetTokenModelViewSet(ModelViewSet):
     @action(detail=False, methods=['post'])
     def generate_reset_token(self, request):
         email_user = request.data.get('emailUser')
-        # Vérifier si l'utilisateur existe et s'il est actif
+
         user_to_reset = get_object_or_404(AppUser, email=email_user, is_active=True)
-        # Créer un jeton de réinitialisation de mot de passe et l'envoyer par e-mail
+  
         new_uuid = uuid.uuid4()
         reset_token = str(new_uuid)
         PasswordResetToken.objects.create(user=user_to_reset, token=reset_token)
@@ -218,8 +218,7 @@ class ContactModelViewSet(ModelViewSet):
             email = request.data.get('email')
             message = request.data.get('message')
             send_contact_email(email, message)
-            print("mail sent")
-            new_contact = Contact.objects.create(email=email, message=message)
+            Contact.objects.create(email=email, message=message)
             return Response({"message": "Contact message sent successfully"}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

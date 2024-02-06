@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
 
-export default function ModalOwt() {
-    const [open, setOpen] = useState(false);
-    const handleClose = () => setOpen(false);
+export default function ModalOwt(props: any) {
+    const { openTermsModal, setOpenTermsModal } = props;
+
+    const handleClose = () => setOpenTermsModal(false);
 
     const style = {
         position: 'absolute',
@@ -30,7 +30,7 @@ export default function ModalOwt() {
     return (
         <>
             <Modal
-                open={open}
+                open={openTermsModal}
                 onClose={handleClose}
                 aria-labelledby='modal-modal-title'
                 aria-describedby='modal-modal-description'

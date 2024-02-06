@@ -19,22 +19,29 @@ export const login = (data: ILoginForm) => {
     })
         .then((response) => {
             if (response.ok) {
-                return response.json();
+                return response.json().then((data) => ({
+                    status: response.status,
+                    data: data,
+                }));
             } else {
-                throw new Error("Erreur lors de la requête à l'API");
+                return response.json().then((errorData) => {
+                    throw new Error(
+                        errorData.message ||
+                            'Error while making request to the API'
+                    );
+                });
             }
         })
-        .then((responseBody) => {
-            console.log('responseBody', responseBody);
-            const accessToken = responseBody.access;
-            const height = responseBody.height;
+        .then((response) => {
+            const accessToken = response.data.access;
+            const height = response.data.height;
             localStorage.setItem('jwt', accessToken);
             localStorage.setItem('height', height);
 
-            return responseBody;
+            return response;
         })
         .catch((error) => {
-            throw new Error("Erreur lors de l'appel à l'API :" + error);
+            throw new Error('Error while calling the API: ' + error);
         });
 };
 

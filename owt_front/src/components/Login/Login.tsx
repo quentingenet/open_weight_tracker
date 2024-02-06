@@ -78,32 +78,40 @@ export default function Login() {
                 setIsLoading(true);
                 loginService(dataLogin).then((response) => {
                     if (response) {
-                        const localStorageJwt =
-                            localStorage.getItem('jwt') || '';
-                        if (
-                            localStorageJwt !== null &&
-                            localStorageJwt !== ''
-                        ) {
-                            localStorageJwt?.startsWith('Bearer')
-                                ? userContext.setJwt(localStorageJwt)
-                                : userContext.setJwt(
-                                      `Bearer ${localStorageJwt}`
-                                  );
+                        if (response.status === 200) {
+                            const localStorageJwt =
+                                localStorage.getItem('jwt') || '';
+                            if (
+                                localStorageJwt !== null &&
+                                localStorageJwt !== ''
+                            ) {
+                                localStorageJwt?.startsWith('Bearer')
+                                    ? userContext.setJwt(localStorageJwt)
+                                    : userContext.setJwt(
+                                          `Bearer ${localStorageJwt}`
+                                      );
 
-                            const localStorageHeight =
-                                localStorage.getItem('height') || '';
-                            const heightUser = Number(localStorageHeight);
-                            userContext.setHeight(heightUser);
+                                const localStorageHeight =
+                                    localStorage.getItem('height') || '';
+                                const heightUser = Number(localStorageHeight);
+                                userContext.setHeight(heightUser);
+                                setIsLoading(false);
+                                userContext.setIsUserLoggedIn(true);
+                                navigate('/dashboard');
+                            }
+                        } else if (response.status === 401) {
                             setIsLoading(false);
-                            userContext.setIsUserLoggedIn(true);
-                            navigate('/dashboard');
+                            console.log(
+                                'Unauthorized: Invalid username or password.'
+                            );
+                        } else {
+                            setIsLoading(false);
+                            console.log('Error while logging in.');
                         }
                     }
                 });
             } catch (error) {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 150);
+                setIsLoading(false);
                 console.log('Incomplete form.');
             }
         }

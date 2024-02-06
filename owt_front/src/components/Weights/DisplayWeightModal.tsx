@@ -24,13 +24,12 @@ const style = {
 export default function DisplayWeightModal(props: any) {
     const { weightData, setOpenDisplayWeightModal, openDisplayWeightModal } =
         props;
-    const handleOpenDisplayWeightModal = () => setOpenDisplayWeightModal(true);
+
     const handleCloseDisplayWeightModal = () =>
         setOpenDisplayWeightModal(false);
 
     return (
         <div>
-            <Button onClick={handleOpenDisplayWeightModal}>Open modal</Button>
             <Modal
                 open={openDisplayWeightModal}
                 onClose={handleCloseDisplayWeightModal}

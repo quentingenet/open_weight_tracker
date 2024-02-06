@@ -33,6 +33,7 @@ export const Register = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [openTermsModal, setOpenTermsModal] = useState(false);
     const handleMouseDownPassword = (
         event: React.MouseEvent<HTMLButtonElement>
     ) => {
@@ -351,7 +352,13 @@ export const Register = () => {
                                     I confirm that I have read, understood, and
                                     accepted
                                 </Typography>
-                                <ModalOwt />
+                                <Button onClick={() => setOpenTermsModal(true)}>
+                                    Terms and conditions
+                                </Button>
+                                <ModalOwt
+                                    openTermsModal={openTermsModal}
+                                    setOpenTermsModal={setOpenTermsModal}
+                                />
                             </Grid>
                         </Grid>
                         <Grid container justifyContent={'center'}>

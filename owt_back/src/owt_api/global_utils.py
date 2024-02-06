@@ -53,15 +53,14 @@ def send_email(user_email, token):
 
 
 def send_contact_email(user_email , message):
-    subject = 'OWT new  message contact'
+    subject = f'OWT new message from : {user_email}'
     message_body = message
     email_admin = config('EMAIL_ADMIN')
-    expediteur = config('EMAIL_HOST_USER')
-    print(f"email_admin: {email_admin}")
+    sender = config('EMAIL_HOST_USER')
     send_mail(
         subject,
         message_body,
-        expediteur,  # Adresse e-mail de l'expéditeur
+        sender,
         [email_admin],  # Liste des adresses e-mail des destinataires
         fail_silently=False,
     )
