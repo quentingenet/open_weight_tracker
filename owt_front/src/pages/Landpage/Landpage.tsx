@@ -75,7 +75,6 @@ export default function Landpage() {
                         |{' '}
                         <Link
                             to={'/owt-terms-and-conditions'}
-                            target='_blank'
                             rel='noopener noreferrer'
                         >
                             Terms and conditions

@@ -1,11 +1,11 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useState } from 'react';
 
 export default function ModalOwt() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -31,7 +31,6 @@ export default function ModalOwt() {
 
     return (
         <>
-            <Button onClick={handleOpen}>Terms and conditions</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -64,6 +63,19 @@ export default function ModalOwt() {
                                 listStyleType: 'none',
                             }}
                         >
+                            <br />
+                            <li>
+                                <strong>
+                                    <center>Legal information</center>
+                                </strong>
+                                <br />
+                                Website owner, administrator, and webmaster
+                                contact: Quentin Genet, Website hosting: OVH -
+                                SAS with a capital of €10,069,020 RCS Lille
+                                Métropole 424 761 419 00045Code APE 2620ZN° TVA:
+                                FR 22 424 761 419Registered office: 2 rue
+                                Kellermann - 59100 Roubaix - France
+                            </li>
                             <br />
                             <li>
                                 <strong>1. Acceptance of Terms of Use</strong>

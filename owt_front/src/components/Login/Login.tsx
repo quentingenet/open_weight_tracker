@@ -9,7 +9,7 @@ import {
     TextField,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Login.css';
 import { Email, Person2, Visibility, VisibilityOff } from '@mui/icons-material';
 import { ILoginForm } from '../../models/ILoginForm';
@@ -108,6 +108,16 @@ export default function Login() {
             }
         }
     };
+
+    useEffect(() => {
+        if (forgotPassword === true) {
+            setTimeout(() => {
+                setErrorRecovery(false);
+                setIsMailSended(false);
+                setForgotPassword(false);
+            }, 3000);
+        }
+    }, [isMailSended, errorRecovery]);
 
     return (
         <>
@@ -267,7 +277,6 @@ export default function Login() {
                                             color='primary'
                                             size='large'
                                             onClick={() => {
-                                                //TODO: appel du backend pour reset le mot de passe + page reset password
                                                 if (
                                                     emailRecovery.match(
                                                         emailValidator
@@ -311,7 +320,7 @@ export default function Login() {
                                                 }
                                                 sx={{ mb: 2 }}
                                             >
-                                                Error, email not sended
+                                                Error, email not sent
                                             </Alert>
                                         </Collapse>
                                     </Grid>
@@ -327,9 +336,6 @@ export default function Login() {
                                                         size='small'
                                                         onClick={() => {
                                                             setIsMailSended(
-                                                                false
-                                                            );
-                                                            setForgotPassword(
                                                                 false
                                                             );
                                                         }}

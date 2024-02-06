@@ -57,4 +57,10 @@ class WeightRecord(models.Model):
     def __str__(self):
           return f'{self.weight_record_date}, {self.weight_value}'
 
-
+class Contact(models.Model):
+    email = models.EmailField(max_length=100, blank=False, null=False)
+    message = models.TextField(max_length=1000, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+          return f'id {self.id}, {self.email}'

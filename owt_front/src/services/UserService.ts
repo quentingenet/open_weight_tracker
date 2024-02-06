@@ -1,3 +1,4 @@
+import { IContactPublic } from '../models/IContactPublic';
 import { IInitialData } from '../models/IInitialData';
 import { ILoginForm } from '../models/ILoginForm';
 import { IRegisterForm } from '../models/IRegisterForm';
@@ -164,4 +165,32 @@ export const resetPasswordProcess = (
         },
         body: JSON.stringify(newPasswordData),
     });
+};
+
+export const contactPublic = async (dataToSend: IContactPublic) => {
+    try {
+        const data = {
+            email: dataToSend.email,
+            message: dataToSend.messageToSend,
+        };
+        const response = await fetch(
+            API_URL.concat('contact/send_contact_message/'),
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Failed to send contact message');
+        }
+
+        return response;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };

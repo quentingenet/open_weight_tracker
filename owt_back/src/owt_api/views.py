@@ -10,10 +10,10 @@ from rest_framework.viewsets import ModelViewSet
 from django.http import HttpResponseForbidden
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import action, permission_classes
-from .global_utils import check_first_connection, get_user_id_from_jwt, send_email
+from .global_utils import check_first_connection, get_user_id_from_jwt, send_contact_email, send_email
 from .services import user_service
-from .models import AppUser, PasswordResetToken, Person, InitialData, WeightRecord
-from .serializers import AppUserSerializer, PasswordResetTokenSerializer, PersonSerializer, InitialDataSerializer, WeightRecordSerializer
+from .models import AppUser, Contact, PasswordResetToken, Person, InitialData, WeightRecord
+from .serializers import AppUserSerializer, ContactSerializer, PasswordResetTokenSerializer, PersonSerializer, InitialDataSerializer, WeightRecordSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 import uuid
@@ -22,7 +22,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     
     @action(detail=False, methods=['post'])
     def post(self, request, *args, **kwargs):
-        print("REQUEST DATA", request.data)
         try:
             user = AppUser.objects.get(username=request.data['username'])
             person_connected = Person.objects.get(user=user)
@@ -39,8 +38,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             jwt_token = str(refresh.access_token)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        print("JWT TOKEN", jwt_token)
-        print("RESPONSE DATA", response.data)
         response.data['Authorization'] = f'Bearer {jwt_token}'
         response.data['height'] = heightUser
 
@@ -73,15 +70,22 @@ class AppUserModelViewSet(ModelViewSet):
     
     @action(detail=False, methods=['post'])
     def update_new_password(self, request):
-        print("RESET PASSWORD",request)
-        new_password = request.data.get('new_password')
-        new_password = make_password(new_password)
-        token = request.data.get('token')
-        print("TOKEN",token)
-        user_to_update = PasswordResetToken.objects.get(token=token)
-        user_found = AppUser.objects.get(email=user_to_update.user.email)
-        AppUser.objects.filter(email=user_found.email).update(password=new_password)
-        return Response({"message": "Password updated successfully"}, status=status.HTTP_200_OK)
+        try:
+            new_password = request.data.get('new_password')
+            new_password = make_password(new_password)
+            token = request.data.get('token')
+            try:
+                user_to_update = PasswordResetToken.objects.get(token=token)
+                user_found = AppUser.objects.get(email=user_to_update.user.email)
+                AppUser.objects.filter(email=user_found.email).update(password=new_password)
+                PasswordResetToken.objects.filter(token=token).delete()
+                return Response({"message": "Password updated successfully"}, status=status.HTTP_200_OK)
+            except PasswordResetToken.DoesNotExist:
+                return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
+            except AppUser.DoesNotExist:
+                return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         
 class PasswordResetTokenModelViewSet(ModelViewSet):
@@ -202,3 +206,20 @@ class WeightRecordModelViewSet(ModelViewSet):
 
         weight.delete()
         return Response({"message": "Weight record deleted successfully"}, status=status.HTTP_200_OK)
+
+
+class ContactModelViewSet(ModelViewSet):
+    serializer_class = ContactSerializer
+    queryset = Contact.objects.all()
+    
+    @action(detail=False, methods=['post'])
+    def send_contact_message(self, request):
+        try:
+            email = request.data.get('email')
+            message = request.data.get('message')
+            send_contact_email(email, message)
+            print("mail sent")
+            new_contact = Contact.objects.create(email=email, message=message)
+            return Response({"message": "Contact message sent successfully"}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

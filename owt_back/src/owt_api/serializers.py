@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import AppUser, PasswordResetToken, Person, InitialData, WeightRecord
+from .models import AppUser, Contact, PasswordResetToken, Person, InitialData, WeightRecord
 
 
 class AppUserSerializer(ModelSerializer):
@@ -27,4 +27,9 @@ class InitialDataSerializer(ModelSerializer):
 class WeightRecordSerializer(ModelSerializer):
     class Meta:
         model = WeightRecord
+        fields = '__all__'
+
+class ContactSerializer(ModelSerializer):
+    class Meta:
+        model = Contact
         fields = '__all__'
