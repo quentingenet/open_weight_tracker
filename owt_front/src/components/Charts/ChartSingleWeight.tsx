@@ -2,7 +2,6 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import dayjs from 'dayjs';
 import { Pie } from 'react-chartjs-2';
 import { useUserContext } from '../../contexts/UserContext';
-import { Grid } from '@mui/material';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

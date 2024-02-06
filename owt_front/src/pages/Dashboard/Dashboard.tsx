@@ -193,8 +193,7 @@ export default function Dashboard() {
                                                 ? 'kg'
                                                 : 'lbs'}
                                             <br />
-                                            left to reach
-                                            <br /> your weight goal!
+                                            left to reach your weight goal!
                                         </Typography>
                                     </CardContent>
                                 </Card>

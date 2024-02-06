@@ -17,7 +17,7 @@ import { calculateBmi } from '../../utils/WeightUtils';
 import { Typography } from '@mui/material';
 
 export default function AddWeightModal(props: any) {
-    const { open, setOpen, newWeightAdded, setNewWeightAdded } = props;
+    const { open, setOpen, setNewWeightAdded } = props;
 
     const userContext = useUserContext();
     const handleClose = () => {
