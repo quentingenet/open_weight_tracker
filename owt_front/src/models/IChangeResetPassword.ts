@@ -1,4 +1,4 @@
 export interface IChangeResetPassword {
-    passwordChanged: string;
-    passwordChangedBis: string;
+    password: string;
+    passwordBis: string;
 }

@@ -3,6 +3,8 @@ from rest_framework.exceptions import AuthenticationFailed
 from owt_api.models import AppUser
 import decouple
 
+from django.core.mail import send_mail
+from django.conf import settings
 from decouple import config
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
@@ -35,3 +37,18 @@ def check_first_connection(user_id):
 
 def check_user_id(user_id):
     return AppUser.objects.get(id=user_id) is not None
+
+
+def send_email(user_email, token):
+    subject = 'Reset your password on Open Weight Tracker'
+    message_body = f'Please click on the following link to reset your password: http://localhost:5173/reset-password/{token}'
+    send_mail(
+        subject,
+        message_body,
+        settings.EMAIL_HOST_USER,  # Adresse e-mail de l'expéditeur
+        [user_email],  # Liste des adresses e-mail des destinataires
+        fail_silently=False,
+    )
+
+
+

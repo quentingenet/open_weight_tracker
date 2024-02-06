@@ -5,7 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 class AppUser(AbstractUser):
     is_accepted_terms = models.BooleanField(default=False, blank=False, null=False)
-
+    email = models.EmailField(unique=True, blank=False, null=False)
+    
     def __str__(self):
         return f'id {self.id}, {self.username}, {self.email}'
 
@@ -14,7 +15,6 @@ class PasswordResetToken(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     token = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()
 
     def __str__(self):
         return f"Reset token for {self.user.username}"

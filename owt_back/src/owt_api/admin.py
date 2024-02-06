@@ -6,7 +6,7 @@ class AppUserAdmin(admin.ModelAdmin):
     list_display = ('id','username', 'email', 'date_joined', 'is_active', 'is_staff', 'is_superuser', 'is_accepted_terms')
 
 class PasswordResetTokenAdmin(admin.ModelAdmin):
-    list_display = ('id','user', 'token', 'created_at', 'expires_at')
+    list_display = ('id','user', 'token', 'created_at')
     
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('id', 'user',)

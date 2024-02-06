@@ -141,13 +141,27 @@ export const initData = async (dataInitial: IInitialData) => {
 };
 
 export const resetAndChangePassword = (emailResetPassword: string) => {
-    const emailUser = emailResetPassword;
+    const emailUser = { emailUser: emailResetPassword };
 
-    return fetch(API_URL.concat('resetPassword'), {
+    return fetch(API_URL.concat('password-reset/generate_reset_token/'), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(emailUser),
+    });
+};
+
+export const resetPasswordProcess = (
+    newResetPassword: string,
+    token: string
+) => {
+    const newPasswordData = { new_password: newResetPassword, token: token };
+    return fetch(API_URL.concat('users/update_new_password/'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newPasswordData),
     });
 };

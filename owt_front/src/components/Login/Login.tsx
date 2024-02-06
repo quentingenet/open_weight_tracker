@@ -16,7 +16,10 @@ import { ILoginForm } from '../../models/ILoginForm';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { login as loginService } from '../../services/UserService';
+import {
+    login as loginService,
+    resetAndChangePassword,
+} from '../../services/UserService';
 import { useUserContext } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { emailValidator } from '../../utils/Regex';
@@ -270,6 +273,9 @@ export default function Login() {
                                                         emailValidator
                                                     )
                                                 ) {
+                                                    resetAndChangePassword(
+                                                        emailRecovery
+                                                    );
                                                     setIsMailSended(true);
                                                     setErrorRecovery(false);
                                                 } else {
@@ -335,7 +341,7 @@ export default function Login() {
                                                     mb: 2,
                                                 }}
                                             >
-                                                Mail is sended. Maybe check your
+                                                Mail is sent. Maybe check your
                                                 spams folder if you don't see it
                                                 from inbox
                                             </Alert>

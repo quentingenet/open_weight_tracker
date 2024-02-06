@@ -10,6 +10,7 @@ import Weights from './pages/Weights/Weights.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Contact from './pages/Contact/Contact.tsx';
 import Terms from './pages/Terms/Terms.tsx';
+import ResetPassword from './components/ResetPassword/ResetPassword.tsx';
 
 function App() {
     const userContext = useUserContext();
@@ -27,6 +28,11 @@ function App() {
                             <Landpage />
                         )
                     }
+                />
+
+                <Route
+                    path='/reset-password/:token'
+                    element={<ResetPassword />}
                 />
                 <Route
                     path='/dashboard'

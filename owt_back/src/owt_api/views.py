@@ -8,17 +8,18 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from django.http import HttpResponseForbidden
-
+from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import action, permission_classes
-from .global_utils import check_first_connection, get_user_id_from_jwt
+from .global_utils import check_first_connection, get_user_id_from_jwt, send_email
 from .services import user_service
 from .models import AppUser, PasswordResetToken, Person, InitialData, WeightRecord
 from .serializers import AppUserSerializer, PasswordResetTokenSerializer, PersonSerializer, InitialDataSerializer, WeightRecordSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
-
+import uuid
 
 class CustomTokenObtainPairView(TokenObtainPairView):
+    
     @action(detail=False, methods=['post'])
     def post(self, request, *args, **kwargs):
         print("REQUEST DATA", request.data)
@@ -69,34 +70,58 @@ class AppUserModelViewSet(ModelViewSet):
                 return HttpResponseForbidden("You are not allowed to access this resource")
         else:
             return HttpResponseForbidden("You are not allowed to access this resource")
+    
+    @action(detail=False, methods=['post'])
+    def update_new_password(self, request):
+        print("RESET PASSWORD",request)
+        new_password = request.data.get('new_password')
+        new_password = make_password(new_password)
+        token = request.data.get('token')
+        print("TOKEN",token)
+        user_to_update = PasswordResetToken.objects.get(token=token)
+        user_found = AppUser.objects.get(email=user_to_update.user.email)
+        AppUser.objects.filter(email=user_found.email).update(password=new_password)
+        return Response({"message": "Password updated successfully"}, status=status.HTTP_200_OK)
+        
         
 class PasswordResetTokenModelViewSet(ModelViewSet):
     serializer_class = PasswordResetTokenSerializer
 
+
     def get_queryset(self):
         return PasswordResetToken.objects.all()
     
-    @action(detail=False, methods=['post'])
-    def generate_reset_token(user_id):
-        refresh = RefreshToken.for_user(user_id)
-        return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
     
     @action(detail=False, methods=['post'])
-    def validate_reset_token(token):
+    def generate_reset_token(self, request):
+        email_user = request.data.get('emailUser')
+        # Vérifier si l'utilisateur existe et s'il est actif
+        user_to_reset = get_object_or_404(AppUser, email=email_user, is_active=True)
+        # Créer un jeton de réinitialisation de mot de passe et l'envoyer par e-mail
+        new_uuid = uuid.uuid4()
+        reset_token = str(new_uuid)
+        PasswordResetToken.objects.create(user=user_to_reset, token=reset_token)
+        send_email(email_user, reset_token)
+        return Response({"message": "Reset email token created successfully and recovery mail sent"}, status=status.HTTP_201_CREATED)
+
+
+    @action(detail=False, methods=['post'])
+    def validate_reset_token(self, request):
         try:
-            refresh_token = RefreshToken(token)
-            user_id = refresh_token.payload['user_id']
-            return user_id
-        except TokenError:
-            return None
+            token = request.data.get('token')
+            reset_token = PasswordResetToken.objects.get(token=token)
+            if reset_token and reset_token.token == token:
+                return Response({"message": "Reset token is valid"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Invalid or expired reset token"}, status=status.HTTP_400_BAD_REQUEST)
+        except PasswordResetToken.DoesNotExist:
+            return Response({"error": "Invalid or expired reset token"}, status=status.HTTP_400_BAD_REQUEST)
 
     
 class PersonModelViewSet(ModelViewSet):
     serializer_class = PersonSerializer
     permission_classes = [IsAuthenticated]
+
 
     def get_queryset(self):
         return Person.objects.all()
@@ -106,8 +131,10 @@ class InitialDataModelViewSet(ModelViewSet):
     serializer_class = InitialDataSerializer
     permission_classes = [IsAuthenticated]
 
+
     def get_queryset(self):
         return InitialData.objects.all()
+
 
     @action(detail=False, methods=['get'])
     def get_weights(self, request):
@@ -123,6 +150,7 @@ class WeightRecordModelViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = WeightRecord.objects.all()
 
+
     @action(detail=False, methods=['get'])
     def get_weights(self, request):
         user_id = get_user_id_from_jwt(request)
@@ -131,16 +159,16 @@ class WeightRecordModelViewSet(ModelViewSet):
         serializer = WeightRecordSerializer(weights, many=True)
         return Response(serializer.data)
     
+    
     @action(detail=False, methods=['post'])
     def create_weight(self, request):
-        print("REQUEST DATA =", request.data)
+  
         user_id = get_user_id_from_jwt(request)
 
         try:
             user_connected = get_object_or_404(AppUser, id=user_id)
             person_connected = get_object_or_404(Person, user=user_connected)
        
-            print("USER CONNECTED ID =", user_id)
             new_weight = WeightRecord.objects.create(
                 weight_record_date=request.data.get('weight_record_date'),
                 weight_value=request.data.get('weight_value'),
@@ -160,9 +188,8 @@ class WeightRecordModelViewSet(ModelViewSet):
     
     @action(detail=False, methods=['delete'])
     def delete_weight(self, request):
-        print("REQUEST DATA =", request.data)
+
         weight_id = request.data.get('weight_id')
-        print("WEIGHT ID =", weight_id)
 
         user_id = get_user_id_from_jwt(request)
         user_connected = get_object_or_404(AppUser, id=user_id)
