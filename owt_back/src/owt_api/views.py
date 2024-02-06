@@ -1,3 +1,4 @@
+from tokenize import TokenError
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -11,8 +12,8 @@ from django.http import HttpResponseForbidden
 from rest_framework.decorators import action, permission_classes
 from .global_utils import check_first_connection, get_user_id_from_jwt
 from .services import user_service
-from .models import AppUser, Person, InitialData, WeightRecord
-from .serializers import AppUserSerializer, PersonSerializer, InitialDataSerializer, WeightRecordSerializer
+from .models import AppUser, PasswordResetToken, Person, InitialData, WeightRecord
+from .serializers import AppUserSerializer, PasswordResetTokenSerializer, PersonSerializer, InitialDataSerializer, WeightRecordSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -69,7 +70,30 @@ class AppUserModelViewSet(ModelViewSet):
         else:
             return HttpResponseForbidden("You are not allowed to access this resource")
         
+class PasswordResetTokenModelViewSet(ModelViewSet):
+    serializer_class = PasswordResetTokenSerializer
 
+    def get_queryset(self):
+        return PasswordResetToken.objects.all()
+    
+    @action(detail=False, methods=['post'])
+    def generate_reset_token(user_id):
+        refresh = RefreshToken.for_user(user_id)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+    
+    @action(detail=False, methods=['post'])
+    def validate_reset_token(token):
+        try:
+            refresh_token = RefreshToken(token)
+            user_id = refresh_token.payload['user_id']
+            return user_id
+        except TokenError:
+            return None
+
+    
 class PersonModelViewSet(ModelViewSet):
     serializer_class = PersonSerializer
     permission_classes = [IsAuthenticated]

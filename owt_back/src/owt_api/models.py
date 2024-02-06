@@ -10,6 +10,16 @@ class AppUser(AbstractUser):
         return f'id {self.id}, {self.username}, {self.email}'
 
 
+class PasswordResetToken(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    token = models.CharField(max_length=255, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+    def __str__(self):
+        return f"Reset token for {self.user.username}"
+    
+
 class InitialData(models.Model):
     class Sex(models.TextChoices):
         MALE = 'M'
