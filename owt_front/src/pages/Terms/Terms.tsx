@@ -10,6 +10,7 @@ export default function Terms() {
                 direction='column'
                 justifyContent='center'
                 alignItems='center'
+                xs={12}
             >
                 <Typography
                     variant='h4'
@@ -20,8 +21,16 @@ export default function Terms() {
                         Terms of Use for the Open Weight Tracker Application
                     </strong>
                 </Typography>
-
-                <Typography sx={{ mt: 2, color: 'white' }}>
+                </Grid>
+                <Grid
+                container
+                direction='column'
+                justifyContent='center'
+                alignItems='center'
+                xs={12}
+            >
+                <Grid item mt={2} color={"white"}>
+                <Typography>
                     <strong>
                         The Open Weight Tracker Application is a free and
                         open-source application under copyleft, developed by
@@ -34,7 +43,6 @@ export default function Terms() {
                     <ul
                         style={{
                             listStyleType: 'none',
-                            width: '100%',
                             textAlign: 'center',
                         }}
                     >
@@ -147,6 +155,7 @@ export default function Terms() {
                         exclusive jurisdiction of French courts.
                     </ul>
                 </Typography>
+                </Grid>
             </Grid>
             <Button onClick={() => navigate('/')}>BACK TO LOGIN</Button>
         </>

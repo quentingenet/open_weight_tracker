@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import dayjs from 'dayjs';
@@ -13,7 +12,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 200,
+    width: { xs: '80%', sm: '70%', md: '40%', lg: '30%'},
     bgcolor: '#384454',
     border: '2px solid #000',
     boxShadow: 24,

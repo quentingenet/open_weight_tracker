@@ -14,7 +14,7 @@ export default function ModalOwt(props: any) {
         overflowY: 'scroll',
         transform: 'translate(-50%, -50%)',
         width: {
-            xs: '50%',
+            xs: '90%',
             sm: '60%',
             md: '50%',
             lg: '40%',
@@ -24,7 +24,7 @@ export default function ModalOwt(props: any) {
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
-        p: 4,
+        p: 2,
     };
 
     return (
