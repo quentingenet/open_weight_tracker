@@ -24,16 +24,7 @@ export default function Landpage() {
                         <span className='iconScale'>OPEN SOURCE</span>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <div className='descriptionLandpage'>
-                        <p>
-                            <span className='firstTime'>
-                                Is it your first time here ?
-                            </span>
-                        </p>
-                    </div>
-                </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} marginTop={3}>
                     <Stack
                         direction='row'
                         spacing={1}

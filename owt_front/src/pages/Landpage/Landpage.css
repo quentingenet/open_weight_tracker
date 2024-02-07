@@ -3,20 +3,12 @@
     color: #d4d3dc;
 }
 
-.descriptionLandpage {
-    font-size: 22px;
-    min-width: 40%;
-    max-width: 50%;
-    margin: 0 auto;
-}
-
 .scaleIcon {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 15%;
-    max-width: 30%;
+    width:20%;
     background-color: #1976d2;
     border-radius: 20px;
 }
@@ -30,10 +22,6 @@ span.iconScale {
     color: #d4d3dc;
     font-weight: bold;
     padding: 3%;
-}
-
-span.firstTime {
-    font-weight: bold;
 }
 
 @keyframes fadeIn {
