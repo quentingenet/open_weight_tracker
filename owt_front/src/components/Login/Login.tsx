@@ -129,7 +129,14 @@ export default function Login() {
 
     return (
         <>
-            <Grid container marginTop={3} justifyContent={'center'}>
+            <Grid
+                container
+                xs={12}
+                md={10}
+                lg={4}
+                justifyContent={'center'}
+                margin={'auto'}
+            >
                 <form
                     onSubmit={handleSubmit(submitLogin)}
                     className='loginFormInput'
@@ -228,7 +235,7 @@ export default function Login() {
                         flexDirection={'column'}
                         alignItems={'center'}
                     >
-                        <Grid item xs={10} marginBottom={2}>
+                        <Grid item xs={10} marginBottom={1}>
                             {isLoading ? (
                                 <CircularProgress color='primary' />
                             ) : (

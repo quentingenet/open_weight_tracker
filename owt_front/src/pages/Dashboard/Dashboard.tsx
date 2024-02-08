@@ -91,45 +91,44 @@ export default function Dashboard() {
                         justifyContent={'center'}
                         alignItems={'center'}
                         flexDirection={{ xs: 'column', lg: 'row' }}
-                        gap={2}
+                        gap={{ xs: 3, lg: 1 }}
+                        flexWrap='wrap'
                     >
-                        <Grid
-                            item
-                            xs={6}
-                            lg={3}
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                        >
+                        <Grid item xs={6} lg={3}>
                             <Tooltip title='Check my weight stats'>
                                 <Card
                                     onClick={handleChangeChart}
                                     elevation={12}
                                     sx={{
                                         cursor: 'pointer',
-                                        width: { xs: '200px', lg: '100%' },
-                                        height: { xs: 200, lg: 170 },
+                                        width: { xs: '200px', lg: '200px' },
+                                        height: { xs: '200px', lg: '200px' },
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         justifyContent: 'center',
+                                        margin: '0 auto',
+                                        borderRadius: '50%',
+                                        backgroundColor: '#1976d2',
+                                        color: 'white',
+                                        padding: '10px',
                                     }}
+                                    className={'circle'}
                                 >
                                     <CardContent>
                                         <Typography
                                             sx={{
                                                 fontSize: 22,
                                                 fontWeight: 'bold',
+                                                color: 'white',
                                             }}
-                                            color='text.secondary'
+                                            color='white'
                                         >
                                             Last weight
                                         </Typography>
                                         <Divider />
-                                        <Typography
-                                            variant='h5'
-                                            component='div'
-                                        ></Typography>
-                                        <Typography color='text.secondary'>
+
+                                        <Typography color='white' paddingY={1}>
                                             {dayjs(lastWeight?.date).format(
                                                 'DD/MM/YYYY hh:mm A'
                                             )}
@@ -148,25 +147,24 @@ export default function Dashboard() {
                                 </Card>
                             </Tooltip>
                         </Grid>
-
-                        <Grid
-                            item
-                            xs={6}
-                            lg={3}
-                            justifyContent={'center'}
-                            alignItems={'center'}
-                        >
-                            <Tooltip title='Check my initial data'>
+                        <Grid item xs={6} lg={3}>
+                            <Tooltip title='Check my BMI stats'>
                                 <Card
+                                    onClick={handleChangeChart}
                                     elevation={12}
                                     sx={{
                                         cursor: 'pointer',
-                                        width: { xs: '200px', lg: '100%' },
-                                        height: { xs: 200, lg: 170 },
+                                        width: { xs: '200px', lg: '200px' },
+                                        height: { xs: '200px', lg: '200px' },
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         justifyContent: 'center',
+                                        margin: '0 auto',
+                                        borderRadius: '50%',
+                                        backgroundColor: '#1976d2',
+                                        color: 'white',
+                                        padding: '10px',
                                     }}
                                 >
                                     <CardContent>
@@ -175,13 +173,57 @@ export default function Dashboard() {
                                                 fontSize: 22,
                                                 fontWeight: 'bold',
                                             }}
-                                            color='text.secondary'
+                                            color='white'
+                                        >
+                                            Last BMI
+                                        </Typography>
+                                        <Divider />
+
+                                        <Typography color='white' paddingY={1}>
+                                            {dayjs(lastWeight?.date).format(
+                                                'DD/MM/YYYY hh:mm A'
+                                            )}
+                                        </Typography>
+
+                                        <Typography variant='h6'>
+                                            BMI: {lastWeight?.bmi}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Tooltip>
+                        </Grid>
+                        <Grid item xs={6} lg={3}>
+                            <Tooltip title='Check my initial data'>
+                                <Card
+                                    elevation={12}
+                                    sx={{
+                                        cursor: 'pointer',
+                                        width: { xs: '200px', lg: '200px' },
+                                        height: { xs: '200px', lg: '200px' },
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        margin: '0 auto',
+                                        borderRadius: '50%',
+                                        backgroundColor: '#1976d2',
+                                        color: 'white',
+                                        padding: '10px',
+                                    }}
+                                >
+                                    <CardContent>
+                                        <Typography
+                                            sx={{
+                                                fontSize: 22,
+                                                fontWeight: 'bold',
+                                            }}
+                                            color='white'
                                         >
                                             Goal weight
                                         </Typography>
                                         <Divider />
 
-                                        <Typography variant='h5'>
+                                        <Typography variant='h5' paddingY={1}>
                                             {initialData[0]?.goalWeight}{' '}
                                             {userContext.isEuropeanUnitMeasure
                                                 ? ' kg'
@@ -193,7 +235,7 @@ export default function Dashboard() {
                                                 ? 'kg'
                                                 : 'lbs'}
                                             <br />
-                                            left to reach your weight goal!
+                                            left to reach goal!
                                         </Typography>
                                     </CardContent>
                                 </Card>
@@ -222,7 +264,6 @@ export default function Dashboard() {
                 </Grid>
             ) : (
                 <>
-                    {' '}
                     <Grid container marginTop={{ xs: 3, lg: 3 }}>
                         <Grid item xs={12} justifyContent={'center'}>
                             <h1>

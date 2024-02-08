@@ -160,7 +160,14 @@ export const InitialData: React.FC = () => {
 
     return (
         <>
-            <Grid container marginTop={3} justifyContent={'center'}>
+            <Grid
+                container
+                xs={12}
+                md={10}
+                lg={4}
+                margin={'auto'}
+                justifyContent={'center'}
+            >
                 <form
                     className='register-form-input'
                     onSubmit={handleSubmit(submitInitialDataRegister)}

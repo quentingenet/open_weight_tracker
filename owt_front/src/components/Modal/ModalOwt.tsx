@@ -39,7 +39,10 @@ export default function ModalOwt(props: any) {
                     <Typography
                         variant='h6'
                         component='h2'
-                        sx={{ color: 'black', textAlign: 'center' }}
+                        sx={{
+                            color: 'black',
+                            textAlign: 'center',
+                        }}
                     >
                         Terms of Use for the Open Weight Tracker Application
                     </Typography>

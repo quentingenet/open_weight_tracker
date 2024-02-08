@@ -144,7 +144,14 @@ export const Register = () => {
 
     return (
         <>
-            <Grid container marginTop={3} justifyContent={'center'}>
+            <Grid
+                container
+                justifyContent={'center'}
+                margin={'auto'}
+                xs={12}
+                md={10}
+                lg={4}
+            >
                 <form
                     onSubmit={handleSubmit(submitRegister)}
                     className='register-form-input'
@@ -348,7 +355,7 @@ export const Register = () => {
                                 justifyContent={'center'}
                                 sx={{ color: 'black', fontSize: '0.8em' }}
                             >
-                                <Typography paddingX={{ xs: 8, lg: 18 }}>
+                                <Typography paddingX={{ xs: 8, lg: 8 }}>
                                     I confirm that I have read, understood, and
                                     accepted
                                 </Typography>
@@ -384,7 +391,7 @@ export const Register = () => {
                         </Grid>
                     </Grid>
                     <Grid container justifyContent={'center'}>
-                        <Grid item marginY={3} xs={10}>
+                        <Grid item marginBottom={2} xs={10}>
                             {isLoading ? (
                                 <CircularProgress color='primary' />
                             ) : (

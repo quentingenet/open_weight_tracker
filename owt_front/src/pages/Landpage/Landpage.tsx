@@ -30,6 +30,7 @@ export default function Landpage() {
                         spacing={1}
                         justifyContent={'center'}
                         alignItems='center'
+                        marginBottom={3}
                     >
                         <Typography variant='h6'>Login</Typography>
                         <Switch

@@ -73,7 +73,17 @@ export default function Contact() {
                 <Grid item xs={12}>
                     <h1>Contact</h1>
                 </Grid>
-                <Grid container justifyContent={'center'}>
+                <Grid
+                    container
+                    display={'flex'}
+                    flexDirection={'column'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                    style={{ margin: '0 auto' }}
+                    xs={12}
+                    md={10}
+                    lg={6}
+                >
                     <form
                         onSubmit={handleSubmit(submitContact)}
                         className='contactForm'
@@ -84,7 +94,7 @@ export default function Contact() {
                                 marginTop={3}
                                 xs={12}
                                 justifyContent={'center'}
-                                padding={1}
+                                paddingX={1}
                             >
                                 <Controller
                                     name='email'
@@ -138,7 +148,7 @@ export default function Contact() {
                                                 padding: '10px',
                                                 fontSize: '16px',
                                                 fontFamily: 'Arial',
-                                                backgroundColor: '#D4D3DB',
+                                                backgroundColor: 'white',
                                                 borderRadius: '5px',
                                             }}
                                             maxRows={15}

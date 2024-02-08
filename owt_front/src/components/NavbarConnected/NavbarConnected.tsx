@@ -4,6 +4,7 @@ import {
     Box,
     Button,
     Container,
+    Grid,
     IconButton,
     Menu,
     MenuItem,
@@ -15,6 +16,7 @@ import './NavbarConnected.css';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../contexts/UserContext';
+import scaleIcon from '../../assets/scale-icon.png';
 
 export default function NavbarConnected() {
     const navigate = useNavigate();
@@ -53,22 +55,31 @@ export default function NavbarConnected() {
             <AppBar position='fixed'>
                 <Container maxWidth='xl'>
                     <Toolbar disableGutters>
-                        <Typography
-                            variant='h6'
-                            noWrap
+                        <Box
                             sx={{
-                                mr: 5,
-                                display: { xs: 'none', md: 'flex' },
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.1rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 3,
+                                paddingY: 1,
                             }}
                         >
-                            Open Weight Tracker
-                        </Typography>
-
+                            <img src={scaleIcon} />
+                            <Typography
+                                variant='h6'
+                                noWrap
+                                sx={{
+                                    mr: 5,
+                                    display: { xs: 'none', md: 'flex' },
+                                    fontFamily: 'monospace',
+                                    fontWeight: 700,
+                                    letterSpacing: '.1rem',
+                                    color: 'inherit',
+                                    textDecoration: 'none',
+                                }}
+                            >
+                                Open Weight Tracker
+                            </Typography>
+                        </Box>
                         <Box
                             sx={{
                                 flexGrow: 1,
