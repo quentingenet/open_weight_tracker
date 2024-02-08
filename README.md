@@ -86,4 +86,4 @@ Nobody should be restricted by the software they use. There are four freedoms th
 -   Quentin GENET
 -   Maybe you as contributor... ? 😄🚀
 
-![OWT preview](https://github.com/quentingenet/open_weight_tracker/blob/main/owt_preview.png)
+![OWT preview](https://github.com/quentingenet/open_weight_tracker/blob/develop/owt_preview.png)
