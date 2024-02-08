@@ -4,7 +4,6 @@ import {
     Box,
     Button,
     Container,
-    Grid,
     IconButton,
     Menu,
     MenuItem,
@@ -52,7 +51,14 @@ export default function NavbarConnected() {
 
     return (
         <>
-            <AppBar position='fixed'>
+            <AppBar
+                position='fixed'
+                sx={{
+                    backgroundImage:
+                        'linear-gradient(to top, #1e4164, #1b4e7e, #185b9a, #1669b5, #1976d2)',
+                    paddingY: '1px',
+                }}
+            >
                 <Container maxWidth='xl'>
                     <Toolbar disableGutters>
                         <Box
@@ -65,13 +71,14 @@ export default function NavbarConnected() {
                         >
                             <img src={scaleIcon} />
                             <Typography
-                                variant='h6'
+                                variant='h5'
                                 noWrap
                                 sx={{
                                     mr: 5,
                                     display: { xs: 'none', md: 'flex' },
-                                    fontFamily: 'monospace',
-                                    fontWeight: 700,
+                                    fontFamily: 'Khand',
+                                    fontSize: '1.8rem',
+                                    fontWeight: 600,
                                     letterSpacing: '.1rem',
                                     color: 'inherit',
                                     textDecoration: 'none',
@@ -157,6 +164,8 @@ export default function NavbarConnected() {
                                             my: 2,
                                             color: 'white',
                                             display: 'block',
+                                            fontSize: '1.6rem',
+                                            fontFamily: 'Khand',
                                         }}
                                     >
                                         {page}

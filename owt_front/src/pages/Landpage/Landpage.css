@@ -9,8 +9,19 @@
     align-items: center;
     width: 200px;
     justify-content: center;
-    background-color: #1976d2;
+    background-image: linear-gradient(
+        to top,
+        #1e4164,
+        #1b4e7e,
+        #185b9a,
+        #1669b5,
+        #1976d2
+    );
     border-radius: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
     padding: 10px;
 }
 
@@ -22,7 +33,7 @@ span.iconScale {
     font-size: 20px;
     color: white;
     font-weight: bold;
-    padding: 3%;
+    padding: 2px;
 }
 
 @keyframes fadeIn {

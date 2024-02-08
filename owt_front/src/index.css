@@ -1,10 +1,28 @@
 :root {
-    font-family: 'Asap Condensed', Inter, system-ui, Avenir, Helvetica, Arial,
-        sans-serif;
+    font-family: 'Khand', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #384454;
+    background-image: linear-gradient(
+        to right top,
+        #1976d2,
+        #487dca,
+        #6284c2,
+        #768bb9,
+        #8692b1,
+        #8692b1,
+        #8692b1,
+        #8692b1,
+        #768bb9,
+        #6284c2,
+        #487dca,
+        #1976d2
+    );
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 a {
@@ -17,9 +35,12 @@ a:hover {
 }
 
 h1 {
-    font-size: 3.5em;
+    font-family: 'Khand', sans-serif;
+    font-size: 4em;
     line-height: 1.1;
-    font-weight: 700;
+    font-weight: 600;
+    color: white;
+    text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .errorText {

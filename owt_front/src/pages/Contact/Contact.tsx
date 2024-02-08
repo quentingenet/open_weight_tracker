@@ -70,7 +70,12 @@ export default function Contact() {
     return (
         <>
             <Grid container>
-                <Grid item xs={12}>
+                <Grid
+                    item
+                    xs={12}
+                    justifyContent={'center'}
+                    marginTop={{ xs: 5, lg: 5 }}
+                >
                     <h1>Contact</h1>
                 </Grid>
                 <Grid

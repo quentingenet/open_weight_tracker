@@ -74,12 +74,7 @@ export default function Weights() {
                 openDisplayWeightModal={openDisplayWeightModal}
                 setOpenDisplayWeightModal={setOpenDisplayWeightModal}
             />
-            <Grid
-                container
-                marginTop={6}
-                justifyContent={'center'}
-                flexDirection={'column'}
-            >
+            <Grid container justifyContent={'center'} flexDirection={'column'}>
                 {open && (
                     <AddWeightModal
                         open={open}
@@ -88,14 +83,21 @@ export default function Weights() {
                         setNewWeightAdded={setNewWeightAdded}
                     />
                 )}
-                <Typography variant='h2'>My weights</Typography>
+                <Grid
+                    item
+                    xs={12}
+                    justifyContent={'center'}
+                    marginTop={{ xs: 5, lg: 6 }}
+                >
+                    <h1>Weight</h1>
+                </Grid>
             </Grid>
             <Grid container justifyContent={'center'}>
                 <Grid
                     item
-                    marginY={5}
                     xs={12}
                     md={4}
+                    marginTop={{ xs: 5, lg: 4 }}
                     justifyContent={'center'}
                     flexDirection={'column'}
                 >
