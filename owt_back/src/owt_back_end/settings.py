@@ -55,9 +55,9 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True  # To change in production by False and add the allowed origins
+CORS_ALLOW_ALL_ORIGINS = False  # To change in production by False and add the allowed origins
 
 CORS_ALLOW_HEADERS = [
     'Authorization',
@@ -88,8 +88,8 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'owt.quentingenet.fr',
-    'owt-api.quentingenet.fr',
+    'http://owt.quentingenet.fr',
+    'https://owt.quentingenet.fr',
     'http://owt-api.quentingenet.fr',
     'https://owt-api.quentingenet.fr',
     'http://localhost:5173',
