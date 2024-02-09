@@ -9,7 +9,6 @@ import {
     TableHead,
     TableRow,
     Tooltip,
-    Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';

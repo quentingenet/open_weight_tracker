@@ -12,10 +12,11 @@ export default function Landpage() {
     return (
         <>
             <Grid container>
-                <Grid item xs={12}>
-                    <div className='titleLandpage'>
-                        <h1>Open Weight Tracker</h1>
-                    </div>
+                <Grid
+                    item
+                    xs={12}
+                >
+                    <h1>Open Weight Tracker</h1>
                 </Grid>
                 <Grid item xs={12} display={'flex'} justifyContent={'center'}>
                     <div className='scaleIcon'>
