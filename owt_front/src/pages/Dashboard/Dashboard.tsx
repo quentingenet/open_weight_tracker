@@ -140,7 +140,7 @@ export default function Dashboard() {
                                             sx={{ fontFamily: 'Khand' }}
                                         >
                                             {dayjs(lastWeight?.date).format(
-                                                'DD/MM/YYYY hh:mm A'
+                                                'DD/MM/YYYY'
                                             )}
                                         </Typography>
                                         <Typography
@@ -261,7 +261,7 @@ export default function Dashboard() {
                                             sx={{ fontFamily: 'Khand' }}
                                         >
                                             {dayjs(lastWeight?.date).format(
-                                                'DD/MM/YYYY hh:mm A'
+                                                'DD/MM/YYYY'
                                             )}
                                         </Typography>
 

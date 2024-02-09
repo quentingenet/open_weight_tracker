@@ -2,7 +2,6 @@
     font-family: 'Khand', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-  
     color: rgba(255, 255, 255, 0.87);
     background-image: linear-gradient(
         to right top,
@@ -20,6 +19,9 @@
         #1976d2
     );
     background-size: cover;
+    margin: 0 0;
+    text-align: center;
+    min-height: 100vh;/*to fix display bug whith gutter*/
 }
 
 a {
@@ -34,7 +36,7 @@ a:hover {
 h1 {
     font-family: 'Khand', sans-serif;
     font-size: 4em;
-    line-height: 1.1;
+    line-height: .4;
     font-weight: 600;
     color: white;
     text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);

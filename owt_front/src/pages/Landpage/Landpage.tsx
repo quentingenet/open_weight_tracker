@@ -50,7 +50,7 @@ export default function Landpage() {
                 <Grid
                     item
                     xs={12}
-                    marginTop={3}
+                    marginTop={2}
                     justifyContent={'center'}
                     textAlign={'center'}
                 >
