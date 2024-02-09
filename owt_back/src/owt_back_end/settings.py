@@ -69,7 +69,8 @@ CORS_ALLOW_ALL_ORIGINS = True  # To change in production by False and add the al
 
 CORS_ALLOW_HEADERS = [
     'Authorization',
-    'Content-Type'
+    'Content-Type',
+    'X-Custom-Header', 
 ]
 
 CORS_EXPOSE_HEADERS = [
@@ -77,11 +78,22 @@ CORS_EXPOSE_HEADERS = [
     'Content-Type'
 ]
 
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
 CORS_ALLOWED_ORIGINS = [
-   'http://owt-api.quentingenet.fr',
-   'https://owt-api.quentingenet.fr',
-   'http://localhost:5173',
-   'http://127.0.0.1:5173'
+    'owt.quentingenet.fr',
+    'owt-api.quentingenet.fr',
+    'http://owt-api.quentingenet.fr',
+    'https://owt-api.quentingenet.fr',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173'
    ]
 
 ROOT_URLCONF = 'owt_back_end.urls'
