@@ -54,6 +54,6 @@ p {
 @media (max-width: 768px) {
     h1 {
         font-size: 3rem;
-        line-height: .7;
+        line-height: 1;
     }
 }
