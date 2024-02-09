@@ -1,5 +1,12 @@
+import { Grid } from "@mui/material";
+import TitleOwt from "../../components/Utils/TitleOwt/TitleOwt";
+
 export default function Profile() {
   return (
-    <>Profile</>
+    <>
+    <Grid container>
+      <TitleOwt title='Profile' />
+    </Grid>
+    </>
   )
 }

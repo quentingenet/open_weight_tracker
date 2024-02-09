@@ -23,6 +23,7 @@ import {
 import { IWeight } from '../../models/IWeight';
 import dayjs from 'dayjs';
 import DisplayWeightModal from '../../components/Weights/DisplayWeightModal';
+import TitleOwt from '../../components/Utils/TitleOwt/TitleOwt';
 
 export default function Weights() {
     const userContext = useUserContext();
@@ -82,21 +83,16 @@ export default function Weights() {
                         setNewWeightAdded={setNewWeightAdded}
                     />
                 )}
-                <Grid
-                    item
-                    xs={12}
-                    justifyContent={'center'}
-                    marginTop={{ xs: 5, lg: 6 }}
-                >
-                    <h1>Weight</h1>
-                </Grid>
+
+                    <TitleOwt title={'Weights'} />
+       
             </Grid>
             <Grid container justifyContent={'center'}>
                 <Grid
                     item
                     xs={12}
                     md={4}
-                    marginTop={{ xs: 5, lg: 4 }}
+                    marginTop={{lg: 1 }}
                     justifyContent={'center'}
                     flexDirection={'column'}
                 >

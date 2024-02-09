@@ -40,14 +40,9 @@ export default function Terms() {
                         <br /> The Application is available on the website
                         https://owt.quentingenet.fr
                     </strong>
-                    <ul
-                        style={{
-                            listStyleType: 'none',
-                            textAlign: 'center',
-                        }}
-                    >
+              
                         <br />
-                        <li>
+                    
                             <strong>
                                 <center>Legal information</center>
                             </strong>
@@ -58,11 +53,11 @@ export default function Terms() {
                             419 00045Code APE 2620ZN° TVA: FR 22 424 761
                             419Registered office: 2 rue Kellermann - 59100
                             Roubaix - France
-                        </li>
+                   
                         <br />
-                        <li>
+                     
                             <strong>1. Acceptance of Terms of Use</strong>
-                        </li>
+                            <br />
                         1.1. The use of the Open Weight Tracker application
                         (hereinafter referred to as the "Application") is
                         subject to the unconditional acceptance of these Terms
@@ -72,9 +67,9 @@ export default function Terms() {
                         carefully and agrees to comply with all the provisions
                         stated herein.
                         <br />
-                        <li>
+                   
                             <strong>2. Personal Use</strong>
-                        </li>
+                            <br />
                         2.1. The Open Weight Tracker Application is designed
                         solely for personal purposes of information and weight
                         tracking. The user is informed that the information
@@ -86,9 +81,9 @@ export default function Terms() {
                         their diet or lifestyle based on the information
                         provided by the Application.
                         <br />
-                        <li>
+                    
                             <strong>3. User Responsibility</strong>
-                        </li>
+                            <br />
                         3.1. The user is entirely responsible for their
                         decisions, dietary choices, and actions resulting from
                         the use of the Open Weight Tracker Application.
@@ -98,9 +93,9 @@ export default function Terms() {
                         actions taken by the user based on the information
                         provided by the Application.
                         <br />
-                        <li>
+                  
                             <strong>4. No Warranty</strong>
-                        </li>
+                            <br />
                         4.1. The Open Weight Tracker Application is provided "as
                         is" without warranty of accuracy, reliability, or
                         fitness for a particular purpose.
@@ -109,12 +104,12 @@ export default function Terms() {
                         the results obtained from the use of the Application and
                         cannot be held responsible for errors, inaccuracies, or
                         omissions in the information provided.
-                        <li>
+                        <br />
                             <strong>
                                 5. Non-Disclosure of User Data for Advertising
                                 or Marketing Purposes
                             </strong>
-                        </li>
+                            <br />
                         5.1. The creators of the Open Weight Tracker Application
                         commit to not disclosing user data to third parties for
                         advertising or marketing purposes.
@@ -123,41 +118,43 @@ export default function Terms() {
                         rented, or shared with third parties for commercial
                         prospecting without the explicit consent of the user.
                         <br />{' '}
-                        <li>
+                
                             <strong>6. Service Interruption</strong>
-                        </li>
+                            <br />
                         6.1. The user acknowledges that the Application may
                         experience temporary interruptions for technical,
                         maintenance, or other reasons, and the creators of the
                         Application are not responsible for disruptions in use.{' '}
                         <br />
-                        <li>
+                   
                             <strong>7. Collection and Use of Data</strong>
-                        </li>
+                            <br />
                         7.1. The user consents to the collection, storage, and
                         use of their data in accordance with the privacy policy
                         of the Open Weight Tracker Application, accessible on
                         the Application's website. No user data is transferred
                         to a third party or for marketing or analysis purposes.
                         <br />
-                        <li>
+                    
                             <strong>8. Modification of Terms of Use</strong>
-                        </li>
+                            <br />
                         8.1. The creators of the Open Weight Tracker Application
                         reserve the right to modify the Terms at any time. It is
                         the user's responsibility to regularly check for
                         updates.
-                        <li>
+                        <br />
                             <strong>9. Applicable Law and Jurisdiction</strong>
-                        </li>
+                            <br />
                         9.1. These Terms are governed by French law. Any dispute
                         arising from the use of the Application falls under the
                         exclusive jurisdiction of French courts.
-                    </ul>
+                    
                 </Typography>
                 </Grid>
             </Grid>
-            <Button onClick={() => navigate('/')}>BACK TO LOGIN</Button>
+            <Grid container justifyContent={'center'} marginY={2}>
+                <Button variant='contained' onClick={() => navigate('/')}>BACK TO LOGIN</Button>
+            </Grid>
         </>
     );
 }

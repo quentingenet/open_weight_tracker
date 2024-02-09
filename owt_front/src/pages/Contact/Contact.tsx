@@ -16,6 +16,7 @@ import { Email } from '@mui/icons-material';
 import { contactPublic as contactService } from '../../services/UserService';
 import './Contact.css';
 import { useNavigate } from 'react-router-dom';
+import TitleOwt from '../../components/Utils/TitleOwt/TitleOwt';
 export default function Contact() {
     const navigate = useNavigate();
     const initialValueContact: IContactPublic = {
@@ -70,14 +71,7 @@ export default function Contact() {
     return (
         <>
             <Grid container>
-                <Grid
-                    item
-                    xs={12}
-                    justifyContent={'center'}
-                    marginTop={{ xs: 5, lg: 5 }}
-                >
-                    <h1>Contact</h1>
-                </Grid>
+             <TitleOwt title='Contact' />
                 <Grid
                     container
                     display={'flex'}
