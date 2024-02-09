@@ -88,6 +88,7 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    'owt.quentingenet.fr',
     'http://owt.quentingenet.fr',
     'https://owt.quentingenet.fr',
     'http://owt-api.quentingenet.fr',
