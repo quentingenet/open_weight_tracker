@@ -7,7 +7,6 @@ import {
     ArcElement,
     Tooltip as ToolTipChartJS,
     Legend,
-    Title,
 } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { getWeights } from '../../services/WeightService';
