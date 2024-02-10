@@ -43,7 +43,7 @@ def check_user_id(user_id):
 
 def send_email(user_email, token):
     subject = 'Reset your password on Open Weight Tracker'
-    message_body = f'Please click on the following link to reset your password:{decouple.config('URL_PROD')}reset-password/{token}'
+    message_body = f"Please click on the following link to reset your password: {decouple.config('URL_PROD')}reset-password/{token}"
     send_mail(
         subject,
         message_body,
