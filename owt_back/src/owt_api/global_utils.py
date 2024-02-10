@@ -66,3 +66,16 @@ def send_contact_email(user_email , message):
         [email_admin],  # Liste des adresses e-mail des destinataires
         fail_silently=False,
     )
+
+def send_new_user_registered_email(user_email, user_id, username):
+    subject = f'OWT new user : {user_email}'
+    message_body = f"NEW USER ON OWT : {user_email} , ID : {user_id}, USERNAME : {username}"
+    email_admin = config('EMAIL_ADMIN')
+    sender = config('EMAIL_HOST_USER')
+    send_mail(
+        subject,
+        message_body,
+        sender,
+        [email_admin],  # Liste des adresses e-mail des destinataires
+        fail_silently=False,
+    )

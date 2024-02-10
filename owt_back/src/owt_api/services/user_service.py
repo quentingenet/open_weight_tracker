@@ -8,6 +8,8 @@ from rest_framework_simplejwt.tokens import AccessToken
 from owt_api.models import AppUser, InitialData, Person
 from dateutil import parser
 
+from owt_back.src.owt_api.global_utils import send_new_user_registered_email
+
 def register_step_one(data):
     try:
         if data:
@@ -57,6 +59,10 @@ def register_step_two(user_id, data):
     try:
         with transaction.atomic():
             person_connected = Person.objects.create(user=user, initial_data=initial_data)
+        try:
+            send_new_user_registered_email(user.email, user.id, user.username)
+        except Exception as e:
+            return HttpResponse(f'Error, email for new registration could not be sent: {e}', status=status.HTTP_400_BAD_REQUEST)
     except IntegrityError as e:
         # Handle the case where the person could not be created due to an IntegrityError
         return HttpResponse(f'Error, person could not be created: {e}', status=status.HTTP_400_BAD_REQUEST)
