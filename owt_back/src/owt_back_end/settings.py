@@ -25,7 +25,7 @@ SECRET_KEY = decouple.config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://kent121.eu.pythonanywhere.com/"]
 
 # Application definition
 
@@ -88,7 +88,7 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'owt.quentingenet.fr',
+    "https://kent121.eu.pythonanywhere.com/",
     'http://owt.quentingenet.fr',
     'https://owt.quentingenet.fr',
     'http://owt-api.quentingenet.fr',
