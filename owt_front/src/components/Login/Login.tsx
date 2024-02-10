@@ -166,6 +166,11 @@ export default function Login() {
                                                 </InputAdornment>
                                             ),
                                         }}
+                                        onChange={(e) =>
+                                            field.onChange(
+                                                e.target.value.toLowerCase()
+                                            )
+                                        }
                                     />
                                 )}
                             />

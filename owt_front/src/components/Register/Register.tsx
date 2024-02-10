@@ -182,6 +182,11 @@ export const Register = () => {
                                                 </InputAdornment>
                                             ),
                                         }}
+                                        onChange={(e) =>
+                                            field.onChange(
+                                                e.target.value.toLowerCase()
+                                            )
+                                        }
                                     />
                                 )}
                             />
