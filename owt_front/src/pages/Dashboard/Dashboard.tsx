@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Divider, Grid, Link, Tooltip } from '@mui/material';
+import { Divider, Grid, Tooltip } from '@mui/material';
 import {
     Chart as ChartJS,
     ArcElement,
@@ -20,7 +20,7 @@ import ChartSingleWeight from '../../components/Charts/ChartSingleWeight';
 import './Dashboard.css';
 import TitleOwt from '../../components/Utils/TitleOwt/TitleOwt';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
     ChartJS.register(ArcElement, ToolTipChartJS, Legend);
@@ -32,7 +32,7 @@ export default function Dashboard() {
     const [displayChartSingleWeight, setDisplayChartSingleWeight] =
         useState<boolean>(false);
     const lastWeight = weightsData[weightsData.length - 1];
-
+    const navigate = useNavigate();
     const handleChangeChart = () => {
         setDisplayGlobalChartWeights(!displayGlobalChartWeights);
         setDisplayChartSingleWeight(!displayChartSingleWeight);
@@ -82,8 +82,7 @@ export default function Dashboard() {
     ).toFixed(1);
     return (
         <>
-            {weightsData.length >= 1 &&
-            initialData !== null ? (
+            {weightsData.length >= 1 && initialData !== null ? (
                 <Grid container>
                     <Grid
                         container
@@ -92,7 +91,7 @@ export default function Dashboard() {
                         flexDirection={{ xs: 'column', lg: 'row' }}
                         gap={{ xs: 5, lg: 0 }}
                     >
-                        <TitleOwt title="Dashboard"/>
+                        <TitleOwt title='Dashboard' />
                         <Grid item xs={12} lg={3}>
                             <Tooltip title='Check my weight stats'>
                                 <Card
@@ -294,16 +293,26 @@ export default function Dashboard() {
             ) : (
                 <>
                     <Grid container marginTop={{ xs: 3, lg: 3 }}>
-                        <Grid item xs={12} marginTop={{xs:12, lg:12}} justifyContent={'center'}>
-                            <Typography variant='h4' fontFamily={"Khand"} paddingX={4} marginBottom={3}>
+                        <Grid
+                            item
+                            xs={12}
+                            marginTop={{ xs: 12, lg: 12 }}
+                            justifyContent={'center'}
+                        >
+                            <Typography
+                                variant='h4'
+                                fontFamily={'Khand'}
+                                paddingX={4}
+                                marginBottom={3}
+                            >
                                 Please enter some weights to display your
                                 dashboard...
                             </Typography>
-                            <Link href='/weights' underline="none" color={"white"} fontSize={"1.8rem"}>
                             <AddCircleOutlineOutlined
-                                                    sx={{ cursor: 'pointer', fontSize: '2rem'}}
-                                                /> Add a weight
-                                </Link>
+                                onClick={() => navigate('/weights')}
+                                sx={{ cursor: 'pointer', fontSize: '2rem' }}
+                            />{' '}
+                            Add a weight
                         </Grid>
                     </Grid>
                 </>

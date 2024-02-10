@@ -8,6 +8,8 @@ from django.conf import settings
 from decouple import config
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
+import decouple
+
 
 def get_user_id_from_jwt(request):
     auth_header = request.META.get('HTTP_AUTHORIZATION')
@@ -41,7 +43,7 @@ def check_user_id(user_id):
 
 def send_email(user_email, token):
     subject = 'Reset your password on Open Weight Tracker'
-    message_body = f'Please click on the following link to reset your password: http://localhost:5173/reset-password/{token}'
+    message_body = f'Please click on the following link to reset your password:{decouple.config('URL_PROD')}reset-password/{token}'
     send_mail(
         subject,
         message_body,
