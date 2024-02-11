@@ -73,8 +73,8 @@ export function ChartWeights(props: any) {
         <>
             <Grid
                 container
-                width={{ xs: '500px', lg: '800px' }}
-                height={{ xs: '400px', lg: '600px' }}
+                width={{ xs: '300px', lg: '800px' }}
+                height={{ xs: '500px', lg: '600px' }}
                 padding={'10px'}
             >
                 <Line

@@ -89,7 +89,8 @@ export default function Dashboard() {
                         justifyContent={'center'}
                         alignItems={'center'}
                         flexDirection={{ xs: 'column', lg: 'row' }}
-                        gap={{ xs: 5, lg: 0 }}
+                        flexWrap={{ xs: 'nowrap', lg: 'wrap' }}
+                        gap={{ xs: 2, lg: 0 }}
                     >
                         <TitleOwt title='Dashboard' />
                         <Grid item xs={12} lg={3}>
@@ -111,7 +112,7 @@ export default function Dashboard() {
                                             'linear-gradient(to top, #1e4164, #1b4e7e, #185b9a, #1669b5, #1976d2)',
                                         color: 'white',
                                         padding: '10px',
-                                        marginLeft: { xs: 0, lg: '250px' },
+                                        marginLeft: { xs: '0px', lg: '250px' },
                                     }}
                                 >
                                     <CardContent>
@@ -233,7 +234,7 @@ export default function Dashboard() {
                                             'linear-gradient(to top, #1e4164, #1b4e7e, #185b9a, #1669b5, #1976d2)',
                                         color: 'white',
                                         padding: '10px',
-                                        marginRight: { xs: 0, lg: '250px' },
+                                        marginRight: { xs: '0px', lg: '250px' },
                                     }}
                                 >
                                     <CardContent>
