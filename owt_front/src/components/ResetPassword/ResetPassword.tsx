@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Supposons que vous avez une fonction resetPassword dans votre fichier d'API
+import { useParams, useNavigate } from 'react-router-dom'; // Supposons que vous avez une fonction resetPassword dans votre fichier d'API
 import {
     Button,
     Grid,
@@ -22,7 +22,7 @@ import { IChangeResetPassword } from '../../models/IChangeResetPassword';
 import './ResetPassword.css';
 
 function ResetPassword() {
-    const location = useLocation();
+    let { tokenResetPassword } = useParams();
     const navigate = useNavigate();
     const [token, setToken] = useState('');
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -35,8 +35,7 @@ function ResetPassword() {
     };
 
     useEffect(() => {
-        const tokenFromUrl = location.pathname.split('/').pop() || '';
-        setToken(tokenFromUrl);
+        setToken(tokenResetPassword as string);
     }, [location]);
 
     const initialRegisterValues: IChangeResetPassword = {
