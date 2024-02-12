@@ -112,7 +112,6 @@ export default function Login() {
                 });
             } catch (error) {
                 setIsLoading(false);
-                console.error("erreur",error);
                 console.log('Incomplete form.');
             }
         }

@@ -36,7 +36,7 @@ function ResetPassword() {
 
     useEffect(() => {
         setToken(tokenResetPassword as string);
-    }, [location]);
+    }, []);
 
     const initialRegisterValues: IChangeResetPassword = {
         password: '',
