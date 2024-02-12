@@ -112,6 +112,7 @@ export default function Login() {
                 });
             } catch (error) {
                 setIsLoading(false);
+                console.error("erreur",error);
                 console.log('Incomplete form.');
             }
         }
@@ -272,6 +273,7 @@ export default function Login() {
                                         <TextField
                                             id='emailRecovery'
                                             label='Email'
+                                            type='email'
                                             variant='outlined'
                                             onChange={(event) =>
                                                 setEmailrecovery(
