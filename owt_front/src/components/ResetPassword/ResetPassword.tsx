@@ -22,9 +22,9 @@ import { IChangeResetPassword } from '../../models/IChangeResetPassword';
 import './ResetPassword.css';
 
 function ResetPassword() {
-    let { tokenResetPassword } = useParams();
+    let { token } = useParams();
     const navigate = useNavigate();
-    const [token, setToken] = useState('');
+    const [tokenToCheck, setTokenToCheck] = useState('');
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -35,7 +35,7 @@ function ResetPassword() {
     };
 
     useEffect(() => {
-        setToken(tokenResetPassword as string);
+        setTokenToCheck(token as string);
     }, []);
 
     const initialRegisterValues: IChangeResetPassword = {
@@ -88,8 +88,8 @@ function ResetPassword() {
             try {
                 const password = dataRegister.password;
                 //setIsLoading(true);
-
-                const response = await resetPasswordProcess(password, token);
+                console.log('token from component ', tokenToCheck);
+                const response = await resetPasswordProcess(password, tokenToCheck);
 
                 if (response.status === 200) {
                     alert('Your password has been reset successfully');

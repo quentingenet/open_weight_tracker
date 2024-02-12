@@ -164,6 +164,7 @@ export const resetPasswordProcess = (
     newResetPassword: string,
     token: string
 ) => {
+    console.log("TOKEN from service ", token);
     const newPasswordData = { new_password: newResetPassword, token: token };
     return fetch(API_URL.concat('users/update_new_password/'), {
         method: 'POST',
