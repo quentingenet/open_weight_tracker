@@ -38,7 +38,7 @@ class InitialData(models.Model):
 
 class Person(models.Model):
     user = models.OneToOneField(AppUser, on_delete=models.CASCADE)
-    initial_data = models.OneToOneField(InitialData, on_delete=models.PROTECT, related_name='person_initial_data')
+    initial_data = models.OneToOneField(InitialData, on_delete=models.CASCADE, related_name='person_initial_data')
 
     def __str__(self):
           return f'id {self.id}, {self.user.username}'

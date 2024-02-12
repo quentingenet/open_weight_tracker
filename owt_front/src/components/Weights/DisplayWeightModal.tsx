@@ -12,7 +12,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: { xs: '50%', sm: '40%', md: '40%', lg: '30%' },
+    width: { xs: '50%', sm: '40%', md: '40%', lg: '10%' },
     backgroundImage:
         'linear-gradient(to top, #1e4164, #1b4e7e, #185b9a, #1669b5, #1976d2)',
     border: '1px solid #000',
