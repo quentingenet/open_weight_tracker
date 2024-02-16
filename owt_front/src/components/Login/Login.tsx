@@ -235,7 +235,6 @@ export default function Login() {
                                 <Alert
                                     onClose={handleCloseSnackBar}
                                     severity="error"
-                                    variant="filled"
                                     sx={{ width: '100%' }}
                                 >
                                     Error while logging in. Try again.
