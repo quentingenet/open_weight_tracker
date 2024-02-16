@@ -1,12 +1,14 @@
 import {
+    Alert,
     Button,
     CircularProgress,
     Grid,
     InputAdornment,
+    Snackbar,
     TextareaAutosize,
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, set, useForm } from 'react-hook-form';
 import { IContactPublic } from '../../models/IContactPublic';
 import { emailValidator } from '../../utils/Regex';
 import * as yup from 'yup';
@@ -19,6 +21,13 @@ import { useNavigate } from 'react-router-dom';
 import TitleOwt from '../../components/Utils/TitleOwt/TitleOwt';
 export default function Contact() {
     const navigate = useNavigate();
+    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+    const [messageSent, setMessageSent] = useState<boolean>(false);
+
+    const handleCloseSnackBar = () => {
+        setOpenSnackBar(false);
+    };
+
     const initialValueContact: IContactPublic = {
         email: '',
         messageToSend: '',
@@ -58,20 +67,30 @@ export default function Contact() {
         if (isValid) {
             try {
                 setIsLoading(true);
-                contactService(dataToSend);
+                const response = await contactService(dataToSend);
+                if (response.ok) {
+                    setMessageSent(true);
+                    setOpenSnackBar(true);
+                } else {
+                    setMessageSent(false);
+                    setOpenSnackBar(true);
+                }
             } catch (error) {
+                setMessageSent(false);
+                setOpenSnackBar(true);
                 console.error('Error while sending form', error);
             } finally {
                 setTimeout(() => {
                     setIsLoading(false);
-                }, 500);
+                }, 400);
             }
         }
     };
+
     return (
         <>
             <Grid container>
-             <TitleOwt title='Contact' />
+                <TitleOwt title='Contact' />
                 <Grid
                     container
                     display={'flex'}
@@ -201,6 +220,24 @@ export default function Contact() {
                     </Button>
                 </Grid>
             </Grid>
+            {openSnackBar && (
+                <Snackbar
+                    open={openSnackBar}
+                    autoHideDuration={4000}
+                    onClose={handleCloseSnackBar}
+                >
+                    <Alert
+                        onClose={handleCloseSnackBar}
+                        severity={messageSent ? 'success' : 'error'}
+                        sx={{ width: '100%' }}
+                    >
+                        {messageSent
+                            ? 'Message sent successfully!'
+                            : 'Error while logging in. Try again.'}
+                        '
+                    </Alert>
+                </Snackbar>
+            )}
         </>
     );
 }
