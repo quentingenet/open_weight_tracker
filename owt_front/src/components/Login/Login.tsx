@@ -37,9 +37,9 @@ export default function Login() {
     const [emailRecovery, setEmailrecovery] = useState<string>('');
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 
-const handleCloseSnackBar = () => {
-    setOpenSnackBar(false);
-};
+    const handleCloseSnackBar = () => {
+        setOpenSnackBar(false);
+    };
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (
         event: React.MouseEvent<HTMLButtonElement>
@@ -99,17 +99,18 @@ const handleCloseSnackBar = () => {
                             navigate('/dashboard');
                         }
                     } else if (response.status === 401) {
-                        setOpenSnackBar(true);
                         setIsLoading(false);
+                        setOpenSnackBar(true);
                         console.log('Unauthorized: Invalid username or password.');
                     } else {
-                        setOpenSnackBar(true);
                         setIsLoading(false);
+                        setOpenSnackBar(true);
                         console.log('Error while logging in.');
                     }
                 }
             } catch (error) {
                 setIsLoading(false);
+                setOpenSnackBar(true);
                 console.log('Error:', error);
             }
         }
