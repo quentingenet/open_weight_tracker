@@ -8,7 +8,7 @@ import {
     TextareaAutosize,
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { Controller, set, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { IContactPublic } from '../../models/IContactPublic';
 import { emailValidator } from '../../utils/Regex';
 import * as yup from 'yup';
