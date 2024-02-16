@@ -6,6 +6,7 @@ import {
     Grid,
     IconButton,
     InputAdornment,
+    Snackbar,
     TextField,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -34,6 +35,11 @@ export default function Login() {
     const [isMailSended, setIsMailSended] = useState<boolean>(false);
     const [errorRecovery, setErrorRecovery] = useState<boolean>(false);
     const [emailRecovery, setEmailrecovery] = useState<string>('');
+    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+
+const handleCloseSnackBar = () => {
+    setOpenSnackBar(false);
+};
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (
         event: React.MouseEvent<HTMLButtonElement>
@@ -93,9 +99,11 @@ export default function Login() {
                             navigate('/dashboard');
                         }
                     } else if (response.status === 401) {
+                        setOpenSnackBar(true);
                         setIsLoading(false);
                         console.log('Unauthorized: Invalid username or password.');
                     } else {
+                        setOpenSnackBar(true);
                         setIsLoading(false);
                         console.log('Error while logging in.');
                     }
@@ -106,7 +114,7 @@ export default function Login() {
             }
         }
     };
-    
+
     useEffect(() => {
         if (forgotPassword === true) {
             setTimeout(() => {
@@ -221,6 +229,17 @@ export default function Login() {
                                 </Grid>
                             )}
                         </Grid>
+                        {openSnackBar && (
+                            <Snackbar open={openSnackBar} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+                                <Alert
+                                    onClose={handleCloseSnackBar}
+                                    severity="error"
+                                    variant="filled"
+                                    sx={{ width: '100%' }}
+                                >
+                                    Error while logging in. Try again.
+                                </Alert>
+                            </Snackbar>)}
                     </Grid>
 
                     <Grid
