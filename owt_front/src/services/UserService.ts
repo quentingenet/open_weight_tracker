@@ -41,7 +41,7 @@ export const login = async (data: ILoginForm) => {
     }
 };
 
-export const register = (dataRegister: IRegisterForm) => {
+export const register = async (dataRegister: IRegisterForm) => {
     const requestDataRegister = {
         username: dataRegister.username,
         email: dataRegister.email,
@@ -49,38 +49,36 @@ export const register = (dataRegister: IRegisterForm) => {
         is_accepted_terms: dataRegister.isAcceptedTerms,
     };
 
-    return fetch(API_URL.concat('users/register_user_step_one/'), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestDataRegister),
-    })
-        .then((response) => {
-            if (response.ok) {
-                const jwt = response.headers.get('Authorization') || '';
-
-                const localStorageJwt = localStorage.getItem('jwt');
-                if (localStorageJwt) {
-                    localStorage.removeItem('jwt');
-                }
-
-                if (jwt) {
-                    localStorage.setItem('jwt', JSON.stringify(jwt));
-                } else {
-                    throw new Error(
-                        "Le JWT n'est pas présent dans les en-têtes de la réponse."
-                    );
-                }
-
-                return response.json();
-            } else {
-                throw new Error("Erreur lors de la requête à l'API");
-            }
-        })
-        .catch((error) => {
-            throw new Error('Error during API request: ' + error.message);
+    try {
+        const response = await fetch(API_URL.concat('users/register_user_step_one/'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestDataRegister),
         });
+
+        if (!response.ok) {
+            throw new Error("Erreur lors de la requête à l'API");
+        }
+
+        const jwt = response.headers.get('Authorization') || '';
+
+        const localStorageJwt = localStorage.getItem('jwt');
+        if (localStorageJwt) {
+            localStorage.removeItem('jwt');
+        }
+
+        if (jwt) {
+            localStorage.setItem('jwt', JSON.stringify(jwt));
+        } else {
+            throw new Error("Le JWT n'est pas présent dans les en-têtes de la réponse.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error during API request: ' + error);
+    }
 };
 
 export const initData = async (dataInitial: IInitialData) => {

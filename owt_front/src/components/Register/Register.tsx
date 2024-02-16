@@ -111,11 +111,6 @@ export const Register = () => {
 
                 const response = await registerService(dataRegister);
 
-                console.log(
-                    'Response from registerService in submitRegister:',
-                    response
-                );
-
                 if (response) {
                     const localStorageJwt = localStorage.getItem('jwt') || '';
 
@@ -133,6 +128,7 @@ export const Register = () => {
                     }
                 }
             } catch (error) {
+                setIsLoading(false)
                 console.error("Erreur lors de l'inscription :", error);
             } finally {
                 setTimeout(() => {
