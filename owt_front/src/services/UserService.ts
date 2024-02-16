@@ -4,45 +4,41 @@ import { ILoginForm } from '../models/ILoginForm';
 import { IRegisterForm } from '../models/IRegisterForm';
 import { API_URL } from '../utils/GlobalUtils';
 
-export const login = (data: ILoginForm) => {
+export const login = async (data: ILoginForm) => {
     const requestDataLogin = {
         username: data.username,
         password: data.password,
     };
 
-    return fetch(API_URL.concat('token/'), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestDataLogin),
-    })
-        .then((response) => {
-            if (response.ok) {
-                return response.json().then((data) => ({
-                    status: response.status,
-                    data: data,
-                }));
-            } else {
-                return response.json().then((errorData) => {
-                    throw new Error(
-                        errorData.message ||
-                            'Error while making request to the API'
-                    );
-                });
-            }
-        })
-        .then((response) => {
-            const accessToken = response.data.access;
-            const height = response.data.height;
-            localStorage.setItem('jwt', accessToken);
-            localStorage.setItem('height', height);
-
-            return response;
-        })
-        .catch((error) => {
-            throw new Error('Error while calling the API: ' + error);
+    try {
+        const response = await fetch(API_URL.concat('token/'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestDataLogin),
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.message || 'Error while making request to the API'
+            );
+        }
+
+        const responseData = await response.json();
+        const accessToken = responseData.access;
+        const height = responseData.height;
+        localStorage.setItem('jwt', accessToken);
+        localStorage.setItem('height', height);
+
+        return {
+            status: response.status,
+            data: responseData,
+        };
+    } catch (error) {
+        throw new Error('Error while calling the API: ' + error);
+    }
 };
 
 export const register = (dataRegister: IRegisterForm) => {

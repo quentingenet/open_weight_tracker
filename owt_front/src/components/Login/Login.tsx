@@ -72,51 +72,41 @@ export default function Login() {
         password: watch('password'),
     };
 
-    const submitLogin = () => {
+    const submitLogin = async () => {
         if (isValid) {
             try {
                 setIsLoading(true);
-                loginService(dataLogin).then((response) => {
-                    if (response) {
-                        if (response.status === 200) {
-                            const localStorageJwt =
-                                localStorage.getItem('jwt') || '';
-                            if (
-                                localStorageJwt !== null &&
-                                localStorageJwt !== ''
-                            ) {
-                                localStorageJwt?.startsWith('Bearer')
-                                    ? userContext.setJwt(localStorageJwt)
-                                    : userContext.setJwt(
-                                          `Bearer ${localStorageJwt}`
-                                      );
+                const response = await loginService(dataLogin);
+                if (response) {
+                    if (response.status === 200) {
+                        const localStorageJwt = localStorage.getItem('jwt') || '';
+                        if (localStorageJwt !== null && localStorageJwt !== '') {
+                            localStorageJwt?.startsWith('Bearer')
+                                ? userContext.setJwt(localStorageJwt)
+                                : userContext.setJwt(`Bearer ${localStorageJwt}`);
 
-                                const localStorageHeight =
-                                    localStorage.getItem('height') || '';
-                                const heightUser = Number(localStorageHeight);
-                                userContext.setHeight(heightUser);
-                                setIsLoading(false);
-                                userContext.setIsUserLoggedIn(true);
-                                navigate('/dashboard');
-                            }
-                        } else if (response.status === 401) {
+                            const localStorageHeight = localStorage.getItem('height') || '';
+                            const heightUser = Number(localStorageHeight);
+                            userContext.setHeight(heightUser);
                             setIsLoading(false);
-                            console.log(
-                                'Unauthorized: Invalid username or password.'
-                            );
-                        } else {
-                            setIsLoading(false);
-                            console.log('Error while logging in.');
+                            userContext.setIsUserLoggedIn(true);
+                            navigate('/dashboard');
                         }
+                    } else if (response.status === 401) {
+                        setIsLoading(false);
+                        console.log('Unauthorized: Invalid username or password.');
+                    } else {
+                        setIsLoading(false);
+                        console.log('Error while logging in.');
                     }
-                });
+                }
             } catch (error) {
                 setIsLoading(false);
-                console.log('Incomplete form.');
+                console.log('Error:', error);
             }
         }
     };
-
+    
     useEffect(() => {
         if (forgotPassword === true) {
             setTimeout(() => {
