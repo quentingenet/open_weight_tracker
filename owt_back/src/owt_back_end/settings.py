@@ -65,6 +65,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
 CORS_ALLOW_ALL_ORIGINS = False  # To change in production by False and add the allowed origins
 
 CORS_ALLOW_HEADERS = [
