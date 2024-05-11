@@ -8,7 +8,7 @@ COPY owt_back /owt_back
 WORKDIR /owt_back
 
 RUN python -m venv venv && \
-    venv/bin/pip install --no-cache-dir -r requirements.txt gunicorn
+    venv/bin/pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
