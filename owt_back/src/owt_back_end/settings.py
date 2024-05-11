@@ -97,8 +97,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://kent121.eu.pythonanywhere.com',
     'http://owt.quentingenet.fr',
     'https://owt.quentingenet.fr',
-    'http://owt-api.quentingenet.fr',
-    'https://owt-api.quentingenet.fr',
+    'http://www.owt-api.quentingenet.fr',
+    'https://www.owt-api.quentingenet.fr',
     'http://localhost:5173',
     'http://127.0.0.1:5173'
    ]
