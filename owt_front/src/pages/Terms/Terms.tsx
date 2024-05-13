@@ -124,7 +124,7 @@ export default function Terms() {
                         6.1. The user acknowledges that the Application may
                         experience temporary interruptions for technical,
                         maintenance, or other reasons, and the creators of the
-                        Application are not responsible for disruptions in use.{' '}
+                        Application are not responsible for disruptions in use.{' '} 
                         <br />
                    
                             <strong>7. Collection and Use of Data</strong>
